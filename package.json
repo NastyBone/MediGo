@@ -2,7 +2,13 @@
   "name": "medigo",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "api": "npx nx serve api",
+    "ng": "nx",
+    "lint": "npx nx lint",
+    "dashboard": "nx run dashboard:serve",
+    "prettier": "npx prettier . --check"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~15.2.0",
