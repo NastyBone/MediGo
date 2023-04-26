@@ -32,22 +32,22 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     context: ExecutionContext,
     status?: any
   ): any {
-    if (info instanceof Error) {
-      if (info.message == 'No auth token') {
-        this._throwUnauthorized('Debe iniciar sesión antes de continuar.');
-        //
-      } else if (info.name == 'TokenExpiredError') {
-        this._throwUnauthorized('Su sesión ha expirado.');
-        //
-      } else {
-        console.log(info);
-        this._throwUnauthorized(
-          'Algo ha ocurrido. Por favor, inicie sesión nuevamente.'
-        );
-      }
-    }
-
-    super.handleRequest(err, user, info, context, status);
+    // if (info instanceof Error) {
+    //   if (info.message == 'No auth token') {
+    //     this._throwUnauthorized('Debe iniciar sesión antes de continuar.');
+    //     //
+    //   } else if (info.name == 'TokenExpiredError') {
+    //     this._throwUnauthorized('Su sesión ha expirado.');
+    //     //
+    //   } else {
+    //     console.log(info);
+    //     this._throwUnauthorized(
+    //       'Algo ha ocurrido. Por favor, inicie sesión nuevamente.'
+    //     );
+    //   }
+    // }
+    // super.handleRequest(err, user, info, context, status);
+    //FIXME: Descomentar
   }
 
   canActivate(

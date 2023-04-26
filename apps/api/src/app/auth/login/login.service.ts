@@ -5,17 +5,17 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-// import { UsersService } from '../../repositories/users/users.service';
+import { UsersService } from '../../repositories/users/users.service';
 import { JwtAuthService } from '../jwt-auth/jwtAuth.service';
 
 import { jwtConstants } from '../jwt-auth/constants';
-import { comparePassword } from '../password-hasher/password-hasher'; //FIXME: Descomentar y arrelgar
+import { comparePassword } from '../password-hasher/password-hasher';
 import { LoginUserResponseDto, UserLoginDto } from './dto/login.dto';
 
 @Injectable()
 export class LoginService {
   constructor(
-    // private readonly usersService: UsersService,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly jwtAuthService: JwtAuthService
   ) {}
@@ -34,16 +34,8 @@ export class LoginService {
       token: _token,
     };
 
-    const { email, id, role, firstName, lastName, deleted, status } = {
-      email: '',
-      id: 0,
-      role: '',
-      firstName: '',
-      lastName: '',
-      deleted: '',
-      status: '',
-    };
-    // await this.usersService.findOneByEmail(user.email);
+    const { email, id, role, firstName, lastName, deleted, status } =
+      await this.usersService.findOneByEmail(user.email);
 
     if (deleted || !status)
       throw new BadRequestException(
@@ -65,12 +57,12 @@ export class LoginService {
   }
 
   async validateUser(email_: string, password_: string): Promise<UserLoginDto> {
-    // const user = await this.usersService.findOneByEmail(email_);
+    const user = await this.usersService.findOneByEmail(email_);
 
-    // if (!user || !(await comparePassword(password_, user.password))) {
-    throw new UnauthorizedException('Usuario o contraseña inválida.');
-    // }
+    if (!user || !(await comparePassword(password_, user.password))) {
+      throw new UnauthorizedException('Usuario o contraseña inválida.');
+    }
 
-    // return { email: user.email, id: user.id };
+    return { email: user.email, id: user.id };
   }
 }

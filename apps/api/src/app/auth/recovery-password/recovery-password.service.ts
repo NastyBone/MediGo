@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '../jwt-auth/constants';
 import { MailService } from '../../mail/mail.service';
-// import { UsersService } from '../../repositories/users/users.service'; //FIXME: Descomentar
+import { UsersService } from '../../repositories/users/users.service';
 import {
   RecoveryPasswordDto,
   RecoveryPasswordResponseDto,
@@ -12,7 +12,7 @@ import { JwtAuthService } from '../jwt-auth/jwtAuth.service';
 @Injectable()
 export class RecoveryPasswordService {
   constructor(
-    // private readonly usersService: UsersService,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly jwtAuthService: JwtAuthService,
     private readonly mailService: MailService
@@ -26,30 +26,30 @@ export class RecoveryPasswordService {
   async generateRecovery(
     recoveryPasswordDto: RecoveryPasswordDto
   ): Promise<RecoveryPasswordResponseDto> {
-    // const user = await this.usersService.findOneByEmail(
-    //   recoveryPasswordDto.email
-    // );
+    const user = await this.usersService.findOneByEmail(
+      recoveryPasswordDto.email
+    );
 
-    // if (!user) {
-    //   throw new BadRequestException('Email no registrado.');
-    // }
+    if (!user) {
+      throw new BadRequestException('Email no registrado.');
+    }
 
-    // const payload = { username: user.email, sub: user.id };
+    const payload = { username: user.email, sub: user.id };
 
-    // const token = await this.jwtService.signAsync(payload, {
-    //   secret: jwtConstants.secret,
-    //   expiresIn: jwtConstants.expiresIn, // 10min
-    // });
+    const token = await this.jwtService.signAsync(payload, {
+      secret: jwtConstants.secret,
+      expiresIn: jwtConstants.expiresIn, // 10min
+    });
 
-    // const _link = `http://localhost:4200/reset-password/${token}`;
+    const _link = `http://localhost:4200/reset-password/${token}`;
 
-    // const _isSent = await this.mailService.sendRecovery(_link, user.email);
+    const _isSent = await this.mailService.sendRecovery(_link, user.email);
 
-    // if (_isSent) {
-    //   return { message: `Se ha enviado el link de recuperación al correo.` };
-    // } else {
-    throw new BadRequestException('No se ha podido enviar el correo.');
-    // }
+    if (_isSent) {
+      return { message: `Se ha enviado el link de recuperación al correo.` };
+    } else {
+      throw new BadRequestException('No se ha podido enviar el correo.');
+    }
   }
 
   /**
@@ -71,16 +71,16 @@ export class RecoveryPasswordService {
       _token
     );
 
-    // const response = await this.usersService.changePassword(
-    //   email,
-    //   id,
-    //   _newPassword
-    // );
+    const response = await this.usersService.changePassword(
+      email,
+      id,
+      _newPassword
+    );
 
-    // if (response) {
-    //   return { message: 'Contraseña cambiada.' };
-    // } else {
-    return { message: 'Error al cambiar la contraseña.' };
-    // }
+    if (response) {
+      return { message: 'Contraseña cambiada.' };
+    } else {
+      return { message: 'Error al cambiar la contraseña.' };
+    }
   }
 }
