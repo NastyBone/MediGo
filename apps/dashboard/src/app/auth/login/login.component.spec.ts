@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '@tecnops/dashboard-sdk';
+import { AuthService } from '@medigo/dashboard-sdk';
 import { AuthModule } from '../auth.module';
 
 import { LoginComponent } from './login.component';

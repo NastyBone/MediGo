@@ -7,7 +7,7 @@ import { passwordMatchValidator } from '../../common/password-match-validator.di
 import { ResetPasswordService } from './reset-password.service';
 
 @Component({
-  selector: 'tecnops-reset-password',
+  selector: 'medigo-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
 })

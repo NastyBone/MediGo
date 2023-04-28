@@ -6,7 +6,7 @@ import { StateService } from '../../common/state';
 import { LoginService } from './login.service';
 
 @Component({
-  selector: 'tecnops-login',
+  selector: 'medigo-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

@@ -18,7 +18,7 @@ import { OptionAction, RowOptionVM, TableDataVM } from './model';
 import { TableService } from './table.service'; /** Constants used to fill up our data base. */
 
 @Component({
-  selector: 'tecnops-table',
+  selector: 'medigo-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })

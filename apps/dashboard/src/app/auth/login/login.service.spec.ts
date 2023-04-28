@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from '@tecnops/dashboard-sdk';
+import { AuthService } from '@medigo/dashboard-sdk';
 
 import { LoginService } from './login.service';
 

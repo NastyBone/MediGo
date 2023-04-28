@@ -6,7 +6,7 @@ import { StateService } from '../../common/state';
 import { RecoveryPasswordService } from './recovery-password.service';
 
 @Component({
-  selector: 'tecnops-recovery-password',
+  selector: 'medigo-recovery-password',
   templateUrl: './recovery-password.component.html',
   styleUrls: ['./recovery-password.component.scss'],
 })

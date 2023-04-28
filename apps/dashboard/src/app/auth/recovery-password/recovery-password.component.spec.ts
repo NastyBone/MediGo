@@ -1,7 +1,7 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthService } from '@tecnops/dashboard-sdk';
+import { AuthService } from '@medigo/dashboard-sdk';
 import { AuthModule } from '../auth.module';
 
 import { RecoveryPasswordComponent } from './recovery-password.component';

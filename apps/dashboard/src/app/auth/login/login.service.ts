@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '@tecnops/dashboard-sdk';
+import { AuthService } from '@medigo/dashboard-sdk';
 import { Observable, map, tap } from 'rxjs';
 import { UserStateService } from '../../common';
 import { UserStateVM } from '../../common/user-state/models';
