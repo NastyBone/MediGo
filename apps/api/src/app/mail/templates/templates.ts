@@ -18,7 +18,7 @@ export const recovery = (_url: string): string => `
       text-align: center;
       word-break: break-word;
     ">
-    <img src="cid:filesrc" style="width:25rem; height:auto" alt="TECNOPS">
+
   </div>
   <div style="
       font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
@@ -67,7 +67,7 @@ export const welcome = (
       text-align: center;
       word-break: break-word;
     ">
-    <div style="font-size: 24px">Bienvenido a <strong>TECNOPS</strong></div>
+    <div style="font-size: 24px">Bienvenido a <strong>MEDIGO</strong></div>
   </div>
   <div style="
       font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
@@ -77,7 +77,7 @@ export const welcome = (
       padding-top: 20px;
       text-align: center;
     ">
-    Te damos la bienvenida al SISTEMA DE GESTION OPERATIVA DE TECNO DIESEL SERVICIOS C.A. Tus datos de acceso al
+    Te damos la bienvenida a MEDIGO! Tus datos de acceso al
     sistema son los siguiente:
     <div style="
         padding-top: 20px;

@@ -16,7 +16,7 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to: email_,
-        subject: 'TECNOPS - Solicitud de cambio de contraseña',
+        subject: 'MEDIGO - Solicitud de cambio de contraseña',
         html: recovery(url_),
         attachments: [
           {
@@ -46,7 +46,7 @@ export class MailService {
       await this.mailerService.sendMail({
         to: email_,
         subject:
-          'TECNOPS - Bienvenido al sistema de gestión operativa de TECNO DIESEL SERVICIOS',
+          'MEDIGO - Bienvenido al sistema de gestión operativa de TECNO DIESEL SERVICIOS',
         html: welcome(
           email_,
           user_,
