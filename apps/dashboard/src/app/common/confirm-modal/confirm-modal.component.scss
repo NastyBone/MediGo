@@ -1,0 +1,23 @@
+mat-card {
+  padding: 1rem;
+}
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+#modal-close-button {
+  width: 2rem;
+  height: 2rem;
+}
+mat-card-actions {
+  justify-content: space-evenly;
+}
+
+mat-card-content {
+  margin: 2rem;
+  text-align: center;
+}
+.confirm-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
