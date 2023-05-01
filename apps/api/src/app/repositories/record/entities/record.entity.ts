@@ -13,7 +13,7 @@ export class Record extends IdEntity {
 
   @ManyToOne(() => Doctor, (doctor) => doctor.id, { nullable: false })
   @JoinColumn()
-  user!: Doctor;
+  doctor!: Doctor;
 
   @ManyToOne(() => Patient, (patient) => patient.id, { nullable: false })
   @JoinColumn()

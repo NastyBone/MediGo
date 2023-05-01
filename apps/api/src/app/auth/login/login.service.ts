@@ -56,6 +56,11 @@ export class LoginService {
     };
   }
 
+  async patientLogin() {
+    return; //TODO: Hacer igual que login, pero el role siempre retorna como patient
+    //TODO: Poner check o automaticamente redirigir a patientLogin desde login cuando el rol es patient
+  }
+
   async validateUser(email_: string, password_: string): Promise<UserLoginDto> {
     const user = await this.usersService.findOneByEmail(email_);
 
