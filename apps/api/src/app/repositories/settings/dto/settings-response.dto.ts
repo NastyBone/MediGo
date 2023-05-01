@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { InternalSettingsResponse } from './internal-settings-response.dto';
 
-export class SettingsRespondeDto {
+export class SettingsResponseDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

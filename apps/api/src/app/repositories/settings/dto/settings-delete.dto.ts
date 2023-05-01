@@ -2,7 +2,7 @@ import { IsBoolean, IsOptional } from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class ConfigDeleteDto {
+export class SettingsDeleteDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
@@ -26,5 +26,5 @@ export class ConfigDeleteDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  daysToReport?: boolean;
+  type?: boolean;
 }
