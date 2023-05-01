@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
@@ -16,7 +16,7 @@ export class CreateRecordDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  @IsDateString()
   date!: string;
 
   @ApiProperty({

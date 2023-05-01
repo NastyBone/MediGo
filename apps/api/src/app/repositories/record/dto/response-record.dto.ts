@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -20,7 +20,7 @@ export class ResponseRecordDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  @IsDateString()
   date: string;
 
   @ApiProperty()

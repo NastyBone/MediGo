@@ -7,7 +7,7 @@ import { Assistant } from '../entities';
 import { ResponseDoctorDto } from '../../doctor/dto';
 import { ResponseUserDto } from '../../users/dto';
 
-export class AssistantRespondeDto {
+export class ResponseAssistantDto {
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)

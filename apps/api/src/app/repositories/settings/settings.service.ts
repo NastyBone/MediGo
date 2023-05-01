@@ -88,7 +88,7 @@ export class SettingsService {
     return await this.getSettingsResponse();
   }
 
-  async deleteConfig(
+  async deleteSettings(
     delSettings: SettingsDeleteDto
   ): Promise<SettingsResponseDto> {
     if (delSettings.name) {

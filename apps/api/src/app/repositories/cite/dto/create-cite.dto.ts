@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
@@ -15,7 +15,7 @@ export class CreateCiteDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  @IsDateString()
   date!: string;
 
   @ApiProperty()

@@ -18,15 +18,17 @@ export class CreateDoctorDto extends PartialType(
   @IsString()
   phone!: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  description?: string;
+  @ApiProperty({
+    type: Number,
+  })
+  @IsNotEmpty()
+  @Type(() => Number)
+  specialityId!: number;
 
   @ApiProperty({
     type: Number,
   })
   @IsNotEmpty()
   @Type(() => Number)
-  doctorId!: number;
+  userId!: number;
 }

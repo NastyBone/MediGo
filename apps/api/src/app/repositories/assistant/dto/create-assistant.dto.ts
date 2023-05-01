@@ -21,9 +21,4 @@ export class CreateAssistantDto extends PartialType(
   @IsNotEmpty()
   @Type(() => Number)
   userId!: number;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  name!: string;
 }

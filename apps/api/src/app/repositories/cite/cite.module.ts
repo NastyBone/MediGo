@@ -3,10 +3,13 @@ import { CiteService } from './cite.service';
 import { CiteController } from './cite.controller';
 import { Cite } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtAuthModule } from '../../auth/jwt-auth';
+import { UsersModule } from '../users';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cite])],
+  imports: [TypeOrmModule.forFeature([Cite]), UsersModule, JwtAuthModule],
   providers: [CiteService],
   controllers: [CiteController],
+  // exports: [CiteService], //TODO: Descomentar
 })
 export class CiteModule {}

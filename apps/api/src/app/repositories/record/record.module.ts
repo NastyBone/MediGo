@@ -3,9 +3,11 @@ import { RecordService } from './record.service';
 import { RecordController } from './record.controller';
 import { Record } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtAuthModule } from '../../auth/jwt-auth';
+import { UsersModule } from '../users';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Record])],
+  imports: [TypeOrmModule.forFeature([Record]), UsersModule, JwtAuthModule],
   providers: [RecordService],
   controllers: [RecordController],
 })
