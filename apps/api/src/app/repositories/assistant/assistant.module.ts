@@ -3,7 +3,7 @@ import { AssistantService } from './assistant.service';
 import { AssistantController } from './assistant.controller';
 import { Assistant } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtAuthModule } from '../../auth/jwt-auth';
+import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
 import { UsersModule } from '../users';
 
 @Module({

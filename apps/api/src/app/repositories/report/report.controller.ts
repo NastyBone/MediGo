@@ -17,23 +17,23 @@ import { Roles } from '../users';
 export class ReportController {
   constructor(private reportService: ReportService) {}
 
-  // @Role(Roles.Admin)
-  // @Get()
-  // @ApiResponse({
-  //   type: Any,
-  // })
-  // findAll(): Promise<{ completed: number; notCompleted: number }> {
-  //   return this.reportService.findAll();
-  // }
+  @Role(Roles.Admin)
+  @Get()
+  @ApiResponse({
+    type: Any,
+  })
+  findAll(): Promise<{ completed: number; notCompleted: number }> {
+    return this.reportService.findAll();
+  }
 
-  // @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  // @Get()
-  // @ApiResponse({
-  //   type: Any,
-  // })
-  // findByDoctor(
-  //   @Param('id', ParseIntPipe) id
-  // ): Promise<{ completed: number; notCompleted: number }> {
-  //   return this.reportService.findByDoctor(id);
-  // }
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Get()
+  @ApiResponse({
+    type: Any,
+  })
+  findByDoctor(
+    @Param('id', ParseIntPipe) id
+  ): Promise<{ completed: number; notCompleted: number }> {
+    return this.reportService.findByDoctor(id);
+  }
 }

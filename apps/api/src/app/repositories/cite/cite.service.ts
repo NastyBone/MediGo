@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Cite } from './entities';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
 
@@ -223,10 +223,30 @@ export class CiteService {
   }
 
   async getData(): Promise<{ completed: number; notCompleted: number }> {
+    const now = new Date(); // obtener la fecha y hora actual
+    const presentMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDay(),
+      0,
+      0,
+      0,
+      0
+    ).toLocaleDateString();
+    const prevMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() - 1,
+      now.getDay(),
+      0,
+      0,
+      0,
+      0
+    ).toLocaleDateString();
     const countCompleted = await this.repository.count({
       where: {
         deleted: false,
         patientConfirm: true,
+        date: Between(prevMonth, presentMonth),
       },
     });
 
@@ -234,6 +254,7 @@ export class CiteService {
       where: {
         deleted: false,
         patientConfirm: false,
+        date: Between(prevMonth, presentMonth),
       },
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };

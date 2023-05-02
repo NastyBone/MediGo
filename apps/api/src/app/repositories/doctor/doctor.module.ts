@@ -3,7 +3,7 @@ import { DoctorService } from './doctor.service';
 import { DoctorController } from './doctor.controller';
 import { Doctor } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtAuthModule } from '../../auth/jwt-auth';
+import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
 import { UsersModule } from '../users';
 
 @Module({

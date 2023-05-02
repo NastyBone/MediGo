@@ -4,7 +4,7 @@ import { SettingsController } from './settings.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Settings } from './entities';
 import { UsersModule } from '../users';
-import { JwtAuthModule } from '../../auth/jwt-auth';
+import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Settings]), UsersModule, JwtAuthModule],

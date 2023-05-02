@@ -3,7 +3,7 @@ import { SpecialityService } from './speciality.service';
 import { SpecialityController } from './speciality.controller';
 import { Speciality } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtAuthModule } from '../../auth/jwt-auth';
+import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
 import { UsersModule } from '../users';
 
 @Module({
