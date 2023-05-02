@@ -39,3 +39,6 @@ testem.log
 Thumbs.db
 
 .angular
+
+# Clientes generados de openapi
+/libs/dashboard-sdk

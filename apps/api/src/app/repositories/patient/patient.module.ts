@@ -3,9 +3,11 @@ import { PatientService } from './patient.service';
 import { PatientController } from './patient.controller';
 import { Patient } from './entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
+import { UsersModule } from '../users';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Patient])],
+  imports: [TypeOrmModule.forFeature([Patient]), UsersModule, JwtAuthModule],
   providers: [PatientService],
   controllers: [PatientController],
 })

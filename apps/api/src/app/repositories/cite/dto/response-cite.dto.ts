@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -15,7 +15,7 @@ export class ResponseCiteDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
+  @IsDateString()
   date: string;
 
   @ApiProperty()
