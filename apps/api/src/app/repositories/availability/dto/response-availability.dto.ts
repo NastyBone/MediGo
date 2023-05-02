@@ -18,8 +18,8 @@ export class ResponseAvailabilityDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDateString()
-  date!: string;
+  @IsString()
+  day!: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -34,7 +34,7 @@ export class ResponseAvailabilityDto {
   constructor(data: Availability) {
     this.id = data.id;
     this.time = data.time;
-    this.date = data.date;
+    this.day = data.day;
     this.doctor = new ResponseDoctorDto(data.doctor);
   }
 }

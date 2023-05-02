@@ -11,7 +11,10 @@ import { hashPassword } from '../../auth/password-hasher/password-hasher';
 import { CrudRepository } from '../../common/use-case';
 import { MailService } from '../../mail/mail.service';
 import { UpdateUserDto } from './dto/update-entities.dto';
-import { ResponseUserDto } from './dto/users-response.dto';
+import {
+  ResponseUserDto,
+  ResponseUserPatientDto,
+} from './dto/users-response.dto';
 import { User } from './entities';
 import { Roles } from './enums';
 
@@ -192,37 +195,12 @@ export class UsersService implements CrudRepository<User> {
     return new ResponseUserDto(await this.usersRepository.save(user));
   }
 
-  async insertAdmin(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    role: string
-  ): Promise<void> {
-    const UsersAdmins = await this.usersRepository.find({
+  async findUsersPatients(): Promise<ResponseUserPatientDto[]> {
+    const data = await this.usersRepository.find({
       where: {
-        role: 'gerenteMecanico',
-        status: true,
+        deleted: false,
       },
     });
-
-    if (UsersAdmins.length !== 0) {
-      const AdminEmail = await this.findOneByEmail(email);
-      if (AdminEmail) {
-        this.usersRepository.remove(AdminEmail);
-      }
-    } else {
-      const user = this.usersRepository.create({
-        email,
-        password: await hashPassword(password),
-        firstName,
-        lastName,
-        role,
-      });
-
-      await this.usersRepository.save(user);
-    }
-
-    //return new ResponseUserDto(_userRes);
+    return data.map((item) => new ResponseUserPatientDto(item));
   }
 }

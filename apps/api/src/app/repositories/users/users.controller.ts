@@ -14,7 +14,10 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { hashPassword } from '../../auth/password-hasher/password-hasher';
 import { CreateUserDto } from './dto';
 import { UpdateUserDto } from './dto/update-entities.dto';
-import { ResponseUserDto } from './dto/users-response.dto';
+import {
+  ResponseUserDto,
+  ResponseUserPatientDto,
+} from './dto/users-response.dto';
 import { Roles } from './enums';
 import { Role, RolesGuard } from './users.guard';
 import { UsersService } from './users.service';
@@ -41,6 +44,15 @@ export class UsersController {
   })
   findAll(): Promise<Array<ResponseUserDto>> {
     return this.userService.findAll();
+  }
+
+  @Get('/patients')
+  @ApiResponse({
+    type: ResponseUserPatientDto,
+    isArray: true,
+  })
+  findAllPatients(): Promise<Array<ResponseUserPatientDto>> {
+    return this.userService.findUsersPatients();
   }
 
   @Patch(':id')

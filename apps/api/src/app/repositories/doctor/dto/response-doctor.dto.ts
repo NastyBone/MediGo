@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Doctor } from '../entities';
 import { ResponseSpecialityDto } from '../../speciality/dto';
-import { ResponseUserDto } from '../../users/dto';
+import { ResponseUserPatientDto } from '../../users/dto';
 
 export class ResponseDoctorDto {
   @ApiProperty()
@@ -25,13 +25,13 @@ export class ResponseDoctorDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => ResponseUserDto)
-  user: ResponseUserDto;
+  @Type(() => ResponseUserPatientDto)
+  user: ResponseUserPatientDto;
 
   constructor(data: Doctor) {
     this.id = data.id;
     this.phone = data.phone;
     this.speciality = new ResponseSpecialityDto(data.speciality);
-    this.user = new ResponseUserDto(data.user);
+    this.user = new ResponseUserPatientDto(data.user);
   }
 }

@@ -8,7 +8,7 @@ export class Availability extends IdEntity {
   time!: string;
 
   @Column({ length: 256, nullable: false })
-  date!: string;
+  day!: string;
 
   @Column({ nullable: false })
   available!: boolean;

@@ -222,6 +222,19 @@ export class CiteService {
     }
   }
 
+  async toggleCite(id: number): Promise<ResponseCiteDto> {
+    const cite = await this.repository.findOne({
+      where: {
+        deleted: false,
+        id,
+      },
+    });
+    cite.patientConfirm = !cite.patientConfirm;
+
+    await this.repository.save(cite);
+    return this.findOne(id);
+  }
+
   async getData(): Promise<{ completed: number; notCompleted: number }> {
     const now = new Date(); // obtener la fecha y hora actual
     const presentMonth = new Date(

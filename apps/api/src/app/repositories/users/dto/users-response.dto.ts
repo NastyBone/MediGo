@@ -45,3 +45,32 @@ export class ResponseUserDto {
     this.role = data.role;
   }
 }
+
+export class ResponseUserPatientDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Number)
+  id: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
+  constructor(data: User) {
+    this.id = data.id;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.email = data.email;
+  }
+}

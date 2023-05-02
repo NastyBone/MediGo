@@ -1,4 +1,4 @@
-import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
@@ -15,8 +15,8 @@ export class CreateAvailabilityDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDateString()
-  date!: string;
+  @IsString()
+  day!: string;
 
   @ApiProperty()
   @IsNotEmpty()
