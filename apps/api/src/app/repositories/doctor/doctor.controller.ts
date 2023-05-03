@@ -71,7 +71,7 @@ export class DoctorController {
   }
 
   @Role(Roles.Admin)
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseDoctorDto,
   })

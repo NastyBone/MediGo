@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Assistant } from '../entities';
 import { ResponseDoctorDto } from '../../doctor/dto';
-import { ResponseUserDto } from '../../users/dto';
+import { ResponseUserPatientDto } from '../../users/dto';
 
 export class ResponseAssistantDto {
   @ApiProperty()
@@ -20,12 +20,12 @@ export class ResponseAssistantDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => ResponseUserDto)
-  user: ResponseUserDto;
+  @Type(() => ResponseUserPatientDto)
+  user: ResponseUserPatientDto;
 
   constructor(data: Assistant) {
     this.id = data.id;
     this.doctor = new ResponseDoctorDto(data.doctor);
-    this.user = new ResponseUserDto(data.user);
+    this.user = new ResponseUserPatientDto(data.user);
   }
 }

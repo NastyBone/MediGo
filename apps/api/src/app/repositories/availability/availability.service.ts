@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -11,6 +12,7 @@ import {
   ResponseAvailabilityDto,
   UpdateAvailabilityDto,
 } from './dto';
+import { daysOfTheWeek } from '../../common/enums';
 
 @Injectable()
 export class AvailabilityService {
@@ -28,7 +30,7 @@ export class AvailabilityService {
         doctor: true,
       },
       order: {
-        date: 'ASC',
+        day: 'ASC',
       },
     });
 
@@ -59,9 +61,17 @@ export class AvailabilityService {
     createAvailabilityDto: CreateAvailabilityDto
   ): Promise<ResponseAvailabilityDto> {
     try {
+      if (
+        !Object.values(daysOfTheWeek).includes(
+          createAvailabilityDto.day as daysOfTheWeek
+        )
+      ) {
+        throw new BadRequestException('Día no definido');
+      }
+
       const availability = this.repository.create({
         time: createAvailabilityDto.time,
-        date: new Date(createAvailabilityDto.date).toLocaleDateString(),
+        day: createAvailabilityDto.day,
         available: createAvailabilityDto.available,
         doctor: {
           id: createAvailabilityDto.doctorId,
@@ -83,9 +93,16 @@ export class AvailabilityService {
   ): Promise<ResponseAvailabilityDto> {
     await this.findValid(id);
     try {
+      if (
+        !Object.values(daysOfTheWeek).includes(
+          updateAvailabilityDto.day as daysOfTheWeek
+        )
+      ) {
+        throw new BadRequestException('Día no definido');
+      }
       const availability = await this.repository.save({
         time: updateAvailabilityDto.time,
-        date: new Date(updateAvailabilityDto.date).toLocaleDateString(),
+        date: updateAvailabilityDto.day,
         available: updateAvailabilityDto.available,
         doctor: {
           id: updateAvailabilityDto.doctorId,

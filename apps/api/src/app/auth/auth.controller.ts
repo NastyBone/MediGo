@@ -50,6 +50,20 @@ export class AuthController {
     return this.loginService.login(req['user'] as UserLoginDto, res);
   }
 
+  @Post('login/patient')
+  @Public()
+  @UseGuards(LoginAuthGuard)
+  @ApiResponse({
+    type: LoginUserResponseDto,
+  })
+  loginPatient(
+    @Body() args: LoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ): Promise<LoginUserResponseDto> {
+    return this.loginService.patientLogin(req['user'] as UserLoginDto, res);
+  }
+
   @Get('logout')
   @ApiResponse({
     type: undefined,
