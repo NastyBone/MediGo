@@ -84,7 +84,7 @@ export class RecordController {
   }
 
   @Role(Roles.Admin)
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseRecordDto,
   })

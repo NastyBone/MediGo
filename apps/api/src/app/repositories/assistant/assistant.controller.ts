@@ -71,7 +71,7 @@ export class AssistantController {
     return this.assistantService.update(id, updateDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseAssistantDto,
   })

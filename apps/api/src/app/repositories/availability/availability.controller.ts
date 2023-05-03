@@ -81,7 +81,7 @@ export class AvailabilityController {
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseAvailabilityDto,
   })

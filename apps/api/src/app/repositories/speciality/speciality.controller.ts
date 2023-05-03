@@ -66,7 +66,7 @@ export class SpecialityController {
     return this.specialityService.update(id, updateDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseSpecialityDto,
   })

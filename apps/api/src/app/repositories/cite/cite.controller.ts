@@ -93,7 +93,7 @@ export class CiteController {
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  @Delete('id')
+  @Delete(':id')
   @ApiResponse({
     type: ResponseCiteDto,
   })
