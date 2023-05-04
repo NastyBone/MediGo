@@ -42,3 +42,8 @@ Thumbs.db
 
 # Clientes generados de openapi
 /libs/dashboard-sdk
+
+#ENV
+apps/api/.env.local
+apps/api/.env.prod
+apps/api/.env
