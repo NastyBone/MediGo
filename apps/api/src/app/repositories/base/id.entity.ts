@@ -18,6 +18,6 @@ export abstract class IdEntity {
   @Column({ nullable: true, default: false })
   deleted?: boolean;
 
-  @Column({ nullable: true, default: false })
+  @Column({ nullable: true, default: true })
   status?: boolean;
 }
