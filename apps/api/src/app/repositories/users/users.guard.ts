@@ -28,17 +28,22 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const { cookies } = context.switchToHttp().getRequest();
-    const { username: email } = await this.jwtAuthService.decode(
-      cookies['auth-cookie'].token
-    );
-
-    const user = await this.usersService.findOneByEmail(email);
-
-    if (!requiredRoles.some((role) => user.role.includes(role))) {
+    if (cookies && cookies['auth-cookie']) {
+      const { username: email } = await this.jwtAuthService.decode(
+        cookies['auth-cookie'].token
+      );
+      const user = await this.usersService.findOneByEmail(email);
+      if (!requiredRoles.some((role) => user.role.includes(role))) {
+        throw new UnauthorizedException(
+          'No está autorizado para realizar esta acción.'
+        );
+      }
+    } else {
       throw new UnauthorizedException(
-        'No está autorizado para realizar esta acción.'
+        `Error de sesión, por favor, inicie sesión nuevamente`
       );
     }
+
     return true;
   }
 }
