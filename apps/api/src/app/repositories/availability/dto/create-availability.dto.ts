@@ -11,7 +11,12 @@ export class CreateAvailabilityDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  time!: string;
+  start!: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  end!: string;
 
   @ApiProperty()
   @IsNotEmpty()
