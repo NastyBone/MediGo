@@ -22,7 +22,7 @@ import { RolesGuard, Role } from '../users/users.guard';
 export class CiteController {
   constructor(private citeService: CiteService) {}
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin, Roles.Paciente)
   @Get('patient/:id')
   @ApiResponse({
     type: ResponseCiteDto,
@@ -46,7 +46,7 @@ export class CiteController {
     return this.citeService.findByPatient(id);
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
   @Get(':id')
   @ApiResponse({
     type: ResponseCiteDto,
@@ -65,7 +65,7 @@ export class CiteController {
     return this.citeService.findAll();
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Doctor, Roles.Paciente)
   @Post()
   @ApiResponse({
     type: ResponseCiteDto,
@@ -83,7 +83,7 @@ export class CiteController {
     return this.citeService.toggleCite(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Patch(':id')
   @ApiResponse({
     type: ResponseCiteDto,
@@ -92,7 +92,7 @@ export class CiteController {
     return this.citeService.update(id, updateDto);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Delete(':id')
   @ApiResponse({
     type: ResponseCiteDto,

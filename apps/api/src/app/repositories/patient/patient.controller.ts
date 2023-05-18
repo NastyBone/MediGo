@@ -42,7 +42,7 @@ export class PatientController {
     return this.patientService.findOne(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get()
   @ApiResponse({
     type: ResponsePatientDto,

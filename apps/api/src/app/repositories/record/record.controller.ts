@@ -16,7 +16,6 @@ import { Roles } from '../users';
 import { Role, RolesGuard } from '../users/users.guard';
 
 @UseGuards(RolesGuard)
-@Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
 @ApiTags('record')
 @Controller('record')
 export class RecordController {
@@ -65,7 +64,7 @@ export class RecordController {
     return this.recordService.findAll();
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Doctor, Roles.Asistente)
   @Post()
   @ApiResponse({
     type: ResponseRecordDto,
@@ -74,7 +73,7 @@ export class RecordController {
     return this.recordService.insert(createDto);
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Doctor)
   @Patch(':id')
   @ApiResponse({
     type: ResponseRecordDto,
@@ -83,7 +82,7 @@ export class RecordController {
     return this.recordService.update(id, updateDto);
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Doctor)
   @Delete(':id')
   @ApiResponse({
     type: ResponseRecordDto,
