@@ -7,4 +7,3 @@ export enum daysOfTheWeek {
   Sabado = 'sabado',
   Domingo = 'domingo',
 }
-//TODO: Hacer getBySpeciality(doctors), getByDoctors(day), getByDay(availabilites)

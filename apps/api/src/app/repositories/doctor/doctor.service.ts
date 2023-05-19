@@ -27,6 +27,7 @@ export class DoctorService {
       },
       relations: {
         user: true,
+        speciality: true,
       },
       select: {
         user: {
@@ -47,6 +48,7 @@ export class DoctorService {
       },
       relations: {
         user: true,
+        speciality: true,
       },
       select: {
         user: {
@@ -124,6 +126,7 @@ export class DoctorService {
         },
         relations: {
           user: true,
+          speciality: true,
         },
         select: {
           user: {
@@ -138,7 +141,28 @@ export class DoctorService {
       throw new InternalServerErrorException('Error al encontrar asistante');
     }
   }
-  async findByPatients() {
+  async findBySpeciality(specialityId: number): Promise<ResponseDoctorDto[]> {
+    const doctorsBySpeciality = this.repository.find({
+      where: {
+        speciality: {
+          id: specialityId,
+        },
+        deleted: false,
+      },
+      relations: {
+        user: true,
+        speciality: true,
+      },
+      select: {
+        user: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    });
+
+    return doctorsBySpeciality;
+
     //TODO: Preguntar si los pacientes y doctores estan directamente relacionados
     // En caso de que si, se necesita una tabla extra para esta relacion
     // Estableciendo la relacion de patient_id y doctor_id
