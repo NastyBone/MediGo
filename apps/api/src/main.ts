@@ -9,9 +9,12 @@ import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  //SOCKET
+  app.useWebSocketAdapter(new IoAdapter(app));
   //CORS
   app.enableCors({
     credentials: true,

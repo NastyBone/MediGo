@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -7,15 +8,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { Cite } from './entities';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
+import { CronService } from '../../cron/cron.service';
 
 @Injectable()
 export class CiteService {
   constructor(
     @InjectRepository(Cite)
-    private repository: Repository<Cite>
+    private repository: Repository<Cite>,
+    private cronService: CronService
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
+    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -90,6 +94,9 @@ export class CiteService {
   }
   async insert(createCiteDto: CreateCiteDto): Promise<ResponseCiteDto> {
     try {
+      if (new Date(createCiteDto.date).getDate() < Date.now()) {
+        throw new BadRequestException('Fecha Invalida');
+      }
       const cite = this.repository.create({
         subject: createCiteDto.subject,
         date: new Date(createCiteDto.date).toLocaleDateString(),
@@ -102,6 +109,10 @@ export class CiteService {
           id: createCiteDto.patientId,
         },
       });
+
+      //ADD CRON JOB
+      //this.cronService.setCronJob(cite);
+
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
       console.log(error);
@@ -114,6 +125,9 @@ export class CiteService {
   ): Promise<ResponseCiteDto> {
     await this.findValid(id);
     try {
+      if (new Date(updateCiteDto.date).getDate() < Date.now()) {
+        throw new BadRequestException('Fecha Invalida');
+      }
       const cite = await this.repository.save({
         subject: updateCiteDto.subject,
         date: new Date(updateCiteDto.date).toLocaleDateString(),
@@ -296,5 +310,10 @@ export class CiteService {
       },
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };
+  }
+
+  testCronJob(): string {
+    this.cronService.test();
+    return 'Send!';
   }
 }
