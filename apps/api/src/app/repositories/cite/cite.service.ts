@@ -315,5 +315,5 @@ export class CiteService {
   testCronJob(): string {
     this.cronService.test();
     return 'Send!';
-  }
+  } //FIXME: Borrar
 }
