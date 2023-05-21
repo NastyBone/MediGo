@@ -5,7 +5,10 @@ import { Doctor } from '../../doctor/entities';
 @Entity()
 export class Availability extends IdEntity {
   @Column({ length: 256, nullable: false })
-  time!: string;
+  end!: string;
+
+  @Column({ length: 256, nullable: false })
+  start!: string;
 
   @Column({ length: 256, nullable: false })
   day!: string;

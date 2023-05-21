@@ -70,7 +70,8 @@ export class AvailabilityService {
       }
 
       const availability = this.repository.create({
-        time: createAvailabilityDto.time,
+        start: createAvailabilityDto.start,
+        end: createAvailabilityDto.end,
         day: createAvailabilityDto.day,
         available: createAvailabilityDto.available,
         doctor: {
@@ -101,7 +102,8 @@ export class AvailabilityService {
         throw new BadRequestException('Día no definido');
       }
       const availability = await this.repository.save({
-        time: updateAvailabilityDto.time,
+        start: updateAvailabilityDto.start,
+        end: updateAvailabilityDto.end,
         date: updateAvailabilityDto.day,
         available: updateAvailabilityDto.available,
         doctor: {

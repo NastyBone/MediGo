@@ -8,6 +8,9 @@ import { RepositoriesModule } from './repositories/repositories.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronModule } from './cron/cron.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -28,9 +31,11 @@ import { MailModule } from './mail/mail.module';
       },
       inject: [ConfigService],
     }),
+    ScheduleModule.forRoot(),
     RepositoriesModule,
     AuthModule,
     MailModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -140,10 +140,4 @@ export class PatientService {
       throw new InternalServerErrorException('Error al encontrar paciente');
     }
   }
-
-  async findByDoctors() {
-    //TODO: Preguntar si los pacientes y doctores estan directamente relacionados
-    // En caso de que si, se necesita una tabla extra para esta relacion
-    // Estableciendo la relacion de patient_id y doctor_id
-  }
 }

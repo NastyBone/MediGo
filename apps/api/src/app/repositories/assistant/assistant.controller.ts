@@ -20,7 +20,7 @@ import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 
 @UseGuards(RolesGuard)
-@Role(Roles.Admin, Roles.Doctor, Roles.Asistente)
+@Role(Roles.Admin)
 @ApiTags('assistant')
 @Controller('assistant')
 export class AssistantController {

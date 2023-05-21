@@ -74,3 +74,4 @@ export class SpecialityController {
     return this.specialityService.remove(id);
   }
 }
+//TODO: Cuadro de accesos

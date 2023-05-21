@@ -90,7 +90,7 @@ export class RecordService {
     try {
       const record = this.repository.create({
         description: createRecordDto.description,
-        date: new Date(createRecordDto.date).toLocaleDateString(),
+        date: new Date(createRecordDto.date).toLocaleDateString('es-ES'),
         doctor: {
           id: createRecordDto.doctorId,
         },
@@ -113,7 +113,7 @@ export class RecordService {
     try {
       const record = await this.repository.save({
         description: updateRecordDto.description,
-        date: new Date(updateRecordDto.date).toLocaleDateString(),
+        date: new Date(updateRecordDto.date).toLocaleDateString('es-ES'),
         doctor: {
           id: updateRecordDto.doctorId,
         },

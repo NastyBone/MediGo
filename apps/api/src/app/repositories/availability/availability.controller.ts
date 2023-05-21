@@ -57,7 +57,7 @@ export class AvailabilityController {
     return this.availabilityService.findAll();
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Doctor)
   @Post()
   @ApiResponse({
     type: ResponseAvailabilityDto,
@@ -68,7 +68,7 @@ export class AvailabilityController {
     return this.availabilityService.insert(createDto);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Doctor)
   @Patch(':id')
   @ApiResponse({
     type: ResponseAvailabilityDto,
@@ -80,7 +80,7 @@ export class AvailabilityController {
     return this.availabilityService.update(id, updateDto);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Doctor)
   @Delete(':id')
   @ApiResponse({
     type: ResponseAvailabilityDto,

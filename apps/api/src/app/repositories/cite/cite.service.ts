@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -7,15 +8,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { Cite } from './entities';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
+import { CronService } from '../../cron/cron.service';
 
 @Injectable()
 export class CiteService {
   constructor(
     @InjectRepository(Cite)
-    private repository: Repository<Cite>
+    private repository: Repository<Cite>,
+    private cronService: CronService
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
+    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -90,9 +94,12 @@ export class CiteService {
   }
   async insert(createCiteDto: CreateCiteDto): Promise<ResponseCiteDto> {
     try {
+      if (new Date(createCiteDto.date).getDate() < Date.now()) {
+        throw new BadRequestException('Fecha Invalida');
+      }
       const cite = this.repository.create({
         subject: createCiteDto.subject,
-        date: new Date(createCiteDto.date).toLocaleDateString(),
+        date: new Date(createCiteDto.date).toLocaleDateString('es-ES'),
         time: createCiteDto.time,
         patientConfirm: createCiteDto.patientConfirm,
         doctor: {
@@ -102,6 +109,10 @@ export class CiteService {
           id: createCiteDto.patientId,
         },
       });
+
+      //CRON
+      this.cronService.setCronJob(cite);
+
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
       console.log(error);
@@ -114,9 +125,12 @@ export class CiteService {
   ): Promise<ResponseCiteDto> {
     await this.findValid(id);
     try {
+      if (new Date(updateCiteDto.date).getDate() < Date.now()) {
+        throw new BadRequestException('Fecha Invalida');
+      }
       const cite = await this.repository.save({
         subject: updateCiteDto.subject,
-        date: new Date(updateCiteDto.date).toLocaleDateString(),
+        date: new Date(updateCiteDto.date).toLocaleDateString('es-ES'),
         time: updateCiteDto.time,
         patientConfirm: updateCiteDto.patientConfirm,
         doctor: {
@@ -126,6 +140,9 @@ export class CiteService {
           id: updateCiteDto.patientId,
         },
       });
+
+      //CRON
+      this.cronService.updateCronJob(cite);
       return this.findOne(cite.id);
     } catch (error) {
       console.log(error);
@@ -136,6 +153,8 @@ export class CiteService {
     try {
       const cite = await this.findValid(id);
       cite.deleted = true;
+      //CRON
+      this.cronService.deleteCronJob('' + id);
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
       console.log(error);
@@ -245,7 +264,7 @@ export class CiteService {
       0,
       0,
       0
-    ).toLocaleDateString();
+    ).toLocaleDateString('es-ES');
     const prevMonth = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
@@ -254,7 +273,7 @@ export class CiteService {
       0,
       0,
       0
-    ).toLocaleDateString();
+    ).toLocaleDateString('es-ES');
     const countCompleted = await this.repository.count({
       where: {
         deleted: false,
@@ -297,4 +316,9 @@ export class CiteService {
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };
   }
+
+  testCronJob(): string {
+    this.cronService.test();
+    return 'Send!';
+  } //FIXME: Borrar
 }

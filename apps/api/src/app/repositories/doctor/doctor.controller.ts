@@ -34,6 +34,18 @@ export class DoctorController {
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Get('speciality/:id')
+  @ApiResponse({
+    type: ResponseDoctorDto,
+    isArray: true,
+  })
+  findBySpecialityId(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<ResponseDoctorDto[]> {
+    return this.doctorService.findBySpeciality(id);
+  }
+
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Get(':id')
   @ApiResponse({
     type: ResponseDoctorDto,

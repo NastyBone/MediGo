@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Availability } from '../entities';
@@ -14,7 +14,12 @@ export class ResponseAvailabilityDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  time!: string;
+  start!: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  end!: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -33,7 +38,8 @@ export class ResponseAvailabilityDto {
 
   constructor(data: Availability) {
     this.id = data.id;
-    this.time = data.time;
+    this.start = data.start;
+    this.end = data.end;
     this.day = data.day;
     this.doctor = new ResponseDoctorDto(data.doctor);
   }
