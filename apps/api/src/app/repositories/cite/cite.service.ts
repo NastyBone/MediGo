@@ -99,7 +99,7 @@ export class CiteService {
       }
       const cite = this.repository.create({
         subject: createCiteDto.subject,
-        date: new Date(createCiteDto.date).toLocaleDateString(),
+        date: new Date(createCiteDto.date).toLocaleDateString('es-ES'),
         time: createCiteDto.time,
         patientConfirm: createCiteDto.patientConfirm,
         doctor: {
@@ -110,8 +110,8 @@ export class CiteService {
         },
       });
 
-      //ADD CRON JOB
-      //this.cronService.setCronJob(cite);
+      //CRON
+      this.cronService.setCronJob(cite);
 
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
@@ -130,7 +130,7 @@ export class CiteService {
       }
       const cite = await this.repository.save({
         subject: updateCiteDto.subject,
-        date: new Date(updateCiteDto.date).toLocaleDateString(),
+        date: new Date(updateCiteDto.date).toLocaleDateString('es-ES'),
         time: updateCiteDto.time,
         patientConfirm: updateCiteDto.patientConfirm,
         doctor: {
@@ -140,6 +140,9 @@ export class CiteService {
           id: updateCiteDto.patientId,
         },
       });
+
+      //CRON
+      this.cronService.updateCronJob(cite);
       return this.findOne(cite.id);
     } catch (error) {
       console.log(error);
@@ -150,6 +153,8 @@ export class CiteService {
     try {
       const cite = await this.findValid(id);
       cite.deleted = true;
+      //CRON
+      this.cronService.deleteCronJob('' + id);
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
       console.log(error);
@@ -259,7 +264,7 @@ export class CiteService {
       0,
       0,
       0
-    ).toLocaleDateString();
+    ).toLocaleDateString('es-ES');
     const prevMonth = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
@@ -268,7 +273,7 @@ export class CiteService {
       0,
       0,
       0
-    ).toLocaleDateString();
+    ).toLocaleDateString('es-ES');
     const countCompleted = await this.repository.count({
       where: {
         deleted: false,
