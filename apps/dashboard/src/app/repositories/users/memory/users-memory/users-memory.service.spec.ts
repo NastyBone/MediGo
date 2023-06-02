@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { UsersService } from '@sm-soc/admin-sdk';
+import { UsersService } from '@medigo/admin-sdk';
 
 import { UsersMemoryService } from './users-memory.service';
 

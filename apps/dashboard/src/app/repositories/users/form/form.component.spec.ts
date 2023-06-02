@@ -10,7 +10,7 @@ import {
 import { UsersService } from '../users.service';
 
 import { FormComponent } from './form.component';
-import { UsersService as Service } from '@sm-soc/admin-sdk';
+import { UsersService as Service } from '@medigo/admin-sdk';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { UsersMemoryService } from '../memory';
 describe('FormComponent', () => {

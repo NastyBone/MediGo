@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { map, Observable, tap } from 'rxjs';
 
-import { UsersService } from '@sm-soc/dashboard-sdk';
+import { UsersService } from '@medigo/dashboard-sdk';
 
 import { BaseQuery, UseCase } from '../../../common';
 import { User2UserVM } from '../../mappers';
