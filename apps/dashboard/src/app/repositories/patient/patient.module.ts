@@ -3,15 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { PatientRoutingModule } from './patient-routing.module';
 import { PatientComponent } from './patient.component';
-
+import { PatientService } from './patient.service';
 
 @NgModule({
-  declarations: [
-    PatientComponent
-  ],
-  imports: [
-    CommonModule,
-    PatientRoutingModule
-  ]
+  declarations: [PatientComponent],
+  imports: [CommonModule, PatientRoutingModule],
+  providers: [PatientService],
 })
-export class PatientModule { }
+export class PatientModule {}

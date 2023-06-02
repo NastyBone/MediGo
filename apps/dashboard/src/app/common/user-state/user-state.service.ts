@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { UserStateVM } from './models';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserStateService {
   private user$ = new BehaviorSubject<UserStateVM | null>(null);
 

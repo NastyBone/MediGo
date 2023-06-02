@@ -1,0 +1,25 @@
+.container {
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+mat-card-header {
+  margin-bottom: 3rem;
+}
+
+.module-title {
+  font-size: 2rem;
+}
+
+mat-card {
+  min-width: max-content;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+  mat-card-header {
+    margin: 0.5rem;
+  }
+}

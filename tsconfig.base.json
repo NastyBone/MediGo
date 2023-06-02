@@ -14,7 +14,18 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@medigo/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@medigo/dashboard-sdk": ["libs/dashboard-sdk/index.ts"],
+      "@medigo/error-handler": ["libs/error-handler/src/index.ts"],
+      "@medigo/form-control-errors": ["libs/form-control-errors/src/index.ts"],
+      "@medigo/http-form-data-client": [
+        "libs/http-form-data-client/src/index.ts"
+      ],
+      "@medigo/logger": ["libs/logger/src/index.ts"],
+      "@medigo/login": ["libs/login/src/index.ts"],
+      "@medigo/toast": ["libs/toast/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
