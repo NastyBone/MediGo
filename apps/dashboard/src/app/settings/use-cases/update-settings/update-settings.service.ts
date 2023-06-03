@@ -8,7 +8,7 @@ import { Settings2SettingsVM } from '../../mappers';
 export class UpdateSettingssService {
   constructor(private settingService: SettingsService) {}
 
-  exec(settingSave: SettingsVM): Observable<SettingsVM | null> {
+  exec(settingSave: SettingsVM): Observable<SettingsVM> {
     return this.settingService
       .settingsControllerUploadConfig(settingSave)
       .pipe(map(Settings2SettingsVM));

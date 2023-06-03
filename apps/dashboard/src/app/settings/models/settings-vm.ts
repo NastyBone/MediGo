@@ -3,5 +3,5 @@ export interface SettingsVM {
   rif: string | undefined;
   description?: string | undefined;
   type: string | undefined;
-  userId: number | undefined;
+  userId?: number | undefined;
 }

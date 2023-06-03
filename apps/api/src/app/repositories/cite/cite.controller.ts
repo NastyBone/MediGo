@@ -43,7 +43,7 @@ export class CiteController {
   findByDoctor(
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResponseCiteDto[]> {
-    return this.citeService.findByPatient(id);
+    return this.citeService.findByDoctor(id);
   }
 
   @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)

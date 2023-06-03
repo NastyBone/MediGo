@@ -32,6 +32,7 @@ export class SettingsController {
       rif: args.rif,
       description: args.description,
       type: args.type,
+      userId: args.userId,
     });
   }
 

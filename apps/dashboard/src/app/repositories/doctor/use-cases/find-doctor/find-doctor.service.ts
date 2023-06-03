@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { DoctorService } from '@medigo/dashboard-sdk';
 import { UseCase, BaseQuery } from '../../../../common';
 import { Observable, map } from 'rxjs';
-import { Doctor2DoctorVM } from '../../mappers';
-import { DoctorVM } from '../../model';
+import { Doctor2DoctorItemVM } from '../../mappers';
+import { DoctorItemVM } from '../../model';
 
 @Injectable()
-export class FindDoctorService implements UseCase<DoctorVM | null, BaseQuery> {
+export class FindDoctorService
+  implements UseCase<DoctorItemVM | null, BaseQuery>
+{
   constructor(private doctorService: DoctorService) {}
 
-  exec(data: BaseQuery): Observable<DoctorVM | null> {
+  exec(data: BaseQuery): Observable<DoctorItemVM | null> {
     return this.doctorService
       .doctorControllerFindOne(data?.id || 0) //ERROR
-      .pipe(map(Doctor2DoctorVM));
+      .pipe(map(Doctor2DoctorItemVM));
   }
 }
