@@ -11,8 +11,13 @@ export class ResponseSpecialityDto {
   @Type(() => Number)
   id: number;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsString()
   description?: string;
 

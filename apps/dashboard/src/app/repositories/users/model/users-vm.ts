@@ -1,4 +1,4 @@
-import { RowOptionVM } from '../../common';
+import { RowOptionVM } from '../../../common';
 import { RowActionUser } from './row-action';
 
 export interface UserVM {

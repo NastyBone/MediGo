@@ -60,9 +60,9 @@ export class SpecialityController {
     type: ResponseSpecialityDto,
   })
   update(
-    @Param('id', ParseIntPipe) id,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateDto: UpdateSpecialityDto
-  ) {
+  ): Promise<ResponseSpecialityDto> {
     return this.specialityService.update(id, updateDto);
   }
 
@@ -70,7 +70,9 @@ export class SpecialityController {
   @ApiResponse({
     type: ResponseSpecialityDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<ResponseSpecialityDto> {
     return this.specialityService.remove(id);
   }
 }

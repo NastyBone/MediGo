@@ -4,7 +4,7 @@ import { map, Observable, tap } from 'rxjs';
 
 import { UsersService } from '@medigo/dashboard-sdk';
 
-import { UseCase } from '../../../common';
+import { UseCase } from '../../../../common';
 import { UsersMemoryService } from '../../memory';
 
 @Injectable()

@@ -78,7 +78,10 @@ export class RecordController {
   @ApiResponse({
     type: ResponseRecordDto,
   })
-  update(@Param('id', ParseIntPipe) id, @Body() updateDto: UpdateRecordDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateRecordDto
+  ): Promise<ResponseRecordDto> {
     return this.recordService.update(id, updateDto);
   }
 
@@ -87,7 +90,7 @@ export class RecordController {
   @ApiResponse({
     type: ResponseRecordDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseRecordDto> {
     return this.recordService.remove(id);
   }
 }

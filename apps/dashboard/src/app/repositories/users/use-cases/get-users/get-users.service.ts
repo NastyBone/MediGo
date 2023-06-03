@@ -4,7 +4,7 @@ import { map, Observable, tap } from 'rxjs';
 
 import { UsersService } from '@medigo/dashboard-sdk';
 
-import { BaseQuery, UseCase } from '../../../common';
+import { BaseQuery, UseCase } from '../../../../common';
 import { User2UserVM } from '../../mappers';
 import { UsersMemoryService } from '../../memory';
 import { UserVM } from '../../model';

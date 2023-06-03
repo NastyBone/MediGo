@@ -9,6 +9,6 @@ export class Settings {
   })
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   value: string;
 }

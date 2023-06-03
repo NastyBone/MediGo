@@ -6,11 +6,6 @@ export class SettingsDeleteDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  file_image?: boolean;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
   name?: boolean;
 
   @ApiPropertyOptional()

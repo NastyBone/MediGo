@@ -2,5 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ToggleCiteService {
-  constructor() {}
+  //TODO: Eliminar toggle
+  constructor() {
+    return;
+  }
 }

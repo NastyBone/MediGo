@@ -88,7 +88,10 @@ export class CiteController {
   @ApiResponse({
     type: ResponseCiteDto,
   })
-  update(@Param('id', ParseIntPipe) id, @Body() updateDto: UpdateCiteDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateCiteDto
+  ): Promise<ResponseCiteDto> {
     return this.citeService.update(id, updateDto);
   }
 
@@ -97,7 +100,7 @@ export class CiteController {
   @ApiResponse({
     type: ResponseCiteDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseCiteDto> {
     return this.citeService.remove(id);
   }
 }
