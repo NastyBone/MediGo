@@ -10,9 +10,10 @@ import { FindAvailabilityService } from './use-cases/find-availability/find-avai
 import { CreateAvailabilityService } from './use-cases/create-availability/create-availability.service';
 import { UpdateAvailabilityService } from './use-cases/update-availability/update-availability.service';
 import { DeleteAvailabilityService } from './use-cases/delete-availability/delete-availability.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [AvailabilityComponent],
+  declarations: [AvailabilityComponent, FormComponent],
   imports: [CommonModule, AvailabilityRoutingModule],
   providers: [
     AvailabilityService,

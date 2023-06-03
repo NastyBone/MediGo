@@ -10,9 +10,10 @@ import { FindPatientByUserIdService } from './use-cases/find-patient-by-user-id/
 import { FindPatientService } from './use-cases/find-patient/find-patient.service';
 import { GetPatientsService } from './use-cases/get-patients/get-patients.service';
 import { UpdatePatientService } from './use-cases/update-patient/update-patient.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [PatientComponent],
+  declarations: [PatientComponent, FormComponent],
   imports: [CommonModule, PatientRoutingModule],
   providers: [
     PatientService,

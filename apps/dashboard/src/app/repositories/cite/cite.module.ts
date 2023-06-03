@@ -12,9 +12,10 @@ import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/fin
 import { GetCitesService } from './use-cases/get-cites/get-cites.service';
 import { ToggleCiteService } from './use-cases/toggle-cite/toggle-cite.service';
 import { UpdateCiteService } from './use-cases/update-cite/update-cite.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [CiteComponent],
+  declarations: [CiteComponent, FormComponent],
   imports: [CommonModule, CiteRoutingModule],
   providers: [
     CiteService,

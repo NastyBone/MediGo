@@ -11,9 +11,10 @@ import { FindDoctorBySpecialityService } from './use-cases/find-doctor-by-specia
 import { FindDoctorByUserIdService } from './use-cases/find-doctor-by-user-id/find-doctor-by-user-id.service';
 import { GetDoctorsService } from './use-cases/get-doctors/get-doctors.service';
 import { UpdateDoctorService } from './use-cases/update-doctor/update-doctor.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [DoctorComponent],
+  declarations: [DoctorComponent, FormComponent],
   imports: [CommonModule, DoctorRoutingModule],
   providers: [
     DoctorService,

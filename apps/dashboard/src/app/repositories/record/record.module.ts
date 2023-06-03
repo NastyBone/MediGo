@@ -11,9 +11,10 @@ import { FindRecordByDoctorService } from './use-cases/find-record-by-doctor/fin
 import { FindRecordByPatientService } from './use-cases/find-record-by-patient/find-record-by-patient.service';
 import { GetRecordsService } from './use-cases/get-records/get-records.service';
 import { UpdateRecordService } from './use-cases/update-record/update-record.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [RecordComponent],
+  declarations: [RecordComponent, FormComponent],
   imports: [CommonModule, RecordRoutingModule],
   providers: [
     RecordService,

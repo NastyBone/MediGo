@@ -10,9 +10,10 @@ import { GetAssistantsService } from './use-cases/get-assistants/get-assistants.
 import { FindByUserIdService } from './use-cases/find-by-user-id/find-by-user-id.service';
 import { UpdateAssistantService } from './use-cases/update-assistant/update-assistant.service';
 import { DeleteAssistantService } from './use-cases/delete-assistant/delete-assistant.service';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
-  declarations: [AssistantComponent],
+  declarations: [AssistantComponent, FormComponent],
   imports: [CommonModule, AssistantRoutingModule],
   providers: [
     AssistantService,
