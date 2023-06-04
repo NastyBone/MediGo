@@ -29,9 +29,9 @@ export interface BrandInfo {
 })
 export class AdminComponent implements OnInit, OnDestroy {
   constructor(
-    // private doctorsService: DoctorService,
-    // private assistantService: AssistantService,
-    // private patientService: PatientService,
+    private doctorsService: DoctorService,
+    private assistantService: AssistantService,
+    private patientService: PatientService,
     private userStateService: UserStateService,
     private adminSettings: AdminService,
     private router: Router,
@@ -92,54 +92,54 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   sub$ = new Subscription();
 
-  // checkRole() {
-  //   const userRole = this.userStateService.getRole();
-  //   const userId = this.userStateService.getUserId() || 0;
-  //   let role: any;
-  //   switch (userRole) {
-  //     case 'doctor': {
-  //       this.sub$.add(
-  //         this.doctorsService
-  //           .findByUserId$(userId)
-  //           .pipe(take(1))
-  //           .subscribe((doctor) => {
-  //             role = doctor;
-  //           })
-  //       );
-  //       break;
-  //     }
-  //     case 'assistant': {
-  //       this.sub$.add(
-  //         this.assistantService
-  //           .findByUserId$(userId)
-  //           .pipe(take(1))
-  //           .subscribe((assistant) => {
-  //             role = assistant;
-  //           })
-  //       );
-  //       break;
-  //     }
-  //     case 'patient': {
-  //       this.sub$.add(
-  //         this.patientService
-  //           .findByUser(userId)
-  //           .pipe(take(1))
-  //           .subscribe((patient) => {
-  //             role = patient;
-  //           })
-  //       );
-  //       break;
-  //     }
-  //     default: {
-  //       console.log('Error');
-  //       break;
-  //     }
-  //   }
-  //   this.userStateService.setRole(role);
-  // }
+  checkRole() {
+    const userRole = this.userStateService.getRole();
+    const userId = this.userStateService.getUserId() || 0;
+    let role: any;
+    switch (userRole) {
+      case 'doctor': {
+        this.sub$.add(
+          this.doctorsService
+            .findByUserId$(userId)
+            .pipe(take(1))
+            .subscribe((doctor) => {
+              role = doctor;
+            })
+        );
+        break;
+      }
+      case 'assistant': {
+        this.sub$.add(
+          this.assistantService
+            .findByUserId$(userId)
+            .pipe(take(1))
+            .subscribe((assistant) => {
+              role = assistant;
+            })
+        );
+        break;
+      }
+      case 'patient': {
+        this.sub$.add(
+          this.patientService
+            .findByUser(userId)
+            .pipe(take(1))
+            .subscribe((patient) => {
+              role = patient;
+            })
+        );
+        break;
+      }
+      default: {
+        console.log('Error');
+        break;
+      }
+    }
+    this.userStateService.setRole(role);
+  }
 
   ngOnInit(): void {
-    // this.checkRole();
+    this.checkRole();
     this.sub$.add(this.settingsService.getSettingsData().subscribe());
     this.sub$.add(
       this.settingsService.getSettings$().subscribe((settings) => {

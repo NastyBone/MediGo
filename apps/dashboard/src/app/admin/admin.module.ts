@@ -10,9 +10,9 @@ import { SettingsModule } from '../settings/settings.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
-// import { DoctorModule } from '../repositories/doctor/doctor.module';
-// import { AssistantModule } from '../repositories/assistant/assistant.module';
-// import { PatientModule } from '../repositories/patient/patient.module';
+import { DoctorModule } from '../repositories/doctor/doctor.module';
+import { AssistantModule } from '../repositories/assistant/assistant.module';
+import { PatientModule } from '../repositories/patient/patient.module';
 
 @NgModule({
   declarations: [AdminComponent],
@@ -25,9 +25,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatSidenavModule,
     MatDialogModule,
-    // DoctorModule,
-    // AssistantModule,
-    // PatientModule,
+    DoctorModule,
+    AssistantModule,
+    PatientModule,
   ],
   providers: [AdminService],
 })

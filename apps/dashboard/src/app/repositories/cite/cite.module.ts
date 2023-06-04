@@ -12,6 +12,7 @@ import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/fin
 import { GetCitesService } from './use-cases/get-cites/get-cites.service';
 import { UpdateCiteService } from './use-cases/update-cite/update-cite.service';
 import { FormComponent } from './form/form.component';
+import { CiteMemoryService } from './memory';
 
 @NgModule({
   declarations: [CiteComponent, FormComponent],
@@ -25,6 +26,7 @@ import { FormComponent } from './form/form.component';
     FindCitesByPatientService,
     GetCitesService,
     UpdateCiteService,
+    CiteMemoryService,
   ],
 })
 export class CiteModule {}

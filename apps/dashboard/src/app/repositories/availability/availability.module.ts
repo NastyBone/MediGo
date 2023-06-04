@@ -11,6 +11,7 @@ import { CreateAvailabilityService } from './use-cases/create-availability/creat
 import { UpdateAvailabilityService } from './use-cases/update-availability/update-availability.service';
 import { DeleteAvailabilityService } from './use-cases/delete-availability/delete-availability.service';
 import { FormComponent } from './form/form.component';
+import { AvailabilityMemoryService } from './memory';
 
 @NgModule({
   declarations: [AvailabilityComponent, FormComponent],
@@ -23,6 +24,7 @@ import { FormComponent } from './form/form.component';
     CreateAvailabilityService,
     UpdateAvailabilityService,
     DeleteAvailabilityService,
+    AvailabilityMemoryService,
   ],
 })
 export class AvailabilityModule {}

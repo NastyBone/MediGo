@@ -11,6 +11,7 @@ import { FindByUserIdService } from './use-cases/find-by-user-id/find-by-user-id
 import { UpdateAssistantService } from './use-cases/update-assistant/update-assistant.service';
 import { DeleteAssistantService } from './use-cases/delete-assistant/delete-assistant.service';
 import { FormComponent } from './form/form.component';
+import { AssistantMemoryService } from './memory';
 
 @NgModule({
   declarations: [AssistantComponent, FormComponent],
@@ -23,6 +24,7 @@ import { FormComponent } from './form/form.component';
     FindByUserIdService,
     UpdateAssistantService,
     DeleteAssistantService,
+    AssistantMemoryService,
   ],
 })
 export class AssistantModule {}

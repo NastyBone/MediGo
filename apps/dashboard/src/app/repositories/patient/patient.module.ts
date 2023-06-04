@@ -11,6 +11,7 @@ import { FindPatientService } from './use-cases/find-patient/find-patient.servic
 import { GetPatientsService } from './use-cases/get-patients/get-patients.service';
 import { UpdatePatientService } from './use-cases/update-patient/update-patient.service';
 import { FormComponent } from './form/form.component';
+import { PatientMemoryService } from './memory';
 
 @NgModule({
   declarations: [PatientComponent, FormComponent],
@@ -23,6 +24,7 @@ import { FormComponent } from './form/form.component';
     FindPatientService,
     GetPatientsService,
     UpdatePatientService,
+    PatientMemoryService,
   ],
 })
 export class PatientModule {}
