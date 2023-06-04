@@ -10,7 +10,6 @@ import { FindCiteService } from './use-cases/find-cite/find-cite.service';
 import { FindCitesByDoctorService } from './use-cases/find-cites-by-doctor/find-cites-by-doctor.service';
 import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/find-cites-by-patient.service';
 import { GetCitesService } from './use-cases/get-cites/get-cites.service';
-import { ToggleCiteService } from './use-cases/toggle-cite/toggle-cite.service';
 import { UpdateCiteService } from './use-cases/update-cite/update-cite.service';
 import { FormComponent } from './form/form.component';
 
@@ -25,7 +24,6 @@ import { FormComponent } from './form/form.component';
     FindCitesByDoctorService,
     FindCitesByPatientService,
     GetCitesService,
-    ToggleCiteService,
     UpdateCiteService,
   ],
 })

@@ -74,15 +74,6 @@ export class CiteController {
     return this.citeService.insert(createDto);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  @Put('toggle/:id')
-  @ApiResponse({
-    type: ResponseCiteDto,
-  })
-  toggle(@Param('id', ParseIntPipe) id: number): Promise<ResponseCiteDto> {
-    return this.citeService.toggleCite(id);
-  }
-
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Patch(':id')
   @ApiResponse({
