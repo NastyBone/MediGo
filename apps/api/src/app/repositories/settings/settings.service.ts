@@ -66,19 +66,19 @@ export class SettingsService {
     }
 
     if (setting.type) {
-      if (
-        (setting.description && setting.description != 'undefined') ||
-        setting.description === ''
-      ) {
-        throw new BadRequestException(
-          'Debe elegir una cantidad de días válidos para reportar.'
-        );
-      }
-
       settings.push(
         this.settingsRepository.create({
           id: 'type',
           value: setting.type,
+        })
+      );
+    }
+
+    if (setting.userId) {
+      settings.push(
+        this.settingsRepository.create({
+          id: 'userId',
+          value: '' + setting.userId,
         })
       );
     }

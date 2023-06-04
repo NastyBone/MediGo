@@ -49,13 +49,14 @@
   
   .router-link-active {
     color: white;
-    background-color: #3f51b5;
+    background-color: #19ab80;
   
     &:hover {
-      background-color: #5b73ff;
+      background-color: #0e9163;
     }
   }
-  
+
+
   .user-info-container {
     display: flex;
     min-width: 7rem;

@@ -8,6 +8,13 @@ import { SettingsVM } from '../settings/models';
 import { AdminService } from './admin.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../settings/settings.service';
+import {
+  adminOptions,
+  assistantOptions,
+  doctorOptions,
+  menuOptions,
+  patientOptions,
+} from './models';
 
 export interface NavLink {
   name: string;
@@ -49,34 +56,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   sideMenuOptions: NavLink[] = [];
 
-  itemsMenuBasic = [
-    {
-      name: 'Redes Sociales',
-      icon: 'group',
-      path: 'social-networks',
-    },
-    {
-      name: 'Programas Sociales',
-      icon: 'diversity_3',
-      path: 'social-plans',
-    },
-    {
-      name: 'Publicaciones',
-      path: 'publications',
-      icon: 'collections_bookmark',
-    },
-  ];
-
-  itemsMenuAdmin = [
-    {
-      name: 'Configuracion',
-      action: 'settings',
-      icon: 'settings',
-    },
-    { name: 'Usuarios', icon: 'person', path: 'users' },
-  ];
-
-  logoPath!: string;
   settings: SettingsVM = {
     name: '',
     description: '',
@@ -95,7 +74,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   checkRole() {
     const userRole = this.userStateService.getRole();
     const userId = this.userStateService.getUserId() || 0;
-    let role: any;
+    let role: unknown;
     switch (userRole) {
       case 'doctor': {
         this.sub$.add(
@@ -108,7 +87,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         );
         break;
       }
-      case 'assistant': {
+      case 'asistente': {
         this.sub$.add(
           this.assistantService
             .findByUserId$(userId)
@@ -119,7 +98,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         );
         break;
       }
-      case 'patient': {
+      case 'paciente': {
         this.sub$.add(
           this.patientService
             .findByUser(userId)
@@ -131,7 +110,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         break;
       }
       default: {
-        console.log('Error');
+        role = 'administrador';
         break;
       }
     }
@@ -140,6 +119,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.checkRole();
+
     this.sub$.add(this.settingsService.getSettingsData().subscribe());
     this.sub$.add(
       this.settingsService.getSettings$().subscribe((settings) => {
@@ -151,11 +131,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       })
     );
     const user = this.userStateService.getUser();
-    this.sideMenuOptions = [
-      ...this.itemsMenuBasic,
-      ...(user?.role === 'admin' ? this.itemsMenuAdmin : []),
-      this.itemMenuLogout,
-    ]; //TODO: Volver a meter en el if
+    this.sideMenuOptions = this.asignOptions(this.userStateService.getRole()); //TODO: Volver a meter en el if
     if (user) {
       const now = new Date();
       const loginStamp = new Date(user.loginStamp);
@@ -164,10 +140,26 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
       }
     }
+    this.sideMenuOptions = [...this.sideMenuOptions, this.itemMenuLogout];
   }
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
+  }
+
+  asignOptions(role: string): menuOptions[] {
+    switch (role) {
+      case 'doctor':
+        return doctorOptions;
+      case 'administrador':
+        return adminOptions;
+      case 'asistente':
+        return assistantOptions;
+      case 'paciente':
+        return patientOptions;
+      default:
+        return [];
+    }
   }
 
   onMenuItemClick(item: NavLink): void {
