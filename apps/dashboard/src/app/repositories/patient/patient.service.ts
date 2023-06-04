@@ -5,7 +5,7 @@ import { DeletePatientService } from './use-cases/delete-patient/delete-patient.
 import { FindPatientService } from './use-cases/find-patient/find-patient.service';
 import { GetPatientsService } from './use-cases/get-patients/get-patients.service';
 import { UpdatePatientService } from './use-cases/update-patient/update-patient.service';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { PatientItemVM } from './model';
 import { FindPatientByUserIdService } from './use-cases/find-patient-by-user-id/find-patient-by-user-id.service';
 import { Observable, finalize } from 'rxjs';

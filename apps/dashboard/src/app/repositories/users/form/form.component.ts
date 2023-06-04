@@ -13,12 +13,12 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
 import { finalize, Subscription } from 'rxjs';
 
-import { StateService } from '../../state';
+import { StateService } from '../../../common/state';
 import { UsersService } from '../users.service';
 import { UserVM } from '../model';
 
 @Component({
-  selector: 'sm-soc-form',
+  selector: 'medigo-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
@@ -34,7 +34,8 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
   submitDisabled = true;
   sub$ = new Subscription();
   oldFormValue: UserVM = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     status: false,
     role: '',

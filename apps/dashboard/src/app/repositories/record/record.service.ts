@@ -5,7 +5,7 @@ import { DeleteRecordService } from './use-cases/delete-record/delete-record.ser
 import { FindRecordService } from './use-cases/find-record/find-record.service';
 import { GetRecordsService } from './use-cases/get-records/get-records.service';
 import { UpdateRecordService } from './use-cases/update-record/update-record.service';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { RecordItemVM } from './model';
 import { FindRecordByDoctorService } from './use-cases/find-record-by-doctor/find-record-by-doctor.service';
 import { FindRecordByPatientService } from './use-cases/find-record-by-patient/find-record-by-patient.service';

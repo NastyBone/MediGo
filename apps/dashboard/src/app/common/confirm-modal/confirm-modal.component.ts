@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalMessageModel } from './modal-message-model';
 
 @Component({
-  selector: 'medigo-confirm-modal',
+  selector: 'tecnops-confirm-modal',
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.scss'],
 })

@@ -7,13 +7,12 @@ import { DoctorService } from '../../repositories/doctor/doctor.service';
 import { AssistantService } from '../../repositories/assistant/assistant.service';
 import { PatientService } from '../../repositories/patient/patient.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserStateService {
-  constructor(
-    private doctorsService: DoctorService,
-    private assistantService: AssistantService,
-    private patientService: PatientService
-  ) {}
+  constructor() // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
+  {
+    return;
+  }
 
   sub$ = new Subscription();
   private user$ = new BehaviorSubject<UserStateVM | null>(null);
@@ -31,41 +30,7 @@ export class UserStateService {
     localStorage.setItem('medigo-user', JSON.stringify(user));
   }
 
-  setRole(user: UserStateVM | null): void {
-    let role!: unknown;
-
-    switch (user?.role) {
-      case 'assistant': {
-        this.sub$.add(
-          this.assistantService
-            .findByUserId$(user.id)
-            .subscribe((assistant) => {
-              role = assistant;
-            })
-        );
-        break;
-      }
-      case 'patient': {
-        this.sub$.add(
-          this.patientService.findByUser(user.id).subscribe((patient) => {
-            role = patient;
-          })
-        );
-        break;
-      }
-      case 'doctor': {
-        this.sub$.add(
-          this.doctorsService.findByUserId$(user.id).subscribe((doctor) => {
-            role = doctor;
-          })
-        );
-        break;
-      }
-      default: {
-        console.log('ERROR!');
-        break;
-      }
-    }
+  setRole(role: unknown): void {
     localStorage.setItem('medigo-role', JSON.stringify(role));
   }
 

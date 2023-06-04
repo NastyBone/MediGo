@@ -5,7 +5,7 @@ import { FindAvailabilityService } from './use-cases/find-availability/find-avai
 import { GetAvailabilitiesService } from './use-cases/get-availabilities/get-availabilities.service';
 import { UpdateAvailabilityService } from './use-cases/update-availability/update-availability.service';
 import { AvailabilityMemoryService } from './memory';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { AvailabilityItemVM } from './model';
 import { FindAvailabilityByDoctorService } from './use-cases/find-availability-by-doctor/find-availability-by-doctor.service';
 import { Observable, finalize } from 'rxjs';

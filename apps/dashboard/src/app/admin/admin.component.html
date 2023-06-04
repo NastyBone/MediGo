@@ -1,1 +1,51 @@
-<p>admin works!</p>
+<mat-drawer-container>
+    <mat-toolbar color="primary">
+      <button
+        mat-icon-button
+        aria-label="icon-button with menu icon"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+  
+      <a [href]="brandInfo.path" class="brand-link">
+        <p
+          class="brand-text font-weight-light d-flex justify-content-between align-items-center"
+        >
+          {{ brandInfo.name }}
+          <a
+            class="nav-link"
+            data-widget="pushmenu"
+            href="javascript:void(0)"
+            role="button"
+            ><em class="fas fa-times"></em
+          ></a>
+        </p>
+      </a>
+      <span class="spacer"></span>
+      <div class="user-info-container">
+        <div class="user-info-name-container">
+          <p class="user-info-name">
+            {{ settings.name }}
+          </p>
+        </div>
+      </div>
+    </mat-toolbar>
+    <mat-drawer #drawer class="sidenav" mode="side" color="primary">
+      <ul class="buttons-container">
+        <li
+          *ngFor="let button of sideMenuOptions"
+          routerLinkActive="router-link-active"
+          href="javascript:void(0)"
+          [routerLink]="button.path"
+          class="button-item"
+          (click)="onMenuItemClick(button)"
+        >
+          <mat-icon class="button-icon">{{ button.icon }}</mat-icon
+          ><span class="button-name">{{ button.name }}</span>
+        </li>
+      </ul>
+    </mat-drawer>
+    <router-outlet></router-outlet>
+  </mat-drawer-container>
+  

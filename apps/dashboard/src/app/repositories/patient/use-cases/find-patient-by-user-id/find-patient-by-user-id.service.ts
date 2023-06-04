@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { PatientService } from '@medigo/dashboard-sdk';
 import { BaseQuery } from '../../../../common';
 import { Observable, map } from 'rxjs';
-import { PatientItem2PatientItemVM } from '../../../patient/mappers';
-import { PatientItemVM } from '../../../patient/model';
+import { PatientItem2PatientItemVM } from '../../mappers';
+import { PatientItemVM } from '../../model';
 
 @Injectable()
 export class FindPatientByUserIdService {

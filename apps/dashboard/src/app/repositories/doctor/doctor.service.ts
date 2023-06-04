@@ -5,7 +5,7 @@ import { DeleteDoctorService } from './use-cases/delete-doctor/delete-doctor.ser
 import { FindDoctorService } from './use-cases/find-doctor/find-doctor.service';
 import { GetDoctorsService } from './use-cases/get-doctors/get-doctors.service';
 import { UpdateDoctorService } from './use-cases/update-doctor/update-doctor.service';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { DoctorItemVM } from './model';
 import { FindDoctorBySpecialityService } from './use-cases/find-doctor-by-speciality/find-doctor-by-speciality.service';
 import { FindDoctorByUserIdService } from './use-cases/find-doctor-by-user-id/find-doctor-by-user-id.service';

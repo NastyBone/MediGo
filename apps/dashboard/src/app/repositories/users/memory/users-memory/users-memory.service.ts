@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { MemoryRepository } from '../../../../common';
+import { MemoryRepository } from '../../../../common/memory-repository/memory-repository';
 import { UserVM } from '../../model';
 
 @Injectable()

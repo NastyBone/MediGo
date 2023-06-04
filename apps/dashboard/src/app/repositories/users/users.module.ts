@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { TableModule } from '../common/table/table.module';
-import { StateModule } from '../state';
+import { TableModule } from '../../common/table/table.module';
+import { StateModule } from '../../common/state';
 import { FormComponent } from './form/form.component';
 import { UsersMemoryService } from './memory';
 import {

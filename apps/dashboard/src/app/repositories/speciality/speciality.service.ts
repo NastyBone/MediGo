@@ -5,7 +5,7 @@ import { FindSpecialityService } from './use-cases/find-speciality/find-speciali
 import { UpdateSpecialityService } from './use-cases/update-speciality/update-speciality.service';
 import { GetSpecialitiesService } from './use-cases/get-specialities/get-specialities.service';
 import { SpecialityMemoryService } from './memory';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { SpecialityItemVM } from './model';
 
 @Injectable()

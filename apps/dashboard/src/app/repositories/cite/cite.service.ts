@@ -5,7 +5,7 @@ import { FindCiteService } from './use-cases/find-cite/find-cite.service';
 import { GetCitesService } from './use-cases/get-cites/get-cites.service';
 import { UpdateCiteService } from './use-cases/update-cite/update-cite.service';
 import { CiteMemoryService } from './memory';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { CiteItemVM } from './model';
 import { FindCitesByDoctorService } from './use-cases/find-cites-by-doctor/find-cites-by-doctor.service';
 import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/find-cites-by-patient.service';

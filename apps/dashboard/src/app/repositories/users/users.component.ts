@@ -7,14 +7,13 @@ import {
   OptionAction,
   TableDataVM,
   TableService,
-} from '../common';
-import { StateService } from '../state';
+} from '../../common';
+import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
 import { RowActionUser, UserVM } from './model';
-import { toInteger } from 'lodash';
 
 @Component({
-  selector: 'sm-soc-users',
+  selector: 'medigo-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
@@ -85,8 +84,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         break;
       case RowActionUser.delete:
         this.showConfirmUser({
-          id: toInteger(action.data['id']),
-          name: action.data['name'],
+          id: +action.data['id'],
+          firstName: action.data['firstName'],
+          lastName: action.data['lastName'],
           email: action.data['name'],
           status: !!action.data['status'],
           role: action.data['role'],
@@ -116,7 +116,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       data: {
         message: {
           title: 'Eliminar usuario',
-          body: `¿Está seguro que desea eliminar al usuario <strong>${user.name}</strong>?`,
+          body: `¿Está seguro que desea eliminar al usuario <strong>${user.firstName} ${user.lastName} </strong>?`,
         },
       },
       hasBackdrop: true,

@@ -5,7 +5,7 @@ import { FindAssistantService } from './use-cases/find-assistant/find-assistant.
 import { GetAssistantsService } from './use-cases/get-assistants/get-assistants.service';
 import { UpdateAssistantService } from './use-cases/update-assistant/update-assistant.service';
 import { AssistantMemoryService } from './memory';
-import { ListComponentService } from '../../common';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { AssistantItemVM } from './model';
 import { FindByUserIdService } from './use-cases/find-by-user-id/find-by-user-id.service';
 import { Observable, finalize } from 'rxjs';

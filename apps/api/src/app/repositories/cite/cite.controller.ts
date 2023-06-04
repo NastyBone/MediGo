@@ -7,7 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Put,
   UseGuards,
 } from '@nestjs/common';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';

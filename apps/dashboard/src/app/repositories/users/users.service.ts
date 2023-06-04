@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ListComponentService } from '../common/memory-repository/list-component.service';
+import { ListComponentService } from '../../common/memory-repository/list-component.service';
 import { UsersMemoryService } from './memory';
 import { UserVM } from './model';
 import {
