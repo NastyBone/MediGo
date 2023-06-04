@@ -1,0 +1,28 @@
+#modal-title {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
+#modal-header {
+  justify-content: space-between;
+}
+
+#modal-close-button {
+  top: 0.35rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+#modal-actions {
+  justify-content: space-around;
+}
+
+#modal-card {
+  min-width: 22rem;
+  overflow: hidden;
+}
+
+#modal-form-field-container {
+  width: 100%;
+  margin: auto;
+}

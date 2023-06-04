@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { CreateRecordDto, ResponseRecordDto, UpdateRecordDto } from './dto';
@@ -14,6 +15,7 @@ import { RecordService } from './record.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../users';
 import { Role, RolesGuard } from '../users/users.guard';
+import { ReportsResponseDto } from '../../reports/dto';
 
 @UseGuards(RolesGuard)
 @ApiTags('record')
@@ -83,6 +85,11 @@ export class RecordController {
     @Body() updateDto: UpdateRecordDto
   ): Promise<ResponseRecordDto> {
     return this.recordService.update(id, updateDto);
+  }
+
+  @Put('report')
+  report(@Body() id: number): Promise<ReportsResponseDto> {
+    return this.recordService.generate(id);
   }
 
   @Role(Roles.Admin, Roles.Doctor)

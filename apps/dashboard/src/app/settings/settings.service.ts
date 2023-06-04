@@ -36,11 +36,9 @@ export class SettingsService {
       disableClose: true,
     });
 
-    // (dialogRef.componentInstance as SettingsComponent).closed.subscribe(
-    //   () => {
-    //     dialogRef.close();
-    //   }
-    // ); //TODO: Implementar
+    (dialogRef.componentInstance as SettingsComponent).closed.subscribe(() => {
+      dialogRef.close();
+    });
   }
 
   setConfigData(data: SettingsSave): Observable<SettingsVM> {

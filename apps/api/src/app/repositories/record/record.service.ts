@@ -7,12 +7,15 @@ import { Record } from './entities/record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRecordDto, ResponseRecordDto, UpdateRecordDto } from './dto';
+import { ReportsService } from '../../reports/reports.service';
+import { ReportsResponseDto } from '../../reports/dto';
 
 @Injectable()
 export class RecordService {
   constructor(
     @InjectRepository(Record)
-    private repository: Repository<Record>
+    private repository: Repository<Record>,
+    private reportService: ReportsService
   ) {}
 
   async findAll(): Promise<ResponseRecordDto[]> {
@@ -209,5 +212,13 @@ export class RecordService {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar citas');
     }
+  }
+
+  async generate(id: number): Promise<ReportsResponseDto> {
+    const toGenerate = await this.findOne(id);
+    const response = await this.reportService.generateReport({
+      data: toGenerate,
+    });
+    return response;
   }
 }

@@ -10,6 +10,7 @@ import { RecordItemVM } from './model';
 import { FindRecordByDoctorService } from './use-cases/find-record-by-doctor/find-record-by-doctor.service';
 import { FindRecordByPatientService } from './use-cases/find-record-by-patient/find-record-by-patient.service';
 import { Observable, finalize } from 'rxjs';
+import { GenerateRecordService } from './use-cases/generate-record/generate-record.service';
 
 @Injectable()
 export class RecordService extends ListComponentService<RecordItemVM> {
@@ -21,7 +22,8 @@ export class RecordService extends ListComponentService<RecordItemVM> {
     public updateRecordService: UpdateRecordService,
     public recordMemoryService: RecordMemoryService,
     protected findRecordByDoctor: FindRecordByDoctorService,
-    protected findRecordByPatient: FindRecordByPatientService
+    protected findRecordByPatient: FindRecordByPatientService,
+    protected generateRecord: GenerateRecordService
   ) {
     super(
       getRecordsService,
@@ -44,6 +46,14 @@ export class RecordService extends ListComponentService<RecordItemVM> {
     this.setLoading(true);
     return this.findRecordByPatient
       .exec({ id })
+      .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  generateReport$(id: number): Observable<any> {
+    this.setLoading(true);
+    return this.generateRecord
+      .exec(id)
       .pipe(finalize(() => this.setLoading(false)));
   }
 }

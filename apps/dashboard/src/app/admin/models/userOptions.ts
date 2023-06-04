@@ -4,7 +4,7 @@ export const userSettings: menuOptions[] = [
   {
     name: 'Cerrar sesión',
     icon: 'logout',
-    value: 'logout',
+    action: 'logout',
   },
 ];
 
@@ -18,6 +18,11 @@ export const adminOptions: menuOptions[] = [
     name: 'Citas',
     icon: 'diversity_3',
     path: 'cite',
+  },
+  {
+    name: 'Configuracion',
+    action: 'settings',
+    icon: 'settings',
   },
   {
     name: 'Doctores',

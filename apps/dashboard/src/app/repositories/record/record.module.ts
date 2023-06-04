@@ -13,6 +13,7 @@ import { GetRecordsService } from './use-cases/get-records/get-records.service';
 import { UpdateRecordService } from './use-cases/update-record/update-record.service';
 import { FormComponent } from './form/form.component';
 import { RecordMemoryService } from './memory';
+import { GenerateRecordService } from './use-cases/generate-record/generate-record.service';
 
 @NgModule({
   declarations: [RecordComponent, FormComponent],
@@ -26,6 +27,7 @@ import { RecordMemoryService } from './memory';
     FindRecordByPatientService,
     GetRecordsService,
     UpdateRecordService,
+    GenerateRecordService,
     RecordMemoryService,
   ],
 })

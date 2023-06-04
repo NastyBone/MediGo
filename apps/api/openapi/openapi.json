@@ -1598,6 +1598,30 @@
                 ]
             }
         },
+        "/record/report": {
+            "put": {
+                "operationId": "RecordController_report",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
         "/report": {
             "get": {
                 "operationId": "ReportController_findAll",
