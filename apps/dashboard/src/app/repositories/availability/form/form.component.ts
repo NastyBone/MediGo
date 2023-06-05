@@ -6,13 +6,20 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
-import { Subscription, finalize } from 'rxjs';
+import { Observable, Subscription, finalize, map, startWith } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { AvailabilityService } from '../availability.service';
 import { AvailabilityItemVM } from '../model';
+import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
+import { DoctorItemVM } from '../../doctor/model';
 
 @Component({
   selector: 'medigo-form',
@@ -37,6 +44,15 @@ export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loading = false;
 
+  //
+  incomingDoctors!: DoctorItemVM[];
+  selectedDoctor!: DoctorItemVM[];
+  doctorControl = new FormControl(this.oldAvailabilityValue.doctor, {
+    validators: [Validators.required, forbiddenNamesValidator],
+  });
+  filteredDoctors!: Observable<DoctorItemVM[]>;
+  //
+
   constructor(
     private availabilityService: AvailabilityService,
     @Inject(MAT_DIALOG_DATA) public data: AvailabilityItemVM,
@@ -47,6 +63,32 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
+    //
+    this.sub$.add(
+      this.availabilityService.getDoctors$().subscribe((doctors) => {
+        //
+        if (doctors) {
+          this.incomingDoctors = doctors;
+          this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+            startWith<string | DoctorItemVM | null | undefined>(''),
+            map((value) => {
+              if (value !== null) {
+                return typeof value === 'string'
+                  ? value
+                  : value?.user?.firstName + ' ' + value?.user?.lastName;
+              }
+              return '';
+            }),
+            map((name) => {
+              return name
+                ? this._filterDoctors(name)
+                : this.incomingDoctors.slice();
+            })
+          );
+        }
+      })
+    );
+    //
     this.createForm();
     if (this.data?.id) {
       this.sub$.add(
@@ -90,7 +132,7 @@ export class FormComponent implements OnInit, OnDestroy {
       end: [null, [Validators.required]],
       day: [null, [Validators.required]],
       available: [false, [Validators.required]],
-      doctor: [null, [Validators.required]], //TODO: Implementar DoctorControl
+      doctor: this.doctorControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -143,5 +185,24 @@ export class FormComponent implements OnInit, OnDestroy {
           .subscribe()
       );
     }
+  }
+  //
+  displayFn(item?: any): string {
+    if (item) {
+      if (item.firstName) return item.firstName + ' ' + item.lastName;
+      if (item.user.firstName)
+        return item.user.firstName + ' ' + item.user.lastName;
+    }
+    return '';
+  }
+  //
+  private _filterDoctors(name: string): DoctorItemVM[] {
+    const filterValue = name.toLowerCase();
+    return this.incomingDoctors.filter(
+      (option) =>
+        (option.user?.firstName + ' ' + option.user?.lastName)
+          .toLowerCase()
+          .indexOf(filterValue) === 0
+    );
   }
 }

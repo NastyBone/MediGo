@@ -9,6 +9,10 @@ import { ListComponentService } from '../../common/memory-repository/list-compon
 import { AssistantItemVM } from './model';
 import { FindByUserIdService } from './use-cases/find-by-user-id/find-by-user-id.service';
 import { Observable, finalize } from 'rxjs';
+import { GetUsersService } from '../users/use-cases';
+import { UserVM } from '../users/model';
+import { GetDoctorsService } from '../doctor/use-cases/get-doctors/get-doctors.service';
+import { DoctorItemVM } from '../doctor/model';
 
 @Injectable()
 export class AssistantService extends ListComponentService<AssistantItemVM> {
@@ -19,7 +23,9 @@ export class AssistantService extends ListComponentService<AssistantItemVM> {
     public getAssistantsService: GetAssistantsService,
     public updateAssistantService: UpdateAssistantService,
     public assistantsMemoryService: AssistantMemoryService,
-    protected findAssistantByUserId: FindByUserIdService
+    protected findAssistantByUserId: FindByUserIdService,
+    private getUsersService: GetUsersService,
+    private getDoctorsService: GetDoctorsService
   ) {
     super(
       getAssistantsService,
@@ -36,5 +42,31 @@ export class AssistantService extends ListComponentService<AssistantItemVM> {
     return this.findAssistantByUserId
       .exec({ id })
       .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  getUsers$(load = true): Observable<Array<UserVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getUsersService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getDoctors$(load = true): Observable<Array<DoctorItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getDoctorsService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }

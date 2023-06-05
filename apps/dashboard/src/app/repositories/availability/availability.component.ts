@@ -23,20 +23,29 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   availabilityData: TableDataVM<AvailabilityItemVM> = {
     headers: [
       {
-        columnDef: 'name',
-        header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        columnDef: 'doctor',
+        header: 'Doctor',
+        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
       },
       {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
+        columnDef: 'day',
+        header: 'Día',
+        cell: (element: { [key: string]: string }) => `${element['day']}`,
       },
       {
-        columnDef: 'description',
-        header: 'Descripción',
-        cell: (element: { [key: string]: string }) =>
-          `${element['description']}`,
+        columnDef: 'start',
+        header: 'Inico',
+        cell: (element: { [key: string]: string }) => `${element['start']}`,
+      },
+      {
+        columnDef: 'end',
+        header: 'Fin',
+        cell: (element: { [key: string]: string }) => `${element['end']}`,
+      },
+      {
+        columnDef: 'available',
+        header: 'Estado',
+        cell: (element: { [key: string]: string }) => `${element['available']}`,
       },
     ],
     body: [],

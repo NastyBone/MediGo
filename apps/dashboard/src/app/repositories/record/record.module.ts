@@ -23,6 +23,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
+import { PatientModule } from '../patient/patient.module';
+import { DoctorModule } from '../doctor/doctor.module';
 
 @NgModule({
   declarations: [RecordComponent, FormComponent],
@@ -38,6 +40,8 @@ import { TableModule } from '../../common';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    PatientModule,
+    DoctorModule,
   ],
   providers: [
     RecordService,

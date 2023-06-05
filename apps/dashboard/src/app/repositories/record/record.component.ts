@@ -23,20 +23,25 @@ export class RecordComponent implements OnInit, OnDestroy {
   recordData: TableDataVM<RecordItemVM> = {
     headers: [
       {
-        columnDef: 'name',
-        header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
-      },
-      {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
+        columnDef: 'date',
+        header: 'Fecha',
+        cell: (element: { [key: string]: string }) => `${element['date']}`,
       },
       {
         columnDef: 'description',
         header: 'Descripción',
         cell: (element: { [key: string]: string }) =>
           `${element['description']}`,
+      },
+      {
+        columnDef: 'doctor',
+        header: 'Doctor',
+        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+      },
+      {
+        columnDef: 'patient',
+        header: 'Paciente',
+        cell: (element: { [key: string]: string }) => `${element['patient']}`,
       },
     ],
     body: [],

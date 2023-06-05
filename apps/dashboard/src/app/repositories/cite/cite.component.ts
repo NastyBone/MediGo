@@ -23,20 +23,35 @@ export class CiteComponent implements OnInit, OnDestroy {
   citeData: TableDataVM<CiteItemVM> = {
     headers: [
       {
-        columnDef: 'name',
-        header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        columnDef: 'date',
+        header: 'Fecha',
+        cell: (element: { [key: string]: string }) => `${element['date']}`,
       },
       {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
+        columnDef: 'time',
+        header: 'Hora',
+        cell: (element: { [key: string]: string }) => `${element['time']}`,
       },
       {
-        columnDef: 'description',
+        columnDef: 'subject',
         header: 'Descripción',
+        cell: (element: { [key: string]: string }) => `${element['subject']}`,
+      },
+      {
+        columnDef: 'doctor',
+        header: 'Doctor',
+        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+      },
+      {
+        columnDef: 'patient',
+        header: 'Paciente',
+        cell: (element: { [key: string]: string }) => `${element['patient']}`,
+      },
+      {
+        columnDef: 'patinetConfirm',
+        header: 'Estado',
         cell: (element: { [key: string]: string }) =>
-          `${element['description']}`,
+          `${element['patientConfirm']}`,
       },
     ],
     body: [],

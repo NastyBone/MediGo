@@ -19,7 +19,6 @@ export class CiteService {
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
-    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,

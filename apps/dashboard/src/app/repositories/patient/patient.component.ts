@@ -23,20 +23,24 @@ export class PatientComponent implements OnInit, OnDestroy {
   patientData: TableDataVM<PatientItemVM> = {
     headers: [
       {
-        columnDef: 'name',
+        columnDef: 'fistName',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        cell: (element: { [key: string]: string }) => `${element['firstName']}`,
       },
       {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
+        columnDef: 'lastName',
+        header: 'Apellido',
+        cell: (element: { [key: string]: string }) => `${element['lastName']}`,
       },
       {
-        columnDef: 'description',
-        header: 'Descripción',
-        cell: (element: { [key: string]: string }) =>
-          `${element['description']}`,
+        columnDef: 'phone',
+        header: 'Teléfono',
+        cell: (element: { [key: string]: string }) => `${element['phone']}`,
+      },
+      {
+        columnDef: 'address',
+        header: 'Dirección',
+        cell: (element: { [key: string]: string }) => `${element['address']}`,
       },
     ],
     body: [],

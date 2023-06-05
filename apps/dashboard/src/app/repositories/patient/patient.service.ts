@@ -9,6 +9,8 @@ import { ListComponentService } from '../../common/memory-repository/list-compon
 import { PatientItemVM } from './model';
 import { FindPatientByUserIdService } from './use-cases/find-patient-by-user-id/find-patient-by-user-id.service';
 import { Observable, finalize } from 'rxjs';
+import { GetUsersService } from '../users/use-cases';
+import { UserVM } from '../users/model';
 
 @Injectable()
 export class PatientService extends ListComponentService<PatientItemVM> {
@@ -19,7 +21,8 @@ export class PatientService extends ListComponentService<PatientItemVM> {
     public getPatientsService: GetPatientsService,
     public updatePatientService: UpdatePatientService,
     public patientMemoryService: PatientMemoryService,
-    protected findPatientByUserId: FindPatientByUserIdService
+    protected findPatientByUserId: FindPatientByUserIdService,
+    private getUsersService: GetUsersService
   ) {
     super(
       getPatientsService,
@@ -36,5 +39,18 @@ export class PatientService extends ListComponentService<PatientItemVM> {
     return this.findPatientByUserId
       .exec({ id })
       .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  getUsers$(load = true): Observable<Array<UserVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getUsersService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }

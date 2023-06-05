@@ -9,6 +9,8 @@ import { ListComponentService } from '../../common/memory-repository/list-compon
 import { AvailabilityItemVM } from './model';
 import { FindAvailabilityByDoctorService } from './use-cases/find-availability-by-doctor/find-availability-by-doctor.service';
 import { Observable, finalize } from 'rxjs';
+import { GetDoctorsService } from '../doctor/use-cases/get-doctors/get-doctors.service';
+import { DoctorItemVM } from '../doctor/model/doctor-item-vm';
 
 @Injectable()
 export class AvailabilityService extends ListComponentService<AvailabilityItemVM> {
@@ -19,7 +21,8 @@ export class AvailabilityService extends ListComponentService<AvailabilityItemVM
     public getAvailabilitiesService: GetAvailabilitiesService,
     public updateAvailabilityService: UpdateAvailabilityService,
     public availabilityMemoryService: AvailabilityMemoryService,
-    protected findAvailabilityByDoctor: FindAvailabilityByDoctorService
+    protected findAvailabilityByDoctor: FindAvailabilityByDoctorService,
+    private getDoctorsService: GetDoctorsService
   ) {
     super(
       getAvailabilitiesService,
@@ -31,10 +34,23 @@ export class AvailabilityService extends ListComponentService<AvailabilityItemVM
     );
   }
 
-  findByAvailabilityId$(id: number): Observable<AvailabilityItemVM> {
+  findByDoctor$(id: number): Observable<AvailabilityItemVM> {
     this.setLoading(true);
     return this.findAvailabilityByDoctor
       .exec({ id })
       .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  getDoctors$(load = true): Observable<Array<DoctorItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getDoctorsService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }

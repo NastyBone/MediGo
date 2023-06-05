@@ -6,13 +6,20 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
-import { Subscription, finalize } from 'rxjs';
+import { Observable, Subscription, finalize, map, startWith } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { PatientItemVM } from '../model';
 import { PatientService } from '../patient.service';
+import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
+import { UserVM } from '../../users/model';
 
 @Component({
   selector: 'medigo-form',
@@ -35,6 +42,15 @@ export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loading = false;
 
+  //
+  incomingUsers!: UserVM[];
+  selectedUser!: UserVM[];
+  userControl = new FormControl(this.oldPatientValue.user, {
+    validators: [Validators.required, forbiddenNamesValidator],
+  });
+  filteredUsers!: Observable<UserVM[]>;
+  //
+
   constructor(
     private patientService: PatientService,
     @Inject(MAT_DIALOG_DATA) public data: PatientItemVM,
@@ -45,6 +61,33 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
+    //
+    this.sub$.add(
+      this.patientService.getUsers$().subscribe((users) => {
+        if (users) {
+          this.incomingUsers = users;
+          this.filteredUsers = this.userControl.valueChanges.pipe(
+            startWith<string | UserVM | undefined | null>(''),
+            map((value) => {
+              if (value !== null) {
+                return typeof value === 'string'
+                  ? value
+                  : value?.firstName + ' ' + value?.lastName;
+              }
+              return '';
+            }),
+            map((name) => {
+              return name
+                ? this._filterUsers(name)
+                : this.incomingUsers.slice();
+            })
+          );
+        }
+        //
+      })
+    );
+    //
+
     this.createForm();
     if (this.data?.id) {
       this.sub$.add(
@@ -86,7 +129,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       address: [null, [Validators.required, Validators.maxLength(256)]],
       phone: [null, [Validators.required, Validators.maxLength(20)]],
-      userId: [null, [Validators.required]],
+      user: this.userControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -140,4 +183,23 @@ export class FormComponent implements OnInit, OnDestroy {
       );
     }
   }
+  //
+  displayFn(item?: any): string {
+    if (item) {
+      if (item.user.firstName)
+        return item.user.firstName + ' ' + item.user.lastName;
+    }
+    return '';
+  }
+
+  private _filterUsers(name: string): UserVM[] {
+    const filterValue = name.toLowerCase();
+    return this.incomingUsers.filter(
+      (option) =>
+        (option.firstName + ' ' + option.lastName)
+          .toLowerCase()
+          .indexOf(filterValue) === 0
+    );
+  }
+  //
 }

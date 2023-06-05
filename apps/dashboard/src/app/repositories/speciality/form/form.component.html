@@ -1,1 +1,54 @@
-<p>form works!</p>
+<div class="modal-header">
+  <span mat-dialog-title>Especialidad</span>
+  <button
+    id="modal-close-button"
+    mat-dialog-close
+    mat-mini-fab
+    type="button"
+    aria-label="Cerrar"
+    color="basic"
+    (click)="clickClosed()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form mat-dialog-content [formGroup]="form!">
+  <mat-form-field class="">
+    <mat-label>Nombre de la especialidad</mat-label>
+    <input type="text" matInput formControlName="name" />
+    <mat-error *ngIf="form.controls['name'].hasError('required')"
+      >Campo requerido</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field class="">
+    <mat-label>Descripción</mat-label>
+    <input type="text" matInput formControlName="description" />
+    <mat-error *ngIf="form.controls['description'].hasError('required')"
+      >Campo requerido</mat-error
+    >
+  </mat-form-field>
+</form>
+
+<div class="modal-footer" mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    type="button"
+    (click)="clickSave()"
+    color="primary"
+    [disabled]="submitDisabled || loading"
+  >
+    Guardar
+  </button>
+  <button
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    type="button"
+    (click)="clickClosed()"
+  >
+    Cancelar
+  </button>
+</div>
+<!-- <app-state *ngIf="loading"> </app-state> -->

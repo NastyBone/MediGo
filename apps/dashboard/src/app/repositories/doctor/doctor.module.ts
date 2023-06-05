@@ -20,6 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
+import { UsersModule } from '../users/users.module';
+import { SpecialityModule } from '../speciality/speciality.module';
 
 @NgModule({
   declarations: [DoctorComponent, FormComponent],
@@ -33,6 +35,8 @@ import { TableModule } from '../../common';
     MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
+    UsersModule,
+    SpecialityModule,
   ],
   providers: [
     DoctorService,

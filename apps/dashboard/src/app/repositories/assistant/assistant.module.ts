@@ -20,6 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
+import { DoctorModule } from '../doctor/doctor.module';
+import { UsersModule } from '../users/users.module';
 
 @NgModule({
   declarations: [AssistantComponent, FormComponent],
@@ -34,6 +36,8 @@ import { TableModule } from '../../common';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    DoctorModule,
+    UsersModule,
   ],
   providers: [
     AssistantService,

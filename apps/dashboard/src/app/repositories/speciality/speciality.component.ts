@@ -28,11 +28,6 @@ export class SpecialityComponent implements OnInit, OnDestroy {
         cell: (element: { [key: string]: string }) => `${element['name']}`,
       },
       {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
-      },
-      {
         columnDef: 'description',
         header: 'Descripción',
         cell: (element: { [key: string]: string }) =>

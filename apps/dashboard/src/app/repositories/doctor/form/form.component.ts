@@ -6,13 +6,28 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
-import { Subscription, finalize } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  finalize,
+  forkJoin,
+  map,
+  startWith,
+} from 'rxjs';
 import { StateService } from '../../../common/state';
 import { DoctorService } from '../doctor.service';
 import { DoctorItemVM } from '../model';
+import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
+import { UserVM } from '../../users/model';
+import { SpecialityItemVM } from '../../speciality/model';
 
 @Component({
   selector: 'medigo-form',
@@ -36,6 +51,22 @@ export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loading = false;
 
+  //
+  incomingUsers!: UserVM[];
+  selectedUser!: UserVM[];
+  userControl = new FormControl(this.oldDoctorValue.user, {
+    validators: [Validators.required, forbiddenNamesValidator],
+  });
+  filteredUsers!: Observable<UserVM[]>;
+  //
+  incomingSpecialities!: SpecialityItemVM[];
+  selectedSpeciality!: SpecialityItemVM[];
+  specialityControl = new FormControl(this.oldDoctorValue.speciality, {
+    validators: [Validators.required, forbiddenNamesValidator],
+  });
+  filteredSpeciality!: Observable<SpecialityItemVM[]>;
+  //
+
   constructor(
     private doctorService: DoctorService,
     @Inject(MAT_DIALOG_DATA) public data: DoctorItemVM,
@@ -46,6 +77,52 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
+    //
+    this.sub$.add(
+      forkJoin({
+        users: this.doctorService.getUsers$(),
+        specialities: this.doctorService.getSpecialities$(),
+      }).subscribe(({ users, specialities }) => {
+        if (users) {
+          this.incomingUsers = users;
+          this.filteredUsers = this.userControl.valueChanges.pipe(
+            startWith<string | UserVM | undefined | null>(''),
+            map((value) => {
+              if (value !== null) {
+                return typeof value === 'string'
+                  ? value
+                  : value?.firstName + ' ' + value?.lastName;
+              }
+              return '';
+            }),
+            map((name) => {
+              return name
+                ? this._filterUsers(name)
+                : this.incomingUsers.slice();
+            })
+          );
+        }
+        //
+        if (specialities) {
+          this.incomingSpecialities = specialities;
+          this.filteredSpeciality = this.specialityControl.valueChanges.pipe(
+            startWith<string | SpecialityItemVM | null | undefined>(''),
+            map((value) => {
+              if (value !== null) {
+                return typeof value === 'string' ? value : value?.name;
+              }
+              return '';
+            }),
+            map((name) => {
+              return name
+                ? this._filteredSpecialities(name)
+                : this.incomingSpecialities.slice();
+            })
+          );
+        }
+      })
+    );
+    //
     this.createForm();
     if (this.data?.id) {
       this.sub$.add(
@@ -86,8 +163,8 @@ export class FormComponent implements OnInit, OnDestroy {
   private createForm(): void {
     this.form = this.formBuilder.group({
       phone: [null, [Validators.required, Validators.maxLength(18)]],
-      speciality: [null, [Validators.required]], //TODO: Implementar SpecialityControl
-      userId: [null, [Validators.required]],
+      speciality: this.specialityControl,
+      userId: this.userControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -141,4 +218,31 @@ export class FormComponent implements OnInit, OnDestroy {
       );
     }
   }
+  //
+  displayFn(item?: any): string {
+    if (item) {
+      if (item.firstName) return item.firstName + ' ' + item.lastName;
+      if (item.user.firstName)
+        return item.user.firstName + ' ' + item.user.lastName;
+    }
+    return '';
+  }
+
+  private _filterUsers(name: string): UserVM[] {
+    const filterValue = name.toLowerCase();
+    return this.incomingUsers.filter(
+      (option) =>
+        (option.firstName + ' ' + option.lastName)
+          .toLowerCase()
+          .indexOf(filterValue) === 0
+    );
+  }
+  //
+  private _filteredSpecialities(name: string): SpecialityItemVM[] {
+    const filterValue = name.toLowerCase();
+    return this.incomingSpecialities.filter(
+      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+    );
+  }
+  //
 }

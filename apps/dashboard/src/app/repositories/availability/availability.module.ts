@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
+import { DoctorModule } from '../doctor/doctor.module';
 
 @NgModule({
   declarations: [AvailabilityComponent, FormComponent],
@@ -36,6 +37,7 @@ import { TableModule } from '../../common';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    DoctorModule,
   ],
   providers: [
     AvailabilityService,

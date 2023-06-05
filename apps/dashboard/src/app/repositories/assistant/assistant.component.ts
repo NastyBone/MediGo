@@ -23,20 +23,19 @@ export class AssistantComponent implements OnInit, OnDestroy {
   assistantData: TableDataVM<AssistantItemVM> = {
     headers: [
       {
-        columnDef: 'name',
+        columnDef: 'firstName',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        cell: (element: { [key: string]: string }) => `${element['firstName']}`,
       },
       {
-        columnDef: 'price',
-        header: 'Precio',
-        cell: (element: { [key: string]: string }) => `${element['price']}`,
+        columnDef: 'lastName',
+        header: 'Apellido',
+        cell: (element: { [key: string]: string }) => `${element['lastName']}`,
       },
       {
-        columnDef: 'description',
-        header: 'Descripción',
-        cell: (element: { [key: string]: string }) =>
-          `${element['description']}`,
+        columnDef: 'doctor',
+        header: 'Doctor',
+        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
       },
     ],
     body: [],
@@ -55,8 +54,12 @@ export class AssistantComponent implements OnInit, OnDestroy {
     private stateService: StateService
   ) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
+    this.sub$.add(
+      this.assistantService.getLoading$().subscribe((loading) => {
+        this.loading = loading;
+        this.stateService.setLoading(loading);
+      })
+    );
     this.sub$.add(
       this.assistantService
         .getData$()

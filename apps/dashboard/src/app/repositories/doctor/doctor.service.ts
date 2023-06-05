@@ -10,6 +10,10 @@ import { DoctorItemVM } from './model';
 import { FindDoctorBySpecialityService } from './use-cases/find-doctor-by-speciality/find-doctor-by-speciality.service';
 import { FindDoctorByUserIdService } from './use-cases/find-doctor-by-user-id/find-doctor-by-user-id.service';
 import { Observable, finalize } from 'rxjs';
+import { GetUsersService } from '../users/use-cases';
+import { UserVM } from '../users/model';
+import { GetSpecialitiesService } from '../speciality/use-cases/get-specialities/get-specialities.service';
+import { SpecialityItemVM } from '../speciality/model';
 
 @Injectable()
 export class DoctorService extends ListComponentService<DoctorItemVM> {
@@ -21,7 +25,9 @@ export class DoctorService extends ListComponentService<DoctorItemVM> {
     public updateDoctorService: UpdateDoctorService,
     public doctorMemoryService: DoctorMemoryService,
     protected findDoctorBySpeciality: FindDoctorBySpecialityService,
-    protected findDoctorByUserId: FindDoctorByUserIdService
+    protected findDoctorByUserId: FindDoctorByUserIdService,
+    private getUsersService: GetUsersService,
+    private getSpecialityService: GetSpecialitiesService
   ) {
     super(
       getDoctorsService,
@@ -45,5 +51,31 @@ export class DoctorService extends ListComponentService<DoctorItemVM> {
     return this.findDoctorBySpeciality
       .exec({ id })
       .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  getUsers$(load = true): Observable<Array<UserVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getUsersService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getSpecialities$(load = true): Observable<Array<SpecialityItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getSpecialityService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }
