@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
 import { DoctorModule } from '../doctor/doctor.module';
 import { UsersModule } from '../users/users.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [AssistantComponent, FormComponent],
@@ -35,6 +36,7 @@ import { UsersModule } from '../users/users.module';
     MatDialogModule,
     MatNativeDateModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     DoctorModule,
     UsersModule,

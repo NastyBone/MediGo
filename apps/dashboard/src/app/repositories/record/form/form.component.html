@@ -1,48 +1,148 @@
 <div class="modal-header">
-    <span mat-dialog-title> Titulo </span>
-    <button
-      id="modal-close-button"
-      mat-dialog-close
-      mat-mini-fab
-      type="button"
-      aria-label="Cerrar"
-      color="basic"
-      (click)="clickClosed()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
+  <span mat-dialog-title> Titulo </span>
+  <button
+    id="modal-close-button"
+    mat-dialog-close
+    mat-mini-fab
+    type="button"
+    aria-label="Cerrar"
+    color="basic"
+    (click)="clickClosed()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<form mat-dialog-content [formGroup]="form!">
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      id="date"
+      name="date"
+      [min]="minDate"
+      [max]="maxDate"
+      formControlName="date"
+      [formControl]="dateControl"
+      readonly
+    />
+    <mat-hint>Presione el calendario</mat-hint>
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="picker"
+      disabled="false"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #picker disabled="false"></mat-datepicker>
+    <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMin')">
+      Seleccione una fecha mayor
+    </mat-error>
+    <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMax')">
+      Seleccione una fecha menor
+    </mat-error>
+    <mat-error *ngIf="form.get('date')?.hasError('required')">
+      Campo Requerido
+    </mat-error>
+  </mat-form-field>
   
-  <form mat-dialog-content [formGroup]="form!">
-    <mat-form-field class="">
-      <mat-label></mat-label>
-      <input type="text" matInput formControlName="" />
-      <mat-error *ngIf="form.controls[''].hasError('required')"
-        >Campo requerido</mat-error
+  <mat-form-field>
+    <mat-label>Doctor</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="doctorControl"
+      [matAutocomplete]="autodoctor"
+    />
+    <mat-autocomplete
+      name="doctor"
+      id="doctor"
+      #autodoctor="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let option of filteredDoctors | async"
+        [value]="option"
+        >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
       >
-    </mat-form-field>
-  </form>
-  
-  <div class="modal-footer" mat-dialog-actions>
-    <button
-      mat-button
-      mat-dialog-close
-      type="button"
-      (click)="clickSave()"
-      color="primary"
-      [disabled]="submitDisabled || loading"
+      <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
+        >No se encontraron doctores</mat-option
+      >
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+      >Campo Requerido</mat-error
     >
-      Guardar
-    </button>
-    <button
-      mat-button
-      mat-dialog-close
-      cdkFocusInitial
-      type="button"
-      (click)="clickClosed()"
+    <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
+      >Seleccione una opción</mat-error
     >
-      Cancelar
-    </button>
-  </div>
-  <!-- <app-state *ngIf="loading"> </app-state> -->
-  
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Paciente</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="patientControl"
+      [matAutocomplete]="autopatient"
+    />
+    <mat-autocomplete
+      name="patient"
+      id="patient"
+      #autopatient="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let option of filteredPatients | async"
+        [value]="option"
+        >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
+      >
+      <mat-option *ngIf="(filteredPatients | async)?.length === 0" disabled
+        >No se encontraron pacientes</mat-option
+      >
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('patient')?.hasError('required')"
+      >Campo Requerido</mat-error
+    >
+    <mat-error *ngIf="form.get('patient')?.hasError('forbiddenNames')"
+      >Seleccione una opción</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <textarea
+      type="text"
+      name="description"
+      id="description"
+      formControlName="description"
+      matInput
+    ></textarea>
+    <mat-error *ngIf="form.controls['description'].hasError('maxlength')"
+      >Longitud Excedida</mat-error
+    >
+    <mat-error *ngIf="form.controls['description'].hasError('required')"
+    >Campo requerido</mat-error
+  >
+  </mat-form-field>
+</form>
+
+<div class="modal-footer" mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    type="button"
+    (click)="clickSave()"
+    color="primary"
+    [disabled]="submitDisabled || loading"
+  >
+    Guardar
+  </button>
+  <button
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    type="button"
+    (click)="clickClosed()"
+  >
+    Cancelar
+  </button>
+</div>
+<!-- <app-state *ngIf="loading"> </app-state> -->

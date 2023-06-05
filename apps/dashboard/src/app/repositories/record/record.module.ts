@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
 import { PatientModule } from '../patient/patient.module';
 import { DoctorModule } from '../doctor/doctor.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [RecordComponent, FormComponent],
@@ -39,6 +40,7 @@ import { DoctorModule } from '../doctor/doctor.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     PatientModule,
     DoctorModule,

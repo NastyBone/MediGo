@@ -20,6 +20,8 @@ import { AvailabilityService } from '../availability.service';
 import { AvailabilityItemVM } from '../model';
 import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
 import { DoctorItemVM } from '../../doctor/model';
+import { DAYS } from '../days/days';
+import { DayVM } from '../days/day-vm';
 
 @Component({
   selector: 'medigo-form',
@@ -44,6 +46,12 @@ export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loading = false;
 
+  selectable = [
+    { name: 'Disponible', value: 'true' },
+    { name: 'No Disponible', value: 'false' },
+  ];
+  availableSelect!: string;
+
   //
   incomingDoctors!: DoctorItemVM[];
   selectedDoctor!: DoctorItemVM[];
@@ -51,6 +59,13 @@ export class FormComponent implements OnInit, OnDestroy {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredDoctors!: Observable<DoctorItemVM[]>;
+  //
+  days: Array<DayVM> = DAYS;
+  selectedDay!: DayVM[];
+  dayControl = new FormControl(this.oldAvailabilityValue.day, {
+    validators: [Validators.required, forbiddenNamesValidator],
+  });
+  filteredDays!: Observable<DayVM[]>;
   //
 
   constructor(
@@ -63,6 +78,21 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
+    //
+    if (this.days) {
+      this.filteredDays = this.dayControl.valueChanges.pipe(
+        startWith<string | DayVM | null | undefined>(''),
+        map((value) => {
+          if (value !== null) {
+            return typeof value === 'string' ? value : value?.name;
+          }
+          return '';
+        }),
+        map((name) => {
+          return name ? this._filterDays(name) : this.days.slice();
+        })
+      );
+    }
     //
     this.sub$.add(
       this.availabilityService.getDoctors$().subscribe((doctors) => {
@@ -203,6 +233,13 @@ export class FormComponent implements OnInit, OnDestroy {
         (option.user?.firstName + ' ' + option.user?.lastName)
           .toLowerCase()
           .indexOf(filterValue) === 0
+    );
+  }
+  //
+  private _filterDays(name: string): DayVM[] {
+    const filterValue = name.toLowerCase();
+    return this.days.filter(
+      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
     );
   }
 }

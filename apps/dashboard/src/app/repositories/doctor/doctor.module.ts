@@ -19,6 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TableModule } from '../../common';
 import { UsersModule } from '../users/users.module';
 import { SpecialityModule } from '../speciality/speciality.module';
@@ -34,6 +35,7 @@ import { SpecialityModule } from '../speciality/speciality.module';
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     UsersModule,
     SpecialityModule,

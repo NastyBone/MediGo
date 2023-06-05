@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
 import { UsersModule } from '../users/users.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [PatientComponent, FormComponent],
@@ -32,6 +33,7 @@ import { UsersModule } from '../users/users.module';
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     UsersModule,
   ],
