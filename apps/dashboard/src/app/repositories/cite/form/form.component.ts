@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
@@ -86,7 +86,12 @@ export class FormComponent implements OnInit, OnDestroy {
   }
   private createForm(): void {
     this.form = this.formBuilder.group({
-      //TODO: Fix
+      subject: [null, [Validators.required, Validators.maxLength(256)]],
+      date: [null, [Validators.required]], //TODO: Implementar DateControl
+      time: [null, [Validators.required]],
+      patientConfirm: [false, [Validators.required]],
+      doctor: [null, [Validators.required]], //TODO: Implementar DoctorControl
+      patient: [null, [Validators.required]], // TODO: Implementar PatientControl
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
