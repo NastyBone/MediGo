@@ -12,7 +12,7 @@ import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { CiteService } from '../cite.service';
-import { CiteVM } from '../model';
+import { CiteItemVM } from '../model';
 
 @Component({
   selector: 'medigo-form',
@@ -25,13 +25,15 @@ export class FormComponent implements OnInit, OnDestroy {
   id?: number;
   submitDisabled = true;
   sub$ = new Subscription();
-  oldCiteValue: CiteVM = {
+  oldCiteValue: CiteItemVM = {
     subject: '',
     date: '',
     time: '',
     patientConfirm: false,
-    doctorId: 0,
-    patientId: 0,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    doctorId: null as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    patientId: null as any,
   };
 
   form!: FormGroup;
@@ -39,7 +41,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private citeService: CiteService,
-    @Inject(MAT_DIALOG_DATA) public data: CiteVM,
+    @Inject(MAT_DIALOG_DATA) public data: CiteItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}

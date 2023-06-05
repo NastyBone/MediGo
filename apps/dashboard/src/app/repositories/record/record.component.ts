@@ -10,7 +10,7 @@ import {
 } from '../../common';
 import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
-import { RecordVM, RowActionRecord } from './model';
+import { RecordItemVM, RowActionRecord } from './model';
 import { RecordService } from './record.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { RecordService } from './record.service';
 })
 export class RecordComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  recordData: TableDataVM<RecordVM> = {
+  recordData: TableDataVM<RecordItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -62,13 +62,15 @@ export class RecordComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.recordService.getData$().subscribe((record: RecordVM[] | null) => {
-        this.recordData = {
-          ...this.recordData,
-          body: record || [],
-        };
-        this.tableService.setData(this.recordData);
-      })
+      this.recordService
+        .getData$()
+        .subscribe((record: RecordItemVM[] | null) => {
+          this.recordData = {
+            ...this.recordData,
+            body: record || [],
+          };
+          this.tableService.setData(this.recordData);
+        })
     );
     this.recordService.get({});
   }
@@ -99,7 +101,7 @@ export class RecordComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(record: RecordVM): void {
+  showConfirm(record: RecordItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

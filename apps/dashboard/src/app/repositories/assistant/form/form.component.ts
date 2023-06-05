@@ -12,7 +12,7 @@ import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { AssistantService } from '../assistant.service';
-import { AssistantVM } from '../model';
+import { AssistantItemVM } from '../model';
 
 @Component({
   selector: 'medigo-form',
@@ -25,9 +25,11 @@ export class FormComponent implements OnInit, OnDestroy {
   id?: number;
   submitDisabled = true;
   sub$ = new Subscription();
-  oldAssistantValue: AssistantVM = {
-    doctorId: 0,
-    userId: 0,
+  oldAssistantValue: AssistantItemVM = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    doctorId: null as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userId: null as any,
   };
 
   form!: FormGroup;
@@ -35,7 +37,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private assistantService: AssistantService,
-    @Inject(MAT_DIALOG_DATA) public data: AssistantVM,
+    @Inject(MAT_DIALOG_DATA) public data: AssistantItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}

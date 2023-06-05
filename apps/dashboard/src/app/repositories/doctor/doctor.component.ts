@@ -11,7 +11,7 @@ import {
 import { StateService } from '../../common/state';
 import { DoctorService } from './doctor.service';
 import { FormComponent } from './form/form.component';
-import { DoctorVM, RowActionDoctor } from './model';
+import { DoctorItemVM, RowActionDoctor } from './model';
 
 @Component({
   selector: 'medigo-doctor',
@@ -20,7 +20,7 @@ import { DoctorVM, RowActionDoctor } from './model';
 })
 export class DoctorComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  doctorData: TableDataVM<DoctorVM> = {
+  doctorData: TableDataVM<DoctorItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -62,13 +62,15 @@ export class DoctorComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.doctorService.getData$().subscribe((doctor: DoctorVM[] | null) => {
-        this.doctorData = {
-          ...this.doctorData,
-          body: doctor || [],
-        };
-        this.tableService.setData(this.doctorData);
-      })
+      this.doctorService
+        .getData$()
+        .subscribe((doctor: DoctorItemVM[] | null) => {
+          this.doctorData = {
+            ...this.doctorData,
+            body: doctor || [],
+          };
+          this.tableService.setData(this.doctorData);
+        })
     );
     this.doctorService.get({});
   }
@@ -99,7 +101,7 @@ export class DoctorComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(doctor: DoctorVM): void {
+  showConfirm(doctor: DoctorItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

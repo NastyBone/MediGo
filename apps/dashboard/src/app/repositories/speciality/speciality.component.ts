@@ -10,7 +10,7 @@ import {
 } from '../../common';
 import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
-import { SpecialityVM, RowActionSpeciality } from './model';
+import { SpecialityItemVM, RowActionSpeciality } from './model';
 import { SpecialityService } from './speciality.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { SpecialityService } from './speciality.service';
 })
 export class SpecialityComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  specialityData: TableDataVM<SpecialityVM> = {
+  specialityData: TableDataVM<SpecialityItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -64,7 +64,7 @@ export class SpecialityComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.specialityService
         .getData$()
-        .subscribe((speciality: SpecialityVM[] | null) => {
+        .subscribe((speciality: SpecialityItemVM[] | null) => {
           this.specialityData = {
             ...this.specialityData,
             body: speciality || [],
@@ -101,7 +101,7 @@ export class SpecialityComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(speciality: SpecialityVM): void {
+  showConfirm(speciality: SpecialityItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

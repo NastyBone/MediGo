@@ -12,7 +12,7 @@ import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { AvailabilityService } from '../availability.service';
-import { AvailabilityVM } from '../model';
+import { AvailabilityItemVM } from '../model';
 
 @Component({
   selector: 'medigo-form',
@@ -25,12 +25,13 @@ export class FormComponent implements OnInit, OnDestroy {
   id?: number;
   submitDisabled = true;
   sub$ = new Subscription();
-  oldAvailabilityValue: AvailabilityVM = {
+  oldAvailabilityValue: AvailabilityItemVM = {
     start: '',
     end: '',
     day: '',
     available: false,
-    doctorId: 0,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    doctorId: null as any,
   };
 
   form!: FormGroup;
@@ -38,7 +39,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private availabilityService: AvailabilityService,
-    @Inject(MAT_DIALOG_DATA) public data: AvailabilityVM,
+    @Inject(MAT_DIALOG_DATA) public data: AvailabilityItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}

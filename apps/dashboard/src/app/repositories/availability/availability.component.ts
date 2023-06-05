@@ -11,7 +11,7 @@ import {
 import { StateService } from '../../common/state';
 import { AvailabilityService } from './availability.service';
 import { FormComponent } from './form/form.component';
-import { AvailabilityVM, RowActionAvailability } from './model';
+import { AvailabilityItemVM, RowActionAvailability } from './model';
 
 @Component({
   selector: 'medigo-availability',
@@ -20,7 +20,7 @@ import { AvailabilityVM, RowActionAvailability } from './model';
 })
 export class AvailabilityComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  availabilityData: TableDataVM<AvailabilityVM> = {
+  availabilityData: TableDataVM<AvailabilityItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -64,7 +64,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.availabilityService
         .getData$()
-        .subscribe((availability: AvailabilityVM[] | null) => {
+        .subscribe((availability: AvailabilityItemVM[] | null) => {
           this.availabilityData = {
             ...this.availabilityData,
             body: availability || [],
@@ -101,7 +101,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(availability: AvailabilityVM): void {
+  showConfirm(availability: AvailabilityItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

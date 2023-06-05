@@ -5,8 +5,8 @@ import { DoctorVM } from '../../doctor/model';
 import { PatientVM } from '../../patient/model';
 
 export interface CiteItemVM extends CiteVM {
-  doctor: DoctorVM;
-  patient: PatientVM;
+  doctor?: DoctorVM;
+  patient?: PatientVM;
   options?: {
     options?: Array<RowOptionVM<RowActionCite>>;
   };

@@ -7,6 +7,6 @@ export function Patient2PatientVM(Patient: any): PatientVM {
     id: Patient.id,
     address: Patient.address,
     phone: Patient.phone,
-    userId: Patient.userId,
+    userId: Patient.user.id,
   };
 }

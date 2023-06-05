@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
-import { PatientVM } from '../model';
+import { PatientItemVM } from '../model';
 import { PatientService } from '../patient.service';
 
 @Component({
@@ -25,10 +25,11 @@ export class FormComponent implements OnInit, OnDestroy {
   id?: number;
   submitDisabled = true;
   sub$ = new Subscription();
-  oldPatientValue: PatientVM = {
+  oldPatientValue: PatientItemVM = {
     address: '',
     phone: '',
-    userId: 0,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userId: null as any,
   };
 
   form!: FormGroup;
@@ -36,7 +37,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private patientService: PatientService,
-    @Inject(MAT_DIALOG_DATA) public data: PatientVM,
+    @Inject(MAT_DIALOG_DATA) public data: PatientItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}

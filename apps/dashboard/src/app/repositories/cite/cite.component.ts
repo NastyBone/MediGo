@@ -11,7 +11,7 @@ import {
 import { StateService } from '../../common/state';
 import { CiteService } from './cite.service';
 import { FormComponent } from './form/form.component';
-import { CiteVM, RowActionCite } from './model';
+import { CiteItemVM, RowActionCite } from './model';
 
 @Component({
   selector: 'medigo-cite',
@@ -20,7 +20,7 @@ import { CiteVM, RowActionCite } from './model';
 })
 export class CiteComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  citeData: TableDataVM<CiteVM> = {
+  citeData: TableDataVM<CiteItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -62,7 +62,7 @@ export class CiteComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.citeService.getData$().subscribe((cite: CiteVM[] | null) => {
+      this.citeService.getData$().subscribe((cite: CiteItemVM[] | null) => {
         this.citeData = {
           ...this.citeData,
           body: cite || [],
@@ -99,7 +99,7 @@ export class CiteComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(cite: CiteVM): void {
+  showConfirm(cite: CiteItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

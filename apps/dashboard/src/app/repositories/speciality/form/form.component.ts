@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
 import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
-import { SpecialityVM } from '../model';
+import { SpecialityItemVM } from '../model';
 import { SpecialityService } from '../speciality.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class FormComponent implements OnInit, OnDestroy {
   id?: number;
   submitDisabled = true;
   sub$ = new Subscription();
-  oldSpecialityValue: SpecialityVM = {
+  oldSpecialityValue: SpecialityItemVM = {
     name: '',
     description: '',
   };
@@ -35,7 +35,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private specialityService: SpecialityService,
-    @Inject(MAT_DIALOG_DATA) public data: SpecialityVM,
+    @Inject(MAT_DIALOG_DATA) public data: SpecialityItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}

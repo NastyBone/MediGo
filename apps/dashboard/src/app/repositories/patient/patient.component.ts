@@ -10,7 +10,7 @@ import {
 } from '../../common';
 import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
-import { PatientVM, RowActionPatient } from './model';
+import { PatientItemVM, RowActionPatient } from './model';
 import { PatientService } from './patient.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { PatientService } from './patient.service';
 })
 export class PatientComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  patientData: TableDataVM<PatientVM> = {
+  patientData: TableDataVM<PatientItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -64,7 +64,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.patientService
         .getData$()
-        .subscribe((patient: PatientVM[] | null) => {
+        .subscribe((patient: PatientItemVM[] | null) => {
           this.patientData = {
             ...this.patientData,
             body: patient || [],
@@ -101,7 +101,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(patient: PatientVM): void {
+  showConfirm(patient: PatientItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {

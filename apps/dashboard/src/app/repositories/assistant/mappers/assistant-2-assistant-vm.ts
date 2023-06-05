@@ -5,7 +5,7 @@ import { AssistantVM } from '../model';
 export function Assistant2AssistantVM(Assistant: any): AssistantVM {
   return {
     id: Assistant.id,
-    doctorId: Assistant.doctorId,
-    userId: Assistant.userId,
+    doctorId: Assistant.doctor.id,
+    userId: Assistant.user.id,
   };
 }

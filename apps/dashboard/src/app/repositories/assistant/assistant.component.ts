@@ -9,7 +9,7 @@ import {
   ConfirmModalComponent,
 } from '../../common';
 import { StateService } from '../../common/state';
-import { AssistantVM, RowActionAssistant } from './model';
+import { AssistantItemVM, RowActionAssistant } from './model';
 import { AssistantService } from './assistant.service';
 import { FormComponent } from './form/form.component';
 
@@ -20,7 +20,7 @@ import { FormComponent } from './form/form.component';
 })
 export class AssistantComponent implements OnInit, OnDestroy {
   //TODO: Fix
-  assistantData: TableDataVM<AssistantVM> = {
+  assistantData: TableDataVM<AssistantItemVM> = {
     headers: [
       {
         columnDef: 'name',
@@ -60,7 +60,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.assistantService
         .getData$()
-        .subscribe((assistant: AssistantVM[] | null) => {
+        .subscribe((assistant: AssistantItemVM[] | null) => {
           this.assistantData = {
             ...this.assistantData,
             body: assistant || [],
@@ -97,7 +97,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
     });
   }
 
-  showConfirm(assistant: AssistantVM): void {
+  showConfirm(assistant: AssistantItemVM): void {
     //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
