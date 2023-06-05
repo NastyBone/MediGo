@@ -13,10 +13,31 @@ import { GetCitesService } from './use-cases/get-cites/get-cites.service';
 import { UpdateCiteService } from './use-cases/update-cite/update-cite.service';
 import { FormComponent } from './form/form.component';
 import { CiteMemoryService } from './memory';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TableModule } from '../../common';
 
 @NgModule({
   declarations: [CiteComponent, FormComponent],
-  imports: [CommonModule, CiteRoutingModule],
+  imports: [
+    CommonModule,
+    CiteRoutingModule,
+    TableModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     CiteService,
     CreateCiteService,

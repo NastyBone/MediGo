@@ -12,10 +12,29 @@ import { UpdateAssistantService } from './use-cases/update-assistant/update-assi
 import { DeleteAssistantService } from './use-cases/delete-assistant/delete-assistant.service';
 import { FormComponent } from './form/form.component';
 import { AssistantMemoryService } from './memory';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TableModule } from '../../common';
 
 @NgModule({
   declarations: [AssistantComponent, FormComponent],
-  imports: [CommonModule, AssistantRoutingModule],
+  imports: [
+    CommonModule,
+    AssistantRoutingModule,
+    TableModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     AssistantService,
     CreateAssistantService,

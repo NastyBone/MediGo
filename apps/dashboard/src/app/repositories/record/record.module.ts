@@ -14,10 +14,31 @@ import { UpdateRecordService } from './use-cases/update-record/update-record.ser
 import { FormComponent } from './form/form.component';
 import { RecordMemoryService } from './memory';
 import { GenerateRecordService } from './use-cases/generate-record/generate-record.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TableModule } from '../../common';
 
 @NgModule({
   declarations: [RecordComponent, FormComponent],
-  imports: [CommonModule, RecordRoutingModule],
+  imports: [
+    CommonModule,
+    RecordRoutingModule,
+    TableModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     RecordService,
     CreateRecordService,

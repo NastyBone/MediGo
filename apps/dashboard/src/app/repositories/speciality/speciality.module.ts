@@ -11,10 +11,31 @@ import { DeleteSpecialityService } from './use-cases/delete-speciality/delete-sp
 import { UpdateSpecialityService } from './use-cases/update-speciality/update-speciality.service';
 import { FindSpecialityService } from './use-cases/find-speciality/find-speciality.service';
 import { SpecialityMemoryService } from './memory';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TableModule } from '../../common';
 
 @NgModule({
   declarations: [SpecialityComponent, FormComponent],
-  imports: [CommonModule, SpecialityRoutingModule],
+  imports: [
+    CommonModule,
+    SpecialityRoutingModule,
+    TableModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     SpecialityService,
     CreateSpecialityService,

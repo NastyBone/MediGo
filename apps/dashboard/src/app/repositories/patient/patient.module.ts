@@ -12,10 +12,27 @@ import { GetPatientsService } from './use-cases/get-patients/get-patients.servic
 import { UpdatePatientService } from './use-cases/update-patient/update-patient.service';
 import { FormComponent } from './form/form.component';
 import { PatientMemoryService } from './memory';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { TableModule } from '../../common';
 
 @NgModule({
   declarations: [PatientComponent, FormComponent],
-  imports: [CommonModule, PatientRoutingModule],
+  imports: [
+    CommonModule,
+    PatientRoutingModule,
+    TableModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     PatientService,
     CreatePatientService,
