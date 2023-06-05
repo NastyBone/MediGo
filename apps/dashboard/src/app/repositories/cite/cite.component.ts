@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -52,29 +52,25 @@ export class CiteComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private citeService: CiteService,
     private tableService: TableService,
-    private stateService: StateService,
-    private formBuilder: FormBuilder
+    private stateService: StateService
   ) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
     this.sub$.add(
-      this.citeService
-        .getData$()
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
-          })
-        )
-        .subscribe((cite: CiteVM[] | null) => {
-          this.citeData = {
-            ...this.citeData,
-            body: cite || [],
-          };
-          this.tableService.setData(this.citeData);
-        })
+      this.citeService.getLoading$().subscribe((loading) => {
+        this.loading = loading;
+        this.stateService.setLoading(loading);
+      })
     );
+    this.sub$.add(
+      this.citeService.getData$().subscribe((cite: CiteVM[] | null) => {
+        this.citeData = {
+          ...this.citeData,
+          body: cite || [],
+        };
+        this.tableService.setData(this.citeData);
+      })
+    );
+    this.citeService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -98,10 +94,9 @@ export class CiteComponent implements OnInit, OnDestroy {
         id,
       },
     });
-    // modal.componentInstance.closed.subscribe(() => {
-    //   modal.close();
-    // });
-    //TODO: Fix
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(cite: CiteVM): void {

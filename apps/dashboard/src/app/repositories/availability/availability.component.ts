@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -52,21 +52,18 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private availabilityService: AvailabilityService,
     private tableService: TableService,
-    private stateService: StateService,
-    private formBuilder: FormBuilder
+    private stateService: StateService
   ) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
+    this.sub$.add(
+      this.availabilityService.getLoading$().subscribe((loading) => {
+        this.loading = loading;
+        this.stateService.setLoading(loading);
+      })
+    );
     this.sub$.add(
       this.availabilityService
         .getData$()
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
-          })
-        )
         .subscribe((availability: AvailabilityVM[] | null) => {
           this.availabilityData = {
             ...this.availabilityData,
@@ -75,6 +72,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
           this.tableService.setData(this.availabilityData);
         })
     );
+    this.availabilityService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -98,10 +96,9 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
         id,
       },
     });
-    // modal.componentInstance.closed.subscribe(() => {
-    //   modal.close();
-    // });
-    //TODO: Fix
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(availability: AvailabilityVM): void {

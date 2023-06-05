@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -52,8 +52,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private assistantService: AssistantService,
     private tableService: TableService,
-    private stateService: StateService,
-    private formBuilder: FormBuilder
+    private stateService: StateService
   ) {}
   ngOnInit(): void {
     this.loading = true;
@@ -61,12 +60,6 @@ export class AssistantComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.assistantService
         .getData$()
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
-          })
-        )
         .subscribe((assistant: AssistantVM[] | null) => {
           this.assistantData = {
             ...this.assistantData,
@@ -75,6 +68,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
           this.tableService.setData(this.assistantData);
         })
     );
+    this.assistantService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -98,10 +92,9 @@ export class AssistantComponent implements OnInit, OnDestroy {
         id,
       },
     });
-    // modal.componentInstance.closed.subscribe(() => {
-    //   modal.close();
-    // });
-    //TODO: Fix
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(assistant: AssistantVM): void {

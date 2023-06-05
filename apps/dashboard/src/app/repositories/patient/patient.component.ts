@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -52,21 +52,18 @@ export class PatientComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private patientService: PatientService,
     private tableService: TableService,
-    private stateService: StateService,
-    private formBuilder: FormBuilder
+    private stateService: StateService
   ) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
+    this.sub$.add(
+      this.patientService.getLoading$().subscribe((loading) => {
+        this.loading = loading;
+        this.stateService.setLoading(loading);
+      })
+    );
     this.sub$.add(
       this.patientService
         .getData$()
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
-          })
-        )
         .subscribe((patient: PatientVM[] | null) => {
           this.patientData = {
             ...this.patientData,
@@ -75,6 +72,7 @@ export class PatientComponent implements OnInit, OnDestroy {
           this.tableService.setData(this.patientData);
         })
     );
+    this.patientService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -98,10 +96,9 @@ export class PatientComponent implements OnInit, OnDestroy {
         id,
       },
     });
-    // modal.componentInstance.closed.subscribe(() => {
-    //   modal.close();
-    // });
-    //TODO: Fix
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(patient: PatientVM): void {

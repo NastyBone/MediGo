@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -52,29 +52,25 @@ export class RecordComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private recordService: RecordService,
     private tableService: TableService,
-    private stateService: StateService,
-    private formBuilder: FormBuilder
+    private stateService: StateService
   ) {}
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
     this.sub$.add(
-      this.recordService
-        .getData$()
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
-          })
-        )
-        .subscribe((record: RecordVM[] | null) => {
-          this.recordData = {
-            ...this.recordData,
-            body: record || [],
-          };
-          this.tableService.setData(this.recordData);
-        })
+      this.recordService.getLoading$().subscribe((loading) => {
+        this.loading = loading;
+        this.stateService.setLoading(loading);
+      })
     );
+    this.sub$.add(
+      this.recordService.getData$().subscribe((record: RecordVM[] | null) => {
+        this.recordData = {
+          ...this.recordData,
+          body: record || [],
+        };
+        this.tableService.setData(this.recordData);
+      })
+    );
+    this.recordService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -98,10 +94,9 @@ export class RecordComponent implements OnInit, OnDestroy {
         id,
       },
     });
-    // modal.componentInstance.closed.subscribe(() => {
-    //   modal.close();
-    // });
-    //TODO: Fix
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(record: RecordVM): void {
