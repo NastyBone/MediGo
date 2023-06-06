@@ -47,7 +47,11 @@ export class RecordComponent implements OnInit, OnDestroy {
       },
     ],
     body: [],
-    options: [],
+    options: [
+      { name: 'Editar', value: 'update', icon: 'edit' },
+      { name: 'Eliminar', value: 'delete', icon: 'delete' },
+      { name: 'Imprimir', value: 'print', icon: 'print' },
+    ],
   };
 
   sub$ = new Subscription();
@@ -93,6 +97,10 @@ export class RecordComponent implements OnInit, OnDestroy {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.showConfirm(option.data as any);
         break;
+      case RowActionRecord.print:
+        this.recordService
+          .generateReport$(+option.data['id'])
+          .subscribe((res) => window.open(res as string, '_blank'));
     }
   }
 

@@ -194,6 +194,7 @@ export class RecordService {
 
   async generate(id: number): Promise<ReportsResponseDto> {
     const toGenerate = await this.findOne(id);
+    console.log(toGenerate);
     const response = await this.reportService.generateReport({
       data: toGenerate,
     });

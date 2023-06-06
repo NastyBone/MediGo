@@ -12,6 +12,105 @@
                 }
             }
         },
+        "/public/{name}": {
+            "get": {
+                "operationId": "AppController_getAsset",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/patients": {
+            "get": {
+                "operationId": "UsersController_findAllPatients",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
+        "/users/assistants": {
+            "get": {
+                "operationId": "UsersController_findAllAssistants",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
+        "/users/doctors": {
+            "get": {
+                "operationId": "UsersController_findAllDoctors",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
         "/users/{id}": {
             "get": {
                 "operationId": "UsersController_findOne",
@@ -151,78 +250,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ResponseUserDto"
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "users"
-                ]
-            }
-        },
-        "/users/patients": {
-            "get": {
-                "operationId": "UsersController_findAllPatients",
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "users"
-                ]
-            }
-        },
-        "/users/assistants": {
-            "get": {
-                "operationId": "UsersController_findAllAssistants",
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "users"
-                ]
-            }
-        },
-        "/users/doctors": {
-            "get": {
-                "operationId": "UsersController_findAllDoctors",
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
-                                    }
                                 }
                             }
                         }
@@ -1646,20 +1673,19 @@
                 ]
             }
         },
-        "/record/report": {
+        "/record/report/{id}": {
             "put": {
                 "operationId": "RecordController_report",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "number"
-                            }
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -1938,6 +1964,33 @@
     "servers": [],
     "components": {
         "schemas": {
+            "NotFoundException": {
+                "type": "object",
+                "properties": {}
+            },
+            "ResponseUserPatientDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email"
+                ]
+            },
             "ResponseUserDto": {
                 "type": "object",
                 "properties": {
@@ -1967,29 +2020,6 @@
                     "email",
                     "status",
                     "role"
-                ]
-            },
-            "ResponseUserPatientDto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "firstName": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "firstName",
-                    "lastName",
-                    "email"
                 ]
             },
             "UpdateUserDto": {

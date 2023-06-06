@@ -87,8 +87,9 @@ export class RecordController {
     return this.recordService.update(id, updateDto);
   }
 
-  @Put('report')
-  report(@Body() id: number): Promise<ReportsResponseDto> {
+  // @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Put('report/:id')
+  report(@Param('id', ParseIntPipe) id: number): Promise<ReportsResponseDto> {
     return this.recordService.generate(id);
   }
 
