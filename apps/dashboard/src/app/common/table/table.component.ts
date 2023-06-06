@@ -27,7 +27,6 @@ export class TableComponent implements AfterViewInit, OnInit {
     headers: [],
     body: [{ option: '' }],
     options: [
-      { name: 'Abrir', value: 'open', icon: 'open_in_new' },
       { name: 'Editar', value: 'update', icon: 'edit' },
       { name: 'Eliminar', value: 'delete', icon: 'delete' },
     ],

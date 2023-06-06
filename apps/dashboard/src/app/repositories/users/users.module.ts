@@ -23,6 +23,8 @@ import {
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { UsersService } from './users.service';
+import { FindAllAssistantsService } from './use-cases/find-all-assistants/find-all-assistants.service';
+import { FindAllDoctorsService } from './use-cases/find-all-doctors/find-all-doctors.service';
 
 @NgModule({
   declarations: [UsersComponent, FormComponent],
@@ -47,6 +49,8 @@ import { UsersService } from './users.service';
     DeleteUserService,
     GetUsersService,
     FindUserService,
+    FindAllAssistantsService,
+    FindAllDoctorsService,
     UsersMemoryService,
   ],
 })

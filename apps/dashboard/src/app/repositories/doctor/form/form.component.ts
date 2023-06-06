@@ -26,7 +26,7 @@ import { StateService } from '../../../common/state';
 import { DoctorService } from '../doctor.service';
 import { DoctorItemVM } from '../model';
 import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
-import { UserVM } from '../../users/model';
+import { UserPatientVM } from '../../users/model';
 import { SpecialityItemVM } from '../../speciality/model';
 
 @Component({
@@ -54,12 +54,12 @@ export class FormComponent implements OnInit, OnDestroy {
   loading = false;
 
   //
-  incomingUsers!: UserVM[];
-  selectedUser!: UserVM[];
+  incomingUsers!: UserPatientVM[];
+  selectedUser!: UserPatientVM[];
   userControl = new FormControl(this.oldDoctorValue.user, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
-  filteredUsers!: Observable<UserVM[]>;
+  filteredUsers!: Observable<UserPatientVM[]>;
   //
   incomingSpecialities!: SpecialityItemVM[];
   selectedSpeciality!: SpecialityItemVM[];
@@ -88,7 +88,7 @@ export class FormComponent implements OnInit, OnDestroy {
         if (users) {
           this.incomingUsers = users;
           this.filteredUsers = this.userControl.valueChanges.pipe(
-            startWith<string | UserVM | undefined | null>(''),
+            startWith<string | UserPatientVM | undefined | null>(''),
             map((value) => {
               if (value !== null) {
                 return typeof value === 'string'
@@ -233,7 +233,7 @@ export class FormComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  private _filterUsers(name: string): UserVM[] {
+  private _filterUsers(name: string): UserPatientVM[] {
     const filterValue = name.toLowerCase();
     return this.incomingUsers.filter(
       (option) =>

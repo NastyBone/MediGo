@@ -9,6 +9,10 @@ import {
   GetUsersService,
   UpdateUsersService,
 } from './use-cases';
+import { FindAllDoctorsService } from './use-cases/find-all-doctors/find-all-doctors.service';
+import { FindAllAssistantsService } from './use-cases/find-all-assistants/find-all-assistants.service';
+import { Observable, finalize } from 'rxjs';
+import { UserPatientVM } from './model/user-patient-vm';
 @Injectable()
 export class UsersService extends ListComponentService<UserVM> {
   constructor(
@@ -17,7 +21,9 @@ export class UsersService extends ListComponentService<UserVM> {
     deleteService: DeleteUserService,
     createService: CreateUserService,
     updateService: UpdateUsersService,
-    findService: FindUserService
+    findService: FindUserService,
+    public findAllDoctorsService: FindAllDoctorsService,
+    public findAllAssistantsService: FindAllAssistantsService
   ) {
     super(
       getService,
@@ -26,6 +32,32 @@ export class UsersService extends ListComponentService<UserVM> {
       createService,
       updateService,
       findService
+    );
+  }
+
+  getDoctors$(load = true): Observable<Array<UserPatientVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.findAllDoctorsService.exec().pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getAssistants$(load = true): Observable<Array<UserPatientVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.findAllAssistantsService.exec().pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
     );
   }
 }

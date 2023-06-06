@@ -10,10 +10,10 @@ import { DoctorItemVM } from './model';
 import { FindDoctorBySpecialityService } from './use-cases/find-doctor-by-speciality/find-doctor-by-speciality.service';
 import { FindDoctorByUserIdService } from './use-cases/find-doctor-by-user-id/find-doctor-by-user-id.service';
 import { Observable, finalize } from 'rxjs';
-import { GetUsersService } from '../users/use-cases';
-import { UserVM } from '../users/model';
 import { GetSpecialitiesService } from '../speciality/use-cases/get-specialities/get-specialities.service';
 import { SpecialityItemVM } from '../speciality/model';
+import { FindAllDoctorsService } from '../users/use-cases/find-all-doctors/find-all-doctors.service';
+import { UserPatientVM } from '../users/model/user-patient-vm';
 
 @Injectable()
 export class DoctorService extends ListComponentService<DoctorItemVM> {
@@ -26,7 +26,7 @@ export class DoctorService extends ListComponentService<DoctorItemVM> {
     public doctorMemoryService: DoctorMemoryService,
     protected findDoctorBySpeciality: FindDoctorBySpecialityService,
     protected findDoctorByUserId: FindDoctorByUserIdService,
-    private getUsersService: GetUsersService,
+    private getUsersService: FindAllDoctorsService,
     private getSpecialityService: GetSpecialitiesService
   ) {
     super(
@@ -53,11 +53,11 @@ export class DoctorService extends ListComponentService<DoctorItemVM> {
       .pipe(finalize(() => this.setLoading(false)));
   }
 
-  getUsers$(load = true): Observable<Array<UserVM> | null> {
+  getUsers$(load = true): Observable<Array<UserPatientVM> | null> {
     if (load) {
       this.setLoading(load);
     }
-    return this.getUsersService.exec({}).pipe(
+    return this.getUsersService.exec().pipe(
       finalize(() => {
         if (load) {
           this.setLoading(false);
