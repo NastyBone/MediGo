@@ -7,12 +7,15 @@ import { Record } from './entities/record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRecordDto, ResponseRecordDto, UpdateRecordDto } from './dto';
+import { ReportsService } from '../../reports/reports.service';
+import { ReportsResponseDto } from '../../reports/dto';
 
 @Injectable()
 export class RecordService {
   constructor(
     @InjectRepository(Record)
-    private repository: Repository<Record>
+    private repository: Repository<Record>,
+    private reportService: ReportsService
   ) {}
 
   async findAll(): Promise<ResponseRecordDto[]> {
@@ -24,19 +27,24 @@ export class RecordService {
         date: 'ASC',
       },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
       select: {
         patient: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
           },
         },
         doctor: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
@@ -51,23 +59,30 @@ export class RecordService {
   async findValid(id: number): Promise<Record> {
     const data = this.repository.findOne({
       where: {
-        id,
         deleted: false,
       },
+      order: {
+        date: 'ASC',
+      },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
       select: {
         patient: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
           },
         },
         doctor: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
@@ -141,25 +156,30 @@ export class RecordService {
     try {
       const record = await this.repository.find({
         where: {
-          patient: {
-            id,
-          },
           deleted: false,
         },
+        order: {
+          date: 'ASC',
+        },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
         select: {
           patient: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
             },
           },
           doctor: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
@@ -178,25 +198,30 @@ export class RecordService {
     try {
       const record = await this.repository.find({
         where: {
-          doctor: {
-            id,
-          },
           deleted: false,
         },
+        order: {
+          date: 'ASC',
+        },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
         select: {
           patient: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
             },
           },
           doctor: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
@@ -209,5 +234,13 @@ export class RecordService {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar citas');
     }
+  }
+
+  async generate(id: number): Promise<ReportsResponseDto> {
+    const toGenerate = await this.findOne(id);
+    const response = await this.reportService.generateReport({
+      data: toGenerate,
+    });
+    return response;
   }
 }

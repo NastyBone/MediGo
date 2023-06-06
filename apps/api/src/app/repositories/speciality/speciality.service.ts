@@ -55,6 +55,7 @@ export class SpecialityService {
   ): Promise<ResponseSpecialityDto> {
     try {
       const speciality = this.repository.create({
+        name: createSpecialityDto.name,
         description: createSpecialityDto.description,
       });
       return new ResponseSpecialityDto(await this.repository.save(speciality));
@@ -70,6 +71,7 @@ export class SpecialityService {
     await this.findValid(id);
     try {
       const speciality = await this.repository.save({
+        name: updateSpecialityDto.name,
         description: updateSpecialityDto.description,
       });
       return this.findOne(speciality.id);

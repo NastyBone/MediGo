@@ -11,13 +11,19 @@ export class ResponseSpecialityDto {
   @Type(() => Number)
   id: number;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsString()
   description?: string;
 
   constructor(data: Speciality) {
     this.id = data.id;
+    this.name = data.name;
     this.description = data.description;
   }
 }

@@ -6,7 +6,7 @@ export function Doctor2DoctorVM(Doctor: any): DoctorVM {
   return {
     id: Doctor.id,
     phone: Doctor.phone,
-    specialityId: Doctor.specialityId,
-    userId: Doctor.userId,
+    specialityId: Doctor.speciality.id,
+    userId: Doctor.user.id,
   };
 }

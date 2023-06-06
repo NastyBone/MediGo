@@ -1,9 +1,10 @@
-import { RowOptionVM } from '../../common';
+import { RowOptionVM } from '../../../common';
 import { RowActionUser } from './row-action';
 
 export interface UserVM {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   status: boolean;
   role: string;

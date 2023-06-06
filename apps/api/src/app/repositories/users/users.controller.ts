@@ -29,6 +29,33 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @Get('/patients')
+  @ApiResponse({
+    type: ResponseUserPatientDto,
+    isArray: true,
+  })
+  findAllPatients(): Promise<Array<ResponseUserPatientDto>> {
+    return this.userService.findUsersPatients();
+  }
+
+  @Get('/assistants')
+  @ApiResponse({
+    type: ResponseUserPatientDto,
+    isArray: true,
+  })
+  findAllAssistants(): Promise<Array<ResponseUserPatientDto>> {
+    return this.userService.findAllByAssistantRole();
+  }
+
+  @Get('/doctors')
+  @ApiResponse({
+    type: ResponseUserPatientDto,
+    isArray: true,
+  })
+  findAllDoctors(): Promise<Array<ResponseUserPatientDto>> {
+    return this.userService.findAllByDoctorRole();
+  }
+
   @Get(':id')
   @ApiResponse({
     type: ResponseUserDto,
@@ -44,15 +71,6 @@ export class UsersController {
   })
   findAll(): Promise<Array<ResponseUserDto>> {
     return this.userService.findAll();
-  }
-
-  @Get('/patients')
-  @ApiResponse({
-    type: ResponseUserPatientDto,
-    isArray: true,
-  })
-  findAllPatients(): Promise<Array<ResponseUserPatientDto>> {
-    return this.userService.findUsersPatients();
   }
 
   @Patch(':id')

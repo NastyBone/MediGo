@@ -17,7 +17,6 @@ export class AlertGateway
   @WebSocketServer() server: Server;
 
   afterInit(server: Server) {
-    console.log('REEEEEEEEEEE');
     this.logger.log('Initialized');
   }
 

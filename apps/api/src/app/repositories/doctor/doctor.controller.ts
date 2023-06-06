@@ -78,7 +78,10 @@ export class DoctorController {
   @ApiResponse({
     type: ResponseDoctorDto,
   })
-  update(@Param('id', ParseIntPipe) id, @Body() updateDto: UpdateDoctorDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateDoctorDto
+  ): Promise<ResponseDoctorDto> {
     return this.doctorService.update(id, updateDto);
   }
 
@@ -87,7 +90,7 @@ export class DoctorController {
   @ApiResponse({
     type: ResponseDoctorDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseDoctorDto> {
     return this.doctorService.remove(id);
   }
 }

@@ -1,1635 +1,2561 @@
 {
-  "openapi": "3.0.0",
-  "paths": {
-    "/": {
-      "get": {
-        "operationId": "AppController_getData",
-        "parameters": [],
-        "responses": { "200": { "description": "" } }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "operationId": "UsersController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseUserDto" }
-              }
-            }
-          }
-        },
-        "tags": ["users"]
-      },
-      "patch": {
-        "operationId": "UsersController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateUserDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseUserDto" }
-              }
-            }
-          }
-        },
-        "tags": ["users"]
-      },
-      "delete": {
-        "operationId": "UsersController_removeUser",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseUserDto" }
-              }
-            }
-          }
-        },
-        "tags": ["users"]
-      }
-    },
-    "/users": {
-      "get": {
-        "operationId": "UsersController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseUserDto" }
+    "openapi": "3.0.0",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "AppController_getData",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
                 }
-              }
             }
-          }
         },
-        "tags": ["users"]
-      },
-      "post": {
-        "operationId": "UsersController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateUserDto" }
+        "/users/{id}": {
+            "get": {
+                "operationId": "UsersController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseUserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "patch": {
+                "operationId": "UsersController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseUserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "delete": {
+                "operationId": "UsersController_removeUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseUserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
             }
-          }
         },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseUserDto" }
-              }
+        "/users": {
+            "get": {
+                "operationId": "UsersController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "post": {
+                "operationId": "UsersController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseUserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
             }
-          }
         },
-        "tags": ["users"]
-      }
+        "/users/patients": {
+            "get": {
+                "operationId": "UsersController_findAllPatients",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
+        "/users/assistants": {
+            "get": {
+                "operationId": "UsersController_findAllAssistants",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
+        "/users/doctors": {
+            "get": {
+                "operationId": "UsersController_findAllDoctors",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            }
+        },
+        "/assistant/{id}": {
+            "get": {
+                "operationId": "AssistantController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAssistantDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            },
+            "patch": {
+                "operationId": "AssistantController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAssistantDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAssistantDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            },
+            "delete": {
+                "operationId": "AssistantController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAssistantDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            }
+        },
+        "/assistant/user/{id}": {
+            "get": {
+                "operationId": "AssistantController_findByUserId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAssistantDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            }
+        },
+        "/assistant": {
+            "get": {
+                "operationId": "AssistantController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseAssistantDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            },
+            "post": {
+                "operationId": "AssistantController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAssistantDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAssistantDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "assistant"
+                ]
+            }
+        },
+        "/settings": {
+            "get": {
+                "operationId": "SettingsController_getConfig",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SettingsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "settings"
+                ]
+            },
+            "post": {
+                "operationId": "SettingsController_uploadConfig",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SettingsDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SettingsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "settings"
+                ]
+            },
+            "delete": {
+                "operationId": "SettingsController_deleteConfig",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SettingsDeleteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SettingsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "settings"
+                ]
+            }
+        },
+        "/cite/patient/{id}": {
+            "get": {
+                "operationId": "CiteController_findByPatient",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseCiteDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            }
+        },
+        "/cite/doctor/{id}": {
+            "get": {
+                "operationId": "CiteController_findByDoctor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseCiteDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            }
+        },
+        "/cite/{id}": {
+            "get": {
+                "operationId": "CiteController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCiteDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            },
+            "patch": {
+                "operationId": "CiteController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCiteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCiteDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            },
+            "delete": {
+                "operationId": "CiteController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCiteDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            }
+        },
+        "/cite": {
+            "get": {
+                "operationId": "CiteController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseCiteDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            },
+            "post": {
+                "operationId": "CiteController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCiteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCiteDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            }
+        },
+        "/doctor/user/{id}": {
+            "get": {
+                "operationId": "DoctorController_findByUserId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            }
+        },
+        "/doctor/speciality/{id}": {
+            "get": {
+                "operationId": "DoctorController_findBySpecialityId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            }
+        },
+        "/doctor/{id}": {
+            "get": {
+                "operationId": "DoctorController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDoctorDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            },
+            "patch": {
+                "operationId": "DoctorController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDoctorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDoctorDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            },
+            "delete": {
+                "operationId": "DoctorController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDoctorDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            }
+        },
+        "/doctor": {
+            "get": {
+                "operationId": "DoctorController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            },
+            "post": {
+                "operationId": "DoctorController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDoctorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseDoctorDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "doctor"
+                ]
+            }
+        },
+        "/speciality/{id}": {
+            "get": {
+                "operationId": "SpecialityController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSpecialityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "speciality"
+                ]
+            },
+            "patch": {
+                "operationId": "SpecialityController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateSpecialityDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSpecialityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "speciality"
+                ]
+            },
+            "delete": {
+                "operationId": "SpecialityController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSpecialityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "speciality"
+                ]
+            }
+        },
+        "/speciality": {
+            "get": {
+                "operationId": "SpecialityController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseSpecialityDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "speciality"
+                ]
+            },
+            "post": {
+                "operationId": "SpecialityController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSpecialityDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSpecialityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "speciality"
+                ]
+            }
+        },
+        "/availability/{id}": {
+            "get": {
+                "operationId": "AvailabilityController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            },
+            "patch": {
+                "operationId": "AvailabilityController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAvailabilityDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            },
+            "delete": {
+                "operationId": "AvailabilityController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            }
+        },
+        "/availability/doctor/{id}": {
+            "get": {
+                "operationId": "AvailabilityController_findByDoctor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            }
+        },
+        "/availability": {
+            "get": {
+                "operationId": "AvailabilityController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            },
+            "post": {
+                "operationId": "AvailabilityController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAvailabilityDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "availability"
+                ]
+            }
+        },
+        "/patient/user/{id}": {
+            "get": {
+                "operationId": "PatientController_findByUserId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponsePatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            }
+        },
+        "/patient/{id}": {
+            "get": {
+                "operationId": "PatientController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePatientDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            },
+            "patch": {
+                "operationId": "PatientController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePatientDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePatientDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            },
+            "delete": {
+                "operationId": "PatientController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePatientDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            }
+        },
+        "/patient": {
+            "get": {
+                "operationId": "PatientController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponsePatientDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            },
+            "post": {
+                "operationId": "PatientController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePatientDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponsePatientDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "patient"
+                ]
+            }
+        },
+        "/record/patient/{id}": {
+            "get": {
+                "operationId": "RecordController_findByPatient",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseRecordDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
+        "/record/doctor/{id}": {
+            "get": {
+                "operationId": "RecordController_findByDoctor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseRecordDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
+        "/record/{id}": {
+            "get": {
+                "operationId": "RecordController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRecordDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            },
+            "patch": {
+                "operationId": "RecordController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRecordDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRecordDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            },
+            "delete": {
+                "operationId": "RecordController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRecordDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
+        "/record": {
+            "get": {
+                "operationId": "RecordController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResponseRecordDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            },
+            "post": {
+                "operationId": "RecordController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRecordDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRecordDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
+        "/record/report": {
+            "put": {
+                "operationId": "RecordController_report",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "record"
+                ]
+            }
+        },
+        "/report": {
+            "get": {
+                "operationId": "ReportController_findAll",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "reports"
+                ]
+            }
+        },
+        "/report/{id}": {
+            "get": {
+                "operationId": "ReportController_findByDoctor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "reports"
+                ]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_login",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginUserResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/login/patient": {
+            "post": {
+                "operationId": "AuthController_loginPatient",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginUserResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/logout": {
+            "get": {
+                "operationId": "AuthController_logout",
+                "parameters": [],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/recovery-password": {
+            "post": {
+                "operationId": "AuthController_generateRecovery",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecoveryPasswordDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecoveryPasswordDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/recovery-password/{recovery_token}": {
+            "get": {
+                "operationId": "AuthController_getRecoveryById",
+                "parameters": [
+                    {
+                        "name": "recovery_token",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            },
+            "post": {
+                "operationId": "AuthController_postRecoveryById",
+                "parameters": [
+                    {
+                        "name": "recovery_token",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/change-password": {
+            "put": {
+                "operationId": "AuthController_changePassword",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChangePasswordResponseDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "auth"
+                ]
+            }
+        }
     },
-    "/assistant/{id}": {
-      "get": {
-        "operationId": "AssistantController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAssistantDto"
+    "info": {
+        "title": "MEDIGO API",
+        "description": "API Endopoints for MEDIGO",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "ResponseUserDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "status",
+                    "role"
+                ]
+            },
+            "ResponseUserPatientDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email"
+                ]
+            },
+            "UpdateUserDto": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "status"
+                ]
+            },
+            "CreateUserDto": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      },
-      "patch": {
-        "operationId": "AssistantController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateAssistantDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAssistantDto"
+            },
+            "ResponseSpecialityDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "description"
+                ]
+            },
+            "ResponseDoctorDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "speciality": {
+                        "$ref": "#/components/schemas/ResponseSpecialityDto"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "phone",
+                    "speciality",
+                    "user"
+                ]
+            },
+            "ResponseAssistantDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "doctor": {
+                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "doctor",
+                    "user"
+                ]
+            },
+            "CreateAssistantDto": {
+                "type": "object",
+                "properties": {
+                    "doctorId": {
+                        "type": "number"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "doctorId",
+                    "userId"
+                ]
+            },
+            "UpdateAssistantDto": {
+                "type": "object",
+                "properties": {
+                    "doctorId": {
+                        "type": "number"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      }
-    },
-    "/assistant/user/{id}": {
-      "get": {
-        "operationId": "AssistantController_findByUserId",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAssistantDto"
+            },
+            "SettingsResponseDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "rif": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "name",
+                    "rif",
+                    "description",
+                    "type",
+                    "userId"
+                ]
+            },
+            "SettingsDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "rif": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      }
-    },
-    "/assistant": {
-      "get": {
-        "operationId": "AssistantController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseAssistantDto"
-                  }
+            },
+            "SettingsDeleteDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "boolean"
+                    },
+                    "rif": {
+                        "type": "boolean"
+                    },
+                    "description": {
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "type": "boolean"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      },
-      "post": {
-        "operationId": "AssistantController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateAssistantDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAssistantDto"
+            },
+            "ResponsePatientDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/ResponseUserPatientDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "address",
+                    "phone",
+                    "user"
+                ]
+            },
+            "ResponseCiteDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "patientConfirm": {
+                        "type": "boolean"
+                    },
+                    "doctor": {
+                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                    },
+                    "patient": {
+                        "$ref": "#/components/schemas/ResponsePatientDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "date",
+                    "time",
+                    "patientConfirm",
+                    "doctor",
+                    "patient"
+                ]
+            },
+            "CreateCiteDto": {
+                "type": "object",
+                "properties": {
+                    "subject": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "patientConfirm": {
+                        "type": "boolean"
+                    },
+                    "doctorId": {
+                        "type": "number"
+                    },
+                    "patientId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "subject",
+                    "date",
+                    "time",
+                    "patientConfirm",
+                    "doctorId",
+                    "patientId"
+                ]
+            },
+            "UpdateCiteDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "CreateDoctorDto": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "specialityId": {
+                        "type": "number"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "phone",
+                    "specialityId",
+                    "userId"
+                ]
+            },
+            "UpdateDoctorDto": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "specialityId": {
+                        "type": "number"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      }
-    },
-    "/assistant/id": {
-      "delete": {
-        "operationId": "AssistantController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAssistantDto"
+            },
+            "CreateSpecialityDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description"
+                ]
+            },
+            "UpdateSpecialityDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          }
-        },
-        "tags": ["assistant"]
-      }
-    },
-    "/settings": {
-      "get": {
-        "operationId": "SettingsController_getConfig",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SettingsResponseDto" }
-              }
-            }
-          }
-        },
-        "tags": ["settings"]
-      },
-      "post": {
-        "operationId": "SettingsController_uploadConfig",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/SettingsDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SettingsResponseDto" }
-              }
-            }
-          }
-        },
-        "tags": ["settings"]
-      },
-      "delete": {
-        "operationId": "SettingsController_deleteConfig",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/SettingsDeleteDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SettingsResponseDto" }
-              }
-            }
-          }
-        },
-        "tags": ["settings"]
-      }
-    },
-    "/cite/patient/{id}": {
-      "get": {
-        "operationId": "CiteController_findByPatient",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseCiteDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      }
-    },
-    "/cite/doctor/{id}": {
-      "get": {
-        "operationId": "CiteController_findByDoctor",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseCiteDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      }
-    },
-    "/cite/{id}": {
-      "get": {
-        "operationId": "CiteController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseCiteDto" }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      },
-      "patch": {
-        "operationId": "CiteController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateCiteDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseCiteDto" }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      }
-    },
-    "/cite": {
-      "get": {
-        "operationId": "CiteController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseCiteDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      },
-      "post": {
-        "operationId": "CiteController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateCiteDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseCiteDto" }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      }
-    },
-    "/cite/id": {
-      "delete": {
-        "operationId": "CiteController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseCiteDto" }
-              }
-            }
-          }
-        },
-        "tags": ["cite"]
-      }
-    },
-    "/doctor/user/{id}": {
-      "get": {
-        "operationId": "DoctorController_findByUserId",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      }
-    },
-    "/doctor/{id}": {
-      "get": {
-        "operationId": "DoctorController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      },
-      "patch": {
-        "operationId": "DoctorController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateDoctorDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      }
-    },
-    "/doctor": {
-      "get": {
-        "operationId": "DoctorController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      },
-      "post": {
-        "operationId": "DoctorController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateDoctorDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      }
-    },
-    "/doctor/id": {
-      "delete": {
-        "operationId": "DoctorController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-              }
-            }
-          }
-        },
-        "tags": ["doctor"]
-      }
-    },
-    "/speciality/{id}": {
-      "get": {
-        "operationId": "SpecialityController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSpecialityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["speciality"]
-      },
-      "patch": {
-        "operationId": "SpecialityController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateSpecialityDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSpecialityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["speciality"]
-      }
-    },
-    "/speciality": {
-      "get": {
-        "operationId": "SpecialityController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseSpecialityDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["speciality"]
-      },
-      "post": {
-        "operationId": "SpecialityController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateSpecialityDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSpecialityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["speciality"]
-      }
-    },
-    "/speciality/id": {
-      "delete": {
-        "operationId": "SpecialityController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSpecialityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["speciality"]
-      }
-    },
-    "/availability/{id}": {
-      "get": {
-        "operationId": "AvailabilityController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      },
-      "patch": {
-        "operationId": "AvailabilityController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateAvailabilityDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      }
-    },
-    "/availability/doctor/{id}": {
-      "get": {
-        "operationId": "AvailabilityController_findByDoctor",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      }
-    },
-    "/availability": {
-      "get": {
-        "operationId": "AvailabilityController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      },
-      "post": {
-        "operationId": "AvailabilityController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateAvailabilityDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      }
-    },
-    "/availability/id": {
-      "delete": {
-        "operationId": "AvailabilityController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAvailabilityDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["availability"]
-      }
-    },
-    "/patient/user/{id}": {
-      "get": {
-        "operationId": "PatientController_findByUserId",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponsePatientDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      }
-    },
-    "/patient/{id}": {
-      "get": {
-        "operationId": "PatientController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponsePatientDto" }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      },
-      "patch": {
-        "operationId": "PatientController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdatePatientDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponsePatientDto" }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      }
-    },
-    "/patient": {
-      "get": {
-        "operationId": "PatientController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponsePatientDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      },
-      "post": {
-        "operationId": "PatientController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreatePatientDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponsePatientDto" }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      }
-    },
-    "/patient/id": {
-      "delete": {
-        "operationId": "PatientController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponsePatientDto" }
-              }
-            }
-          }
-        },
-        "tags": ["patient"]
-      }
-    },
-    "/record/patient/{id}": {
-      "get": {
-        "operationId": "RecordController_findByPatient",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseRecordDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      }
-    },
-    "/record/doctor/{id}": {
-      "get": {
-        "operationId": "RecordController_findByDoctor",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseRecordDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      }
-    },
-    "/record/{id}": {
-      "get": {
-        "operationId": "RecordController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseRecordDto" }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      },
-      "patch": {
-        "operationId": "RecordController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateRecordDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseRecordDto" }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      }
-    },
-    "/record": {
-      "get": {
-        "operationId": "RecordController_findAll",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/ResponseRecordDto" }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      },
-      "post": {
-        "operationId": "RecordController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateRecordDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseRecordDto" }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      }
-    },
-    "/record/id": {
-      "delete": {
-        "operationId": "RecordController_remove",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResponseRecordDto" }
-              }
-            }
-          }
-        },
-        "tags": ["record"]
-      }
-    },
-    "/report": {
-      "get": {
-        "operationId": "ReportController_findByDoctor",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Any" }
-              }
-            }
-          }
-        },
-        "tags": ["reports"]
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "operationId": "AuthController_login",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/LoginDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginUserResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["auth"]
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "operationId": "AuthController_logout",
-        "parameters": [],
-        "responses": { "default": { "description": "" } },
-        "tags": ["auth"]
-      }
-    },
-    "/auth/recovery-password": {
-      "post": {
-        "operationId": "AuthController_generateRecovery",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/RecoveryPasswordDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/RecoveryPasswordDto" }
-              }
-            }
-          }
-        },
-        "tags": ["auth"]
-      }
-    },
-    "/auth/recovery-password/{recovery_token}": {
-      "get": {
-        "operationId": "AuthController_getRecoveryById",
-        "parameters": [
-          {
-            "name": "recovery_token",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["auth"]
-      },
-      "post": {
-        "operationId": "AuthController_postRecoveryById",
-        "parameters": [
-          {
-            "name": "recovery_token",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string" }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/ChangePasswordDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["auth"]
-      }
-    },
-    "/auth/change-password": {
-      "put": {
-        "operationId": "AuthController_changePassword",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/ChangePasswordDto" }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ChangePasswordResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": ["auth"]
-      }
+            },
+            "ResponseAvailabilityDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "start": {
+                        "type": "string"
+                    },
+                    "end": {
+                        "type": "string"
+                    },
+                    "day": {
+                        "type": "string"
+                    },
+                    "available": {
+                        "type": "boolean"
+                    },
+                    "doctor": {
+                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "start",
+                    "end",
+                    "day",
+                    "available",
+                    "doctor"
+                ]
+            },
+            "CreateAvailabilityDto": {
+                "type": "object",
+                "properties": {
+                    "start": {
+                        "type": "string"
+                    },
+                    "end": {
+                        "type": "string"
+                    },
+                    "day": {
+                        "type": "string"
+                    },
+                    "available": {
+                        "type": "boolean"
+                    },
+                    "doctorId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "start",
+                    "end",
+                    "day",
+                    "available",
+                    "doctorId"
+                ]
+            },
+            "UpdateAvailabilityDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "CreatePatientDto": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "address",
+                    "phone",
+                    "userId"
+                ]
+            },
+            "UpdatePatientDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "ResponseRecordDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "doctor": {
+                        "$ref": "#/components/schemas/ResponseDoctorDto"
+                    },
+                    "patient": {
+                        "$ref": "#/components/schemas/ResponsePatientDto"
+                    }
+                },
+                "required": [
+                    "id",
+                    "description",
+                    "date",
+                    "doctor",
+                    "patient"
+                ]
+            },
+            "CreateRecordDto": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "doctorId": {
+                        "type": "number"
+                    },
+                    "patientId": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "description",
+                    "date",
+                    "doctorId",
+                    "patientId"
+                ]
+            },
+            "UpdateRecordDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
+            "LoginUserResponseDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "loginStamp": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "email",
+                    "id",
+                    "name",
+                    "role",
+                    "loginStamp"
+                ]
+            },
+            "RecoveryPasswordDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email"
+                ]
+            },
+            "RecoveryPasswordResponseDto": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "ChangePasswordDto": {
+                "type": "object",
+                "properties": {
+                    "newPassword": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "newPassword"
+                ]
+            },
+            "ChangePasswordResponseDto": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            }
+        }
     }
-  },
-  "info": {
-    "title": "MEDIGO API",
-    "description": "API Endopoints for MEDIGO",
-    "version": "1.0",
-    "contact": {}
-  },
-  "tags": [],
-  "servers": [],
-  "components": {
-    "schemas": {
-      "ResponseUserDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "email": { "type": "string" },
-          "status": { "type": "boolean" },
-          "role": { "type": "string" }
-        },
-        "required": ["id", "firstName", "lastName", "email", "status", "role"]
-      },
-      "UpdateUserDto": {
-        "type": "object",
-        "properties": {
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "email": { "type": "string" },
-          "role": { "type": "string" },
-          "status": { "type": "boolean" }
-        },
-        "required": ["status"]
-      },
-      "CreateUserDto": {
-        "type": "object",
-        "properties": {
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "email": { "type": "string" },
-          "role": { "type": "string" }
-        }
-      },
-      "ResponseSpecialityDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "description": { "type": "string" }
-        },
-        "required": ["id"]
-      },
-      "ResponseDoctorDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "phone": { "type": "string" },
-          "speciality": {
-            "$ref": "#/components/schemas/ResponseSpecialityDto"
-          },
-          "user": { "$ref": "#/components/schemas/ResponseUserDto" }
-        },
-        "required": ["id", "phone", "speciality", "user"]
-      },
-      "ResponseAssistantDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "doctor": { "$ref": "#/components/schemas/ResponseDoctorDto" },
-          "user": { "$ref": "#/components/schemas/ResponseUserDto" }
-        },
-        "required": ["id", "doctor", "user"]
-      },
-      "CreateAssistantDto": {
-        "type": "object",
-        "properties": {
-          "doctorId": { "type": "number" },
-          "userId": { "type": "number" }
-        },
-        "required": ["doctorId", "userId"]
-      },
-      "UpdateAssistantDto": {
-        "type": "object",
-        "properties": {
-          "doctorId": { "type": "number" },
-          "userId": { "type": "number" }
-        }
-      },
-      "SettingsResponseDto": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "rif": { "type": "string" },
-          "description": { "type": "string" },
-          "type": { "type": "string" }
-        },
-        "required": ["name", "rif", "description", "type"]
-      },
-      "SettingsDto": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "rif": { "type": "string" },
-          "description": { "type": "string" },
-          "type": { "type": "string" }
-        }
-      },
-      "SettingsDeleteDto": {
-        "type": "object",
-        "properties": {
-          "file_image": { "type": "boolean" },
-          "name": { "type": "boolean" },
-          "rif": { "type": "boolean" },
-          "description": { "type": "boolean" },
-          "type": { "type": "boolean" }
-        }
-      },
-      "ResponsePatientDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "address": { "type": "string" },
-          "phone": { "type": "string" },
-          "user": { "$ref": "#/components/schemas/ResponseUserDto" }
-        },
-        "required": ["id", "address", "phone", "user"]
-      },
-      "ResponseCiteDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "date": { "type": "string" },
-          "time": { "type": "string" },
-          "patientConfirm": { "type": "boolean" },
-          "doctor": { "$ref": "#/components/schemas/ResponseDoctorDto" },
-          "patient": { "$ref": "#/components/schemas/ResponsePatientDto" }
-        },
-        "required": [
-          "id",
-          "date",
-          "time",
-          "patientConfirm",
-          "doctor",
-          "patient"
-        ]
-      },
-      "CreateCiteDto": {
-        "type": "object",
-        "properties": {
-          "subject": { "type": "string" },
-          "date": { "type": "string" },
-          "time": { "type": "string" },
-          "patientConfirm": { "type": "boolean" },
-          "doctorId": { "type": "number" },
-          "patientId": { "type": "number" }
-        },
-        "required": [
-          "subject",
-          "date",
-          "time",
-          "patientConfirm",
-          "doctorId",
-          "patientId"
-        ]
-      },
-      "UpdateCiteDto": { "type": "object", "properties": {} },
-      "CreateDoctorDto": {
-        "type": "object",
-        "properties": {
-          "phone": { "type": "string" },
-          "specialityId": { "type": "number" },
-          "userId": { "type": "number" }
-        },
-        "required": ["phone", "specialityId", "userId"]
-      },
-      "UpdateDoctorDto": {
-        "type": "object",
-        "properties": {
-          "phone": { "type": "string" },
-          "specialityId": { "type": "number" },
-          "userId": { "type": "number" }
-        }
-      },
-      "CreateSpecialityDto": {
-        "type": "object",
-        "properties": { "description": { "type": "string" } },
-        "required": ["description"]
-      },
-      "UpdateSpecialityDto": {
-        "type": "object",
-        "properties": { "description": { "type": "string" } }
-      },
-      "ResponseAvailabilityDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "time": { "type": "string" },
-          "date": { "type": "string" },
-          "available": { "type": "boolean" },
-          "doctor": { "$ref": "#/components/schemas/ResponseDoctorDto" }
-        },
-        "required": ["id", "time", "date", "available", "doctor"]
-      },
-      "CreateAvailabilityDto": {
-        "type": "object",
-        "properties": {
-          "time": { "type": "string" },
-          "date": { "type": "string" },
-          "available": { "type": "boolean" },
-          "doctorId": { "type": "number" }
-        },
-        "required": ["time", "date", "available", "doctorId"]
-      },
-      "UpdateAvailabilityDto": { "type": "object", "properties": {} },
-      "CreatePatientDto": {
-        "type": "object",
-        "properties": {
-          "address": { "type": "string" },
-          "phone": { "type": "string" },
-          "userId": { "type": "number" }
-        },
-        "required": ["address", "phone", "userId"]
-      },
-      "UpdatePatientDto": { "type": "object", "properties": {} },
-      "ResponseRecordDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "number" },
-          "description": { "type": "string" },
-          "date": { "type": "string" },
-          "doctor": { "$ref": "#/components/schemas/ResponseDoctorDto" },
-          "patient": { "$ref": "#/components/schemas/ResponsePatientDto" }
-        },
-        "required": ["id", "description", "date", "doctor", "patient"]
-      },
-      "CreateRecordDto": {
-        "type": "object",
-        "properties": {
-          "description": { "type": "string" },
-          "date": { "type": "string" },
-          "doctorId": { "type": "number" },
-          "patientId": { "type": "number" }
-        },
-        "required": ["description", "date", "doctorId", "patientId"]
-      },
-      "UpdateRecordDto": { "type": "object", "properties": {} },
-      "Any": { "type": "object", "properties": {} },
-      "LoginDto": {
-        "type": "object",
-        "properties": {
-          "email": { "type": "string" },
-          "password": { "type": "string" }
-        },
-        "required": ["email", "password"]
-      },
-      "LoginUserResponseDto": {
-        "type": "object",
-        "properties": {
-          "email": { "type": "string" },
-          "id": { "type": "number" },
-          "name": { "type": "string" },
-          "role": { "type": "string" },
-          "loginStamp": { "type": "number" }
-        },
-        "required": ["email", "id", "name", "role", "loginStamp"]
-      },
-      "RecoveryPasswordDto": {
-        "type": "object",
-        "properties": { "email": { "type": "string" } },
-        "required": ["email"]
-      },
-      "RecoveryPasswordResponseDto": {
-        "type": "object",
-        "properties": { "message": { "type": "string" } },
-        "required": ["message"]
-      },
-      "ChangePasswordDto": {
-        "type": "object",
-        "properties": { "newPassword": { "type": "string" } },
-        "required": ["newPassword"]
-      },
-      "ChangePasswordResponseDto": {
-        "type": "object",
-        "properties": { "message": { "type": "string" } },
-        "required": ["message"]
-      }
-    }
-  }
 }

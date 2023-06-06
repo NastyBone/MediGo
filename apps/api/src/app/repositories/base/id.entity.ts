@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 export abstract class IdEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
   @CreateDateColumn()

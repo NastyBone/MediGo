@@ -67,7 +67,10 @@ export class AssistantController {
   @ApiResponse({
     type: ResponseAssistantDto,
   })
-  update(@Param('id', ParseIntPipe) id, @Body() updateDto: UpdateAssistantDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateAssistantDto
+  ): Promise<ResponseAssistantDto> {
     return this.assistantService.update(id, updateDto);
   }
 
@@ -75,7 +78,7 @@ export class AssistantController {
   @ApiResponse({
     type: ResponseAssistantDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseAssistantDto> {
     return this.assistantService.remove(id);
   }
 }

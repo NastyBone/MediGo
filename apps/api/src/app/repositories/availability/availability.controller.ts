@@ -74,9 +74,9 @@ export class AvailabilityController {
     type: ResponseAvailabilityDto,
   })
   update(
-    @Param('id', ParseIntPipe) id,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateDto: UpdateAvailabilityDto
-  ) {
+  ): Promise<ResponseAvailabilityDto> {
     return this.availabilityService.update(id, updateDto);
   }
 
@@ -85,7 +85,9 @@ export class AvailabilityController {
   @ApiResponse({
     type: ResponseAvailabilityDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<ResponseAvailabilityDto> {
     return this.availabilityService.remove(id);
   }
 }

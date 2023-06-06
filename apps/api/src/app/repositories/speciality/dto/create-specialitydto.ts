@@ -10,5 +10,10 @@ export class CreateSpecialityDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  description!: string;
+  name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 }

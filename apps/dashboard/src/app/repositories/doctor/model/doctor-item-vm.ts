@@ -5,8 +5,8 @@ import { UserVM } from '../../users/model';
 import { SpecialityVM } from '../../speciality/model';
 
 export interface DoctorItemVM extends DoctorVM {
-  user: UserVM;
-  speciality: SpecialityVM;
+  user?: UserVM;
+  speciality?: SpecialityVM;
   options?: {
     options?: Array<RowOptionVM<RowActionDoctor>>;
   };

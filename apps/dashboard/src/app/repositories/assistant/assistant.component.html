@@ -1,1 +1,27 @@
-<p>assistant works!</p>
+<div class="container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <span class="module-title">Asistentes</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <medigo-table
+          emptyMessage="No hay asistentes para mostrar"
+          emptySearchMessage="Ningún asistente coincide con la busqueda"
+          (clickOption)="clickAction($event)"
+        ></medigo-table>
+      </mat-card-content>
+    </mat-card>
+    <button
+      mat-fab
+      matTooltip="Agregar nuevo asistente"
+      color="accent"
+      aria-label="Agregar nuevo asistente"
+      class="btn-fixed"
+      (click)="showModal()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  

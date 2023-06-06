@@ -51,7 +51,7 @@ export class CronService {
         this.server.emit('alert', `Cita: ${myDate}`);
         console.log('Emitting test: ' + myDate);
       } else {
-        console.log('server error');
+        console.log('Server error');
       }
     });
     this.schedulerRegistry.addCronJob('' + 'test', job);
@@ -59,7 +59,8 @@ export class CronService {
   }
 
   formatDate(_date: string, _time: string): Date {
-    const date = new Date(_date);
+    let date = new Date(_date);
+    date = new Date(new Date(date).getDate() - 1);
     const [hours, minutes] = _time.split(':');
     date.setHours(+hours);
     date.setMinutes(+minutes);

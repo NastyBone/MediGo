@@ -1,0 +1,107 @@
+<div class="modal-header">
+  <span mat-dialog-title> Titulo </span>
+  <button
+    id="modal-close-button"
+    mat-dialog-close
+    mat-mini-fab
+    type="button"
+    aria-label="Cerrar"
+    color="basic"
+    (click)="clickClosed()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form mat-dialog-content [formGroup]="form!">
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="userControl"
+      [matAutocomplete]="autouser"
+    />
+    <mat-autocomplete
+      name="user"
+      id="user"
+      #autouser="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option *ngFor="let option of filteredUsers | async" [value]="option"
+        >{{ option.firstName }} {{ option.lastName }}</mat-option
+      >
+      <mat-option *ngIf="(filteredUsers | async)?.length === 0" disabled
+        >No se encontraron usuarios</mat-option
+      >
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('user')?.hasError('required')"
+      >Campo Requerido</mat-error
+    >
+    <mat-error *ngIf="form.get('user')?.hasError('forbiddenNames')"
+      >Seleccione una opción</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field class="">
+    <mat-label>Telefono</mat-label>
+    <input type="text" matInput formControlName="phone" />
+    <mat-error *ngIf="form.controls['phone'].hasError('required')"
+      >Campo requerido</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Espacialidad</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="specialityControl"
+      [matAutocomplete]="autospeciality"
+    />
+    <mat-autocomplete
+      name="speciality"
+      id="speciality"
+      #autospeciality="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let option of filteredSpeciality | async"
+        [value]="option"
+        >{{ option.name }}</mat-option
+      >
+      <mat-option *ngIf="(filteredSpeciality | async)?.length === 0" disabled
+        >No se encontraron especialidades</mat-option
+      >
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('speciality')?.hasError('required')"
+      >Campo Requerido</mat-error
+    >
+    <mat-error *ngIf="form.get('speciality')?.hasError('forbiddenNames')"
+      >Seleccione una opción</mat-error
+    >
+  </mat-form-field>
+</form>
+
+<div class="modal-footer" mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    type="button"
+    (click)="clickSave()"
+    color="primary"
+    [disabled]="submitDisabled || loading"
+  >
+    Guardar
+  </button>
+  <button
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    type="button"
+    (click)="clickClosed()"
+  >
+    Cancelar
+  </button>
+</div>
+<!-- <app-state *ngIf="loading"> </app-state> -->

@@ -7,7 +7,7 @@ export function Record2RecordVM(Record: any): RecordVM {
     id: Record.id,
     date: Record.date,
     description: Record.description,
-    doctorId: Record.doctorId,
-    patientId: Record.patientId,
+    doctorId: Record.doctor.id,
+    patientId: Record.patient.id,
   };
 }

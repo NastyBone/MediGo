@@ -4,7 +4,8 @@ import { UserVM, RowActionUser } from '../model';
 export function User2UserVM(user: any): UserVM {
   return {
     id: user.id,
-    name: user.name,
+    firstName: user.firstName,
+    lastName: user.lastName,
     email: user.email,
     status: user.status,
     role: user.role,

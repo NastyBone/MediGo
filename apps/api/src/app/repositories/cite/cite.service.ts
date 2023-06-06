@@ -19,7 +19,6 @@ export class CiteService {
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
-    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -239,19 +238,6 @@ export class CiteService {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar citas');
     }
-  }
-
-  async toggleCite(id: number): Promise<ResponseCiteDto> {
-    const cite = await this.repository.findOne({
-      where: {
-        deleted: false,
-        id,
-      },
-    });
-    cite.patientConfirm = !cite.patientConfirm;
-
-    await this.repository.save(cite);
-    return this.findOne(id);
   }
 
   async getData(): Promise<{ completed: number; notCompleted: number }> {

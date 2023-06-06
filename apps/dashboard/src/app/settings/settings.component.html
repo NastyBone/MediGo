@@ -1,1 +1,99 @@
-<p>settings works!</p>
+<!-- Modal -->
+
+<mat-card id="modal-card">
+    <mat-card-header id="modal-header">
+      <mat-card-title><p id="modal-title">Configuración</p></mat-card-title>
+      <button
+        id="modal-close-button"
+        type="button"
+        mat-fab
+        color="basic"
+        aria-label="Close"
+        (click)="closeModal(false)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+  
+    <form class="formControl" [formGroup]="form!" (ngSubmit)="closeModal(true)">
+      <mat-card-content>
+        <mat-form-field id="modal-form-field-container">
+          <mat-label>Nombre de la institución</mat-label>
+          <input
+            matInput
+            type="text"
+            name="name"
+            id="name"
+            formControlName="name"
+            required
+          />
+          <mat-error *ngIf="form.controls['name'].hasError('required')"
+            >Campo requerido</mat-error
+          >
+          <mat-error *ngIf="form.controls['rif'].hasError('maxlength')"
+            >30 caracteres maximos</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field id="modal-form-field-container">
+          <mat-label>R.I.F</mat-label>
+          <input
+            matInput
+            type="text"
+            name="rif"
+            id="rif"
+            formControlName="rif"
+            required
+          />
+          <mat-error *ngIf="form.controls['rif'].hasError('required')"
+            >Campo requerido</mat-error
+          ><mat-error
+            *ngIf="
+              form.controls['rif'].hasError('maxlength') ||
+              form.controls['rif'].hasError('minlength')
+            "
+            >10 caracteres requeridos</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field id="modal-form-field-container">
+          <mat-label>Tipo de institución</mat-label>
+          <input
+            matInput
+            type="text"
+            name="type"
+            id="type"
+            formControlName="type"
+            required
+          />
+          <mat-error *ngIf="form.controls['type'].hasError('required')"
+            >Campo requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field id="modal-form-field-container">
+          <mat-label>Descripción</mat-label>
+          <textarea
+            matInput
+            type="text"
+            name="description"
+            id="description"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+        <mat-card-actions id="modal-actions">
+          <button
+            type="submit"
+            mat-button
+            color="primary"
+            [disabled]="!form.valid"
+          >
+            Guardar
+          </button>
+          <button mat-button type="button" (click)="closeModal(false)">
+            Cancelar
+          </button>
+        </mat-card-actions>
+        <div class="modal-footer"></div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+  <!-- End of Modal  -->
+  

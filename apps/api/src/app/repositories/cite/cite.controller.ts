@@ -7,7 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Put,
   UseGuards,
 } from '@nestjs/common';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
@@ -43,7 +42,7 @@ export class CiteController {
   findByDoctor(
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResponseCiteDto[]> {
-    return this.citeService.findByPatient(id);
+    return this.citeService.findByDoctor(id);
   }
 
   @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
@@ -74,21 +73,15 @@ export class CiteController {
     return this.citeService.insert(createDto);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  @Put('toggle/:id')
-  @ApiResponse({
-    type: ResponseCiteDto,
-  })
-  toggle(@Param('id', ParseIntPipe) id: number): Promise<ResponseCiteDto> {
-    return this.citeService.toggleCite(id);
-  }
-
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Patch(':id')
   @ApiResponse({
     type: ResponseCiteDto,
   })
-  update(@Param('id', ParseIntPipe) id, @Body() updateDto: UpdateCiteDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateCiteDto
+  ): Promise<ResponseCiteDto> {
     return this.citeService.update(id, updateDto);
   }
 
@@ -97,7 +90,7 @@ export class CiteController {
   @ApiResponse({
     type: ResponseCiteDto,
   })
-  remove(@Param('id', ParseIntPipe) id) {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ResponseCiteDto> {
     return this.citeService.remove(id);
   }
 }

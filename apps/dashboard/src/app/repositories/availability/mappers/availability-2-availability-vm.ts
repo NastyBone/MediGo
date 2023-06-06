@@ -9,6 +9,6 @@ export function Availability2AvailabilityVM(Availability: any): AvailabilityVM {
     end: Availability.end,
     day: Availability.day,
     available: Availability.available,
-    doctorId: Availability.doctorId,
+    doctorId: Availability.doctor.id,
   };
 }

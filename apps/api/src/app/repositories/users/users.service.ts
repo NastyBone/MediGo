@@ -203,4 +203,27 @@ export class UsersService implements CrudRepository<User> {
     });
     return data.map((item) => new ResponseUserPatientDto(item));
   }
+
+  async findAllByDoctorRole(): Promise<Array<ResponseUserPatientDto>> {
+    const data = await this.usersRepository.find({
+      where: {
+        deleted: false,
+        role: 'doctor' || 'administrador',
+      },
+    });
+
+    return data.map((item) => new ResponseUserPatientDto(item));
+  }
+
+  async findAllByAssistantRole(): Promise<Array<ResponseUserPatientDto>> {
+    console.log('debug');
+    const data = await this.usersRepository.find({
+      where: {
+        deleted: false,
+        role: 'asistente',
+      },
+    });
+
+    return data.map((item) => new ResponseUserPatientDto(item));
+  }
 }

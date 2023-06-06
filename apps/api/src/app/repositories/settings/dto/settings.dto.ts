@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -6,20 +6,25 @@ export class SettingsDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  name?: string;
+  name!: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  rif?: string;
+  rif!: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  description?: string;
+  description!: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  type?: string;
+  type!: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsNumber()
+  userId!: number;
 }

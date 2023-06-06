@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { ReportService } from './report.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Any } from 'typeorm';
 import { Role, RolesGuard } from '../users/users.guard';
 import { Roles } from '../users';
 
@@ -20,19 +19,19 @@ export class ReportController {
   @Role(Roles.Admin)
   @Get()
   @ApiResponse({
-    type: Any,
+    type: Object,
   })
   findAll(): Promise<{ completed: number; notCompleted: number }> {
     return this.reportService.findAll();
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
-  @Get()
+  @Get(':id')
   @ApiResponse({
-    type: Any,
+    type: Object,
   })
   findByDoctor(
-    @Param('id', ParseIntPipe) id
+    @Param('id', ParseIntPipe) id: number
   ): Promise<{ completed: number; notCompleted: number }> {
     return this.reportService.findByDoctor(id);
   }

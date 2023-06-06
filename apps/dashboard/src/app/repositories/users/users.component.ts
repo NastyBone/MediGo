@@ -7,14 +7,13 @@ import {
   OptionAction,
   TableDataVM,
   TableService,
-} from '../common';
-import { StateService } from '../state';
+} from '../../common';
+import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
 import { RowActionUser, UserVM } from './model';
-import { toInteger } from 'lodash';
 
 @Component({
-  selector: 'sm-soc-users',
+  selector: 'medigo-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
@@ -24,12 +23,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       {
         columnDef: 'name',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        cell: (element: { [key: string]: string }) =>
+          `${element['firstName'] + ' ' + element['lastName']}`,
       },
       {
         columnDef: 'email',
         header: 'Correo',
         cell: (element: { [key: string]: string }) => `${element['email']}`,
+      },
+      {
+        columnDef: 'role',
+        header: 'Rol',
+        cell: (element: { [key: string]: string | boolean }) => element['role'],
       },
       {
         columnDef: 'status',
@@ -57,7 +62,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.usersService.getLoading$().subscribe((loading: boolean) => {
         this.stateService.setLoading(loading);
       })
-    ); //TODO: ADD
+    );
     this.sub$.add(
       this.usersService.getData$().subscribe((users: UserVM[] | null) => {
         this.data = {
@@ -65,10 +70,11 @@ export class UsersComponent implements OnInit, OnDestroy {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           body: (users as any) || [],
         };
-        this.data.body = this.data.body.map((data) =>
-          data['status'] == true
-            ? { ...data, status: 'Inactivo' }
-            : { ...data, status: 'Activo' }
+        this.data.body = this.data.body.map(
+          (data) =>
+            data['status'] == true
+              ? { ...data, status: 'Activo' }
+              : { ...data, status: 'Inactivo' } //TODO: Fix
         );
         this.tableService.setData(this.data);
       })
@@ -85,8 +91,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         break;
       case RowActionUser.delete:
         this.showConfirmUser({
-          id: toInteger(action.data['id']),
-          name: action.data['name'],
+          id: +action.data['id'],
+          firstName: action.data['firstName'],
+          lastName: action.data['lastName'],
           email: action.data['name'],
           status: !!action.data['status'],
           role: action.data['role'],
@@ -116,7 +123,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       data: {
         message: {
           title: 'Eliminar usuario',
-          body: `¿Está seguro que desea eliminar al usuario <strong>${user.name}</strong>?`,
+          body: `¿Está seguro que desea eliminar al usuario <strong>${user.firstName} ${user.lastName} </strong>?`,
         },
       },
       hasBackdrop: true,

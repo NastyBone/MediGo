@@ -9,7 +9,7 @@ export function Cite2CiteVM(Cite: any): CiteVM {
     date: Cite.date,
     time: Cite.time,
     patientConfirm: Cite.patientConfirm,
-    doctorId: Cite.doctorId,
-    patientId: Cite.patientId,
+    doctorId: Cite.doctor.id,
+    patientId: Cite.patient.id,
   };
 }
