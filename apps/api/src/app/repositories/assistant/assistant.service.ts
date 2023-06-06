@@ -121,6 +121,7 @@ export class AssistantService {
     await this.findValid(id);
     try {
       const assistant = await this.repository.save({
+        id,
         doctor: {
           id: updateAssistantDto.doctorId,
         },

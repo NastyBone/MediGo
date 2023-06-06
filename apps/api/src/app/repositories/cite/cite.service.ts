@@ -128,6 +128,7 @@ export class CiteService {
         throw new BadRequestException('Fecha Invalida');
       }
       const cite = await this.repository.save({
+        id,
         subject: updateCiteDto.subject,
         date: new Date(updateCiteDto.date).toLocaleDateString('es-ES'),
         time: updateCiteDto.time,

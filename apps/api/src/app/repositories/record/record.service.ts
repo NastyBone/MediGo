@@ -127,6 +127,7 @@ export class RecordService {
     await this.findValid(id);
     try {
       const record = await this.repository.save({
+        id,
         description: updateRecordDto.description,
         date: new Date(updateRecordDto.date).toLocaleDateString('es-ES'),
         doctor: {

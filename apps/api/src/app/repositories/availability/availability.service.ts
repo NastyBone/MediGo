@@ -102,6 +102,7 @@ export class AvailabilityService {
         throw new BadRequestException('Día no definido');
       }
       const availability = await this.repository.save({
+        id,
         start: updateAvailabilityDto.start,
         end: updateAvailabilityDto.end,
         date: updateAvailabilityDto.day,

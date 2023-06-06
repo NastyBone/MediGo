@@ -15,12 +15,9 @@ export class CronService {
     console.log('Cite!');
 
     const job = new CronJob(this.formatDate(cite.date, cite.time), () => {
-      this.server.emit(
-        'alert',
-        `Cita con doctor(a) ${cite.doctor.user.firstName} ${cite.doctor.user.firstName}!`
-      ); //FIXME: Ser preciso con el tiempo: Agregar 5 minutos menos respecto a la hora y fecha
-
-      //TODO: Testear
+      this.server.emit('alert', {
+        data: cite,
+      });
       console.log('Emitting: ' + cite.date);
     });
     this.schedulerRegistry.addCronJob('' + cite.id, job);

@@ -71,6 +71,7 @@ export class SpecialityService {
     await this.findValid(id);
     try {
       const speciality = await this.repository.save({
+        id,
         name: updateSpecialityDto.name,
         description: updateSpecialityDto.description,
       });

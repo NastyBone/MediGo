@@ -91,6 +91,7 @@ export class PatientService {
     await this.findValid(id);
     try {
       const patient = await this.repository.save({
+        id,
         address: updatePatientDto.address,
         phone: updatePatientDto.phone,
         user: {
