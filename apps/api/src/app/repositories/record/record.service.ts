@@ -35,22 +35,6 @@ export class RecordService {
           user: true,
         },
       },
-      select: {
-        patient: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
     });
 
     return data.map((item) => new ResponseRecordDto(item));
@@ -60,6 +44,7 @@ export class RecordService {
     const data = this.repository.findOne({
       where: {
         deleted: false,
+        id,
       },
       order: {
         date: 'ASC',
@@ -71,22 +56,6 @@ export class RecordService {
         doctor: {
           speciality: true,
           user: true,
-        },
-      },
-      select: {
-        patient: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       },
     });
@@ -158,6 +127,7 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
+          id,
         },
         order: {
           date: 'ASC',
@@ -169,22 +139,6 @@ export class RecordService {
           doctor: {
             speciality: true,
             user: true,
-          },
-        },
-        select: {
-          patient: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-          doctor: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
           },
         },
       });
@@ -200,6 +154,7 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
+          id,
         },
         order: {
           date: 'ASC',

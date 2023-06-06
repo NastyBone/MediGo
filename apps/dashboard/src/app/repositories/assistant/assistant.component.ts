@@ -67,7 +67,6 @@ export class AssistantComponent implements OnInit, OnDestroy {
       this.assistantService
         .getData$()
         .subscribe((assistant: AssistantItemVM[] | null) => {
-          console.log(assistant);
           this.assistantData = {
             ...this.assistantData,
             body: assistant || [],

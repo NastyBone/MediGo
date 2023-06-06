@@ -72,7 +72,6 @@ export class DoctorComponent implements OnInit, OnDestroy {
       this.doctorService
         .getData$()
         .subscribe((doctor: DoctorItemVM[] | null) => {
-          console.log(doctor);
           this.doctorData = {
             ...this.doctorData,
             body: doctor || [],

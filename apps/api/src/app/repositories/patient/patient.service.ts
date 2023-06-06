@@ -28,12 +28,6 @@ export class PatientService {
       relations: {
         user: true,
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-      },
     });
 
     return data.map((item) => new ResponsePatientDto(item));
@@ -47,12 +41,6 @@ export class PatientService {
       },
       relations: {
         user: true,
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
       },
     });
     if (!data) {
@@ -127,12 +115,6 @@ export class PatientService {
         },
         relations: {
           user: true,
-        },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       });
       return new ResponsePatientDto(cite);

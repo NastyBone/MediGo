@@ -60,7 +60,6 @@ export class SpecialityComponent implements OnInit, OnDestroy {
       this.specialityService
         .getData$()
         .subscribe((speciality: SpecialityItemVM[] | null) => {
-          console.log(speciality);
           this.specialityData = {
             ...this.specialityData,
             body: speciality || [],

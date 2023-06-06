@@ -105,6 +105,9 @@ export class FormComponent implements OnInit, OnDestroy {
               this.form.patchValue(
                 {
                   ...patient,
+                  userId: this.incomingUsers.find(
+                    (user) => user.id == patient.user?.id
+                  ),
                 },
                 {
                   emitEvent: false,
@@ -185,6 +188,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
   //
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   displayFn(item?: any): string {
     if (item) {
       if (item.firstName) return item.firstName + ' ' + item.lastName;

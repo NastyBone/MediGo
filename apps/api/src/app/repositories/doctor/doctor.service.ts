@@ -29,12 +29,6 @@ export class DoctorService {
         user: true,
         speciality: true,
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-      },
     });
 
     return data.map((item) => new ResponseDoctorDto(item));
@@ -49,12 +43,6 @@ export class DoctorService {
       relations: {
         user: true,
         speciality: true,
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
       },
     });
     if (!data) {
@@ -129,12 +117,6 @@ export class DoctorService {
           user: true,
           speciality: true,
         },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
       });
       return new ResponseDoctorDto(doctor);
     } catch (error) {
@@ -153,12 +135,6 @@ export class DoctorService {
       relations: {
         user: true,
         speciality: true,
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
       },
     });
 

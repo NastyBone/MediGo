@@ -15,7 +15,6 @@ import { StateService } from '../../../common/state';
 import { UserVM } from '../model';
 import { UsersService } from '../users.service';
 import { isEqual } from 'lodash';
-import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
 
 @Component({
   selector: 'medigo-form',
@@ -45,7 +44,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     lastName: '',
     email: '',
     status: false,
-    role: null as any,
+    role: '',
     id: 0,
   };
   loading = false;

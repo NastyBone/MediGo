@@ -36,19 +36,6 @@ export class AssistantService {
           user: true,
         },
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
     });
 
     return data.map((item) => new ResponseAssistantDto(item));
@@ -58,6 +45,7 @@ export class AssistantService {
     const data = this.repository.findOne({
       where: {
         deleted: false,
+        id,
       },
       order: {
         user: {
@@ -69,19 +57,6 @@ export class AssistantService {
         doctor: {
           speciality: true,
           user: true,
-        },
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       },
     });
@@ -150,6 +125,7 @@ export class AssistantService {
       const assistant = await this.repository.findOne({
         where: {
           deleted: false,
+          id,
         },
         order: {
           user: {
@@ -161,19 +137,6 @@ export class AssistantService {
           doctor: {
             speciality: true,
             user: true,
-          },
-        },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-          doctor: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
           },
         },
       });
