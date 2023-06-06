@@ -1,26 +1,39 @@
-mat-card {
-  min-width: 25rem;
-}
-mat-card-header {
-  display: flex;
-  justify-content: space-between;
+.container {
+  min-width: 50vw;
+  max-height: 80vh;
+  overflow: auto;
 }
 
-#modal-close-button {
+mat-card {
+  height: 100%;
+  margin: 0.8rem;
+}
+
+mat-card-content {
+  column-gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem !important;
+  justify-content: space-evenly;
+}
+mat-card-header {
+  justify-content: space-between;
+}
+.title {
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.close-button {
+  float: right;
+  top: 0.35rem;
   width: 2rem;
   height: 2rem;
 }
 
-#modal-title {
-  font-size: 2rem;
-  margin-top: 1rem;
-}
-
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-}
-
 mat-card-actions {
   justify-content: space-evenly;
+}
+.action-button {
+  flex: 1 1 auto;
 }

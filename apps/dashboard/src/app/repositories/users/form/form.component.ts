@@ -8,14 +8,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { isEqual } from 'lodash';
-import { finalize, Subscription } from 'rxjs';
-
+import { Subscription, finalize } from 'rxjs';
 import { StateService } from '../../../common/state';
-import { UsersService } from '../users.service';
 import { UserVM } from '../model';
+import { UsersService } from '../users.service';
+import { isEqual } from 'lodash';
+import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
 
 @Component({
   selector: 'medigo-form',
@@ -27,10 +27,17 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
   closed = new EventEmitter();
   form!: FormGroup;
   selectable = [
-    { name: 'Activo', value: 'false' },
     { name: 'Inactivo', value: 'true' },
+    { name: 'Activo', value: 'false' },
+  ];
+  roleList = [
+    { name: 'Administrador', value: 'administrador' },
+    { name: 'Doctor', value: 'doctor' },
+    { name: 'Asistente', value: 'asistente' },
+    { name: 'Paciente', value: 'paciente' },
   ];
   selected!: string;
+  selectedRole!: string;
   submitDisabled = true;
   sub$ = new Subscription();
   oldFormValue: UserVM = {
@@ -38,7 +45,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     lastName: '',
     email: '',
     status: false,
-    role: '',
+    role: null as any,
     id: 0,
   };
   loading = false;
@@ -70,11 +77,11 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     if (this.data.id) {
       this.sub$.add(
         this.usersService.find$({ id: this.data.id }).subscribe((users) => {
-          users?.status
-            ? (this.selected = this.selectable[1].value)
-            : (this.selected = this.selectable[0].value);
-
           if (users) {
+            users.status
+              ? (this.selected = this.selectable[0].value)
+              : (this.selected = this.selectable[1].value);
+
             this.oldFormValue = users;
             this.form.patchValue(
               {
@@ -98,9 +105,14 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   private createForm(): void {
     this.form = this.formBuilder.group({
-      name: [null, [Validators.required]],
-      email: [null, [Validators.email, Validators.required]],
+      firstName: [null, [Validators.required, Validators.maxLength(256)]],
+      lastName: [null, [Validators.required, Validators.maxLength(256)]],
+      email: [
+        null,
+        [Validators.email, Validators.required, Validators.maxLength(256)],
+      ],
       status: [false, [Validators.required]],
+      role: [false, [Validators.required]],
       id: [0],
     });
     this.sub$.add(
@@ -110,6 +122,13 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
           this.form.invalid;
       })
     );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  compareObjects(o1: any, o2: any): boolean {
+    o1 == 'false' ? (o1 = false) : (o1 = true);
+    o2 == 'false' ? (o2 = false) : (o2 = true);
+    return o1 === o2;
   }
 
   clickSave(): void {
@@ -122,14 +141,6 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
       this.create();
     }
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  compareObjects(o1: any, o2: any): boolean {
-    o1 == 'false' ? (o1 = false) : (o1 = true);
-    o2 == 'false' ? (o2 = false) : (o2 = true);
-    return o1 === o2;
-  }
-
   private create(): void {
     if (!this.submitDisabled) {
       this.sub$.add(

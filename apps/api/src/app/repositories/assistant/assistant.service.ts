@@ -31,11 +31,22 @@ export class AssistantService {
       },
       relations: {
         user: true,
+        doctor: {
+          speciality: true,
+          user: true,
+        },
       },
       select: {
         user: {
           firstName: true,
           lastName: true,
+        },
+        doctor: {
+          id: true,
+          user: {
+            firstName: true,
+            lastName: true,
+          },
         },
       },
     });
@@ -46,16 +57,31 @@ export class AssistantService {
   async findValid(id: number): Promise<Assistant> {
     const data = this.repository.findOne({
       where: {
-        id,
         deleted: false,
+      },
+      order: {
+        user: {
+          lastName: 'ASC',
+        },
       },
       relations: {
         user: true,
+        doctor: {
+          speciality: true,
+          user: true,
+        },
       },
       select: {
         user: {
           firstName: true,
           lastName: true,
+        },
+        doctor: {
+          id: true,
+          user: {
+            firstName: true,
+            lastName: true,
+          },
         },
       },
     });
@@ -122,18 +148,31 @@ export class AssistantService {
     try {
       const assistant = await this.repository.findOne({
         where: {
-          user: {
-            id,
-          },
           deleted: false,
+        },
+        order: {
+          user: {
+            lastName: 'ASC',
+          },
         },
         relations: {
           user: true,
+          doctor: {
+            speciality: true,
+            user: true,
+          },
         },
         select: {
           user: {
             firstName: true,
             lastName: true,
+          },
+          doctor: {
+            id: true,
+            user: {
+              firstName: true,
+              lastName: true,
+            },
           },
         },
       });

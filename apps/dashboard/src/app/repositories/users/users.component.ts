@@ -23,12 +23,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       {
         columnDef: 'name',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['name']}`,
+        cell: (element: { [key: string]: string }) =>
+          `${element['firstName'] + ' ' + element['lastName']}`,
       },
       {
         columnDef: 'email',
         header: 'Correo',
         cell: (element: { [key: string]: string }) => `${element['email']}`,
+      },
+      {
+        columnDef: 'role',
+        header: 'Rol',
+        cell: (element: { [key: string]: string | boolean }) => element['role'],
       },
       {
         columnDef: 'status',
@@ -56,7 +62,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.usersService.getLoading$().subscribe((loading: boolean) => {
         this.stateService.setLoading(loading);
       })
-    ); //TODO: ADD
+    );
     this.sub$.add(
       this.usersService.getData$().subscribe((users: UserVM[] | null) => {
         this.data = {
@@ -64,10 +70,11 @@ export class UsersComponent implements OnInit, OnDestroy {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           body: (users as any) || [],
         };
-        this.data.body = this.data.body.map((data) =>
-          data['status'] == true
-            ? { ...data, status: 'Inactivo' }
-            : { ...data, status: 'Activo' }
+        this.data.body = this.data.body.map(
+          (data) =>
+            data['status'] == true
+              ? { ...data, status: 'Activo' }
+              : { ...data, status: 'Inactivo' } //TODO: Fix
         );
         this.tableService.setData(this.data);
       })

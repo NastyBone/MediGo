@@ -24,6 +24,7 @@ export class ResponseAssistantDto {
   user: ResponseUserPatientDto;
 
   constructor(data: Assistant) {
+    console.log(data);
     this.id = data.id;
     this.doctor = new ResponseDoctorDto(data.doctor);
     this.user = new ResponseUserPatientDto(data.user);

@@ -25,17 +25,20 @@ export class AssistantComponent implements OnInit, OnDestroy {
       {
         columnDef: 'firstName',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['firstName']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['firstName']}`,
       },
       {
         columnDef: 'lastName',
         header: 'Apellido',
-        cell: (element: { [key: string]: string }) => `${element['lastName']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['lastName']}`,
       },
       {
         columnDef: 'doctor',
         header: 'Doctor',
-        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
       },
     ],
     body: [],
@@ -64,6 +67,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
       this.assistantService
         .getData$()
         .subscribe((assistant: AssistantItemVM[] | null) => {
+          console.log(assistant);
           this.assistantData = {
             ...this.assistantData,
             body: assistant || [],

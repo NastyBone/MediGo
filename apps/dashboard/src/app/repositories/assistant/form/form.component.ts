@@ -163,8 +163,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
   private createForm(): void {
     this.form = this.formBuilder.group({
-      doctor: this.doctorControl,
-      user: this.userControl,
+      doctorId: this.doctorControl,
+      userId: this.userControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -188,6 +188,8 @@ export class FormComponent implements OnInit, OnDestroy {
         this.assistantService
           .create({
             ...this.form.value,
+            doctorId: this.doctorControl.getRawValue()?.id,
+            userId: this.userControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {

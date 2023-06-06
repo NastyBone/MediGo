@@ -23,6 +23,7 @@ export class ResponseSpecialityDto {
 
   constructor(data: Speciality) {
     this.id = data.id;
+    this.name = data.name;
     this.description = data.description;
   }
 }

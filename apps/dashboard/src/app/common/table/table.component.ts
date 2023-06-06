@@ -87,9 +87,7 @@ export class TableComponent implements AfterViewInit, OnInit {
           data.options.length === 0
             ? this.incomingData.options
             : [...data.options];
-        this.dataSource = new MatTableDataSource(
-          this.fixSource(this.incomingData.body)
-        );
+        this.dataSource = new MatTableDataSource(this.incomingData.body);
         this.displayedColumns = this.incomingData.headers.map(
           (c: any) => c.columnDef
         );

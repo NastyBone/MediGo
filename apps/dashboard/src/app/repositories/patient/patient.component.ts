@@ -25,12 +25,14 @@ export class PatientComponent implements OnInit, OnDestroy {
       {
         columnDef: 'fistName',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['firstName']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['firstName']}`,
       },
       {
         columnDef: 'lastName',
         header: 'Apellido',
-        cell: (element: { [key: string]: string }) => `${element['lastName']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['lastName']}`,
       },
       {
         columnDef: 'phone',

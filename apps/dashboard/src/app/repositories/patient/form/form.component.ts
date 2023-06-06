@@ -129,7 +129,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       address: [null, [Validators.required, Validators.maxLength(256)]],
       phone: [null, [Validators.required, Validators.maxLength(20)]],
-      user: this.userControl,
+      userId: this.userControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -153,6 +153,7 @@ export class FormComponent implements OnInit, OnDestroy {
         this.patientService
           .create({
             ...this.form.value,
+            userId: this.userControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {
@@ -186,8 +187,7 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   displayFn(item?: any): string {
     if (item) {
-      if (item.user.firstName)
-        return item.user.firstName + ' ' + item.user.lastName;
+      if (item.firstName) return item.firstName + ' ' + item.lastName;
     }
     return '';
   }

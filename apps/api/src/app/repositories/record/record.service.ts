@@ -27,19 +27,24 @@ export class RecordService {
         date: 'ASC',
       },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
       select: {
         patient: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
           },
         },
         doctor: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
@@ -54,23 +59,30 @@ export class RecordService {
   async findValid(id: number): Promise<Record> {
     const data = this.repository.findOne({
       where: {
-        id,
         deleted: false,
       },
+      order: {
+        date: 'ASC',
+      },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
       select: {
         patient: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
           },
         },
         doctor: {
+          id: true,
           user: {
             firstName: true,
             lastName: true,
@@ -144,25 +156,30 @@ export class RecordService {
     try {
       const record = await this.repository.find({
         where: {
-          patient: {
-            id,
-          },
           deleted: false,
         },
+        order: {
+          date: 'ASC',
+        },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
         select: {
           patient: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
             },
           },
           doctor: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
@@ -181,25 +198,30 @@ export class RecordService {
     try {
       const record = await this.repository.find({
         where: {
-          doctor: {
-            id,
-          },
           deleted: false,
         },
+        order: {
+          date: 'ASC',
+        },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
         select: {
           patient: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,
             },
           },
           doctor: {
+            id: true,
             user: {
               firstName: true,
               lastName: true,

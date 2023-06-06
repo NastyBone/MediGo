@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoggerService } from '@tecnops/logger';
+import { LoggerService } from '@medigo/logger';
 
 import { AlertServiceKey } from './consts';
 import { ErrorHandlerService } from './error-handler.service';

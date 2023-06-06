@@ -174,8 +174,8 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       date: this.dateControl,
       description: [null, [Validators.required, Validators.maxLength(256)]],
-      doctor: this.doctorControl,
-      patient: this.patientControl,
+      doctorId: this.doctorControl,
+      patientId: this.patientControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
@@ -199,6 +199,8 @@ export class FormComponent implements OnInit, OnDestroy {
         this.recordService
           .create({
             ...this.form.value,
+            doctorId: this.doctorControl.getRawValue()?.id,
+            patientId: this.doctorControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {

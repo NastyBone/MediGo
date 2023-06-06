@@ -8,6 +8,7 @@ import { BaseQuery, UseCase } from '../../../../common';
 import { User2UserVM } from '../../mappers';
 import { UsersMemoryService } from '../../memory';
 import { UserVM } from '../../model';
+import { User2UserItemVM } from '../../mappers/user-2-user-item-vm';
 
 @Injectable()
 export class GetUsersService
@@ -23,7 +24,7 @@ export class GetUsersService
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       map((data: any[]) => {
         data = data?.filter((user: UserVM) => user.role !== 'admin');
-        return data.map(User2UserVM);
+        return data.map(User2UserItemVM);
       }),
       tap((users) => {
         this.memoryService.setDataSource(users);

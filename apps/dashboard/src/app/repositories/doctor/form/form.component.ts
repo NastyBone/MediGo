@@ -47,6 +47,8 @@ export class FormComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     userId: null as any,
   };
+  specialityId!: number;
+  userId!: number;
 
   form!: FormGroup;
   loading = false;
@@ -163,7 +165,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private createForm(): void {
     this.form = this.formBuilder.group({
       phone: [null, [Validators.required, Validators.maxLength(18)]],
-      speciality: this.specialityControl,
+      specialityId: this.specialityControl,
       userId: this.userControl,
     });
     this.sub$.add(
@@ -188,6 +190,8 @@ export class FormComponent implements OnInit, OnDestroy {
         this.doctorService
           .create({
             ...this.form.value,
+            specialityId: this.specialityControl.getRawValue()?.id,
+            userId: this.userControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {
@@ -221,6 +225,7 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   displayFn(item?: any): string {
     if (item) {
+      if (item.name) return item.name;
       if (item.firstName) return item.firstName + ' ' + item.lastName;
       if (item.user.firstName)
         return item.user.firstName + ' ' + item.user.lastName;

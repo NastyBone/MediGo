@@ -25,23 +25,20 @@ export class DoctorComponent implements OnInit, OnDestroy {
       {
         columnDef: 'lastName',
         header: 'Apellido',
-        cell: (element: { [key: string]: string }) => `${element['lastName']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['lastName']}`,
       },
       {
         columnDef: 'firstName',
         header: 'Nombre',
-        cell: (element: { [key: string]: string }) => `${element['firstName']}`,
-      },
-      {
-        columnDef: 'description',
-        header: 'Descripción',
-        cell: (element: { [key: string]: string }) =>
-          `${element['description']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['user']['firstName']}`,
       },
       {
         columnDef: 'speciality',
         header: 'Especialidad',
-        cell: (element: { [key: string]: string }) => `${element['available']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['speciality']['name']}`,
       },
       {
         columnDef: 'phone',
@@ -75,6 +72,7 @@ export class DoctorComponent implements OnInit, OnDestroy {
       this.doctorService
         .getData$()
         .subscribe((doctor: DoctorItemVM[] | null) => {
+          console.log(doctor);
           this.doctorData = {
             ...this.doctorData,
             body: doctor || [],
