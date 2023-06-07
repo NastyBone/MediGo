@@ -106,7 +106,7 @@ export class PatientService {
 
   async findByUserId(id: number) {
     try {
-      const cite = await this.repository.findOne({
+      const patient = await this.repository.findOne({
         where: {
           deleted: false,
           user: {
@@ -117,7 +117,7 @@ export class PatientService {
           user: true,
         },
       });
-      return new ResponsePatientDto(cite);
+      return new ResponsePatientDto(patient);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar paciente');

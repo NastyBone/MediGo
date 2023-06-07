@@ -5,13 +5,27 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
+  SubscribeMessage,
+  MessageBody,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
+import io from 'socket.io-client';
+import { socketOptions } from './constants';
+
+@WebSocketGateway(+process.env.GATEWAY_PORT | 8080, socketOptions)
 export class AlertGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  constructor() {
+    // const client = io('http://localhost:8080');
+    // client.on('connect', () => {
+    //   console.log('Connected to WebSocket server');
+    // });
+    // client.on('alert', (data: any) => {
+    //   console.log('Received message:', data);
+    // }); //TESTING
+  }
   private logger: Logger = new Logger('AlertGateway');
 
   @WebSocketServer() server: Server;

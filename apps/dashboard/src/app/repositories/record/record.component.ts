@@ -36,12 +36,14 @@ export class RecordComponent implements OnInit, OnDestroy {
       {
         columnDef: 'doctor',
         header: 'Doctor',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
       },
       {
         columnDef: 'patient',
         header: 'Paciente',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['patient']['user']['lastName']} ${element['patient']['user']['firstName']}`,
       },

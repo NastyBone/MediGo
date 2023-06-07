@@ -3,14 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 import { UserStateVM } from './models';
-import { DoctorService } from '../../repositories/doctor/doctor.service';
-import { AssistantService } from '../../repositories/assistant/assistant.service';
-import { PatientService } from '../../repositories/patient/patient.service';
-
 @Injectable({ providedIn: 'root' })
 export class UserStateService {
-  constructor() // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
-  {
+  constructor() { // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
     return;
   }
 
