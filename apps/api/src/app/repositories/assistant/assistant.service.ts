@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -74,6 +75,12 @@ export class AssistantService {
   async insert(
     createAssistantDto: CreateAssistantDto
   ): Promise<ResponseAssistantDto> {
+    const user = await this.findByUserId(createAssistantDto.userId);
+    if (user) {
+      throw new BadRequestException(
+        'Este usuario ya está asignado como asistente'
+      );
+    }
     try {
       const assistant = this.repository.create({
         doctor: {
@@ -125,7 +132,9 @@ export class AssistantService {
       const assistant = await this.repository.findOne({
         where: {
           deleted: false,
-          id,
+          user: {
+            id,
+          },
         },
         order: {
           user: {
@@ -140,6 +149,7 @@ export class AssistantService {
           },
         },
       });
+
       return new ResponseAssistantDto(assistant);
     } catch (error) {
       console.log(error);

@@ -21,11 +21,10 @@ import { Roles } from '../users';
 export class DoctorController {
   constructor(private doctorService: DoctorService) {}
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get('user/:id')
   @ApiResponse({
     type: ResponseDoctorDto,
-    isArray: true,
   })
   findByUserId(
     @Param('id', ParseIntPipe) id: number
@@ -33,7 +32,7 @@ export class DoctorController {
     return this.doctorService.findByUserId(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin, Roles.Paciente)
   @Get('speciality/:id')
   @ApiResponse({
     type: ResponseDoctorDto,
@@ -45,7 +44,7 @@ export class DoctorController {
     return this.doctorService.findBySpeciality(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get(':id')
   @ApiResponse({
     type: ResponseDoctorDto,
@@ -54,7 +53,7 @@ export class DoctorController {
     return this.doctorService.findOne(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get()
   @ApiResponse({
     type: ResponseDoctorDto,

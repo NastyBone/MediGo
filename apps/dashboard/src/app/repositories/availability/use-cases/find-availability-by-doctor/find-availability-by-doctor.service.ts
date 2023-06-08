@@ -9,9 +9,9 @@ import { AvailabilityItemVM } from '../../model';
 export class FindAvailabilityByDoctorService {
   constructor(private availabilityService: AvailabilityService) {}
 
-  exec(data: BaseQuery): Observable<AvailabilityItemVM> {
+  exec(data: BaseQuery): Observable<AvailabilityItemVM[]> {
     return this.availabilityService
       .availabilityControllerFindByDoctor(data?.id || 0) //ERROR
-      .pipe(map(AvailabilityItem2AvailabilityItemVM));
+      .pipe(map((res) => res.map(AvailabilityItem2AvailabilityItemVM)));
   }
 }

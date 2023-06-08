@@ -170,7 +170,6 @@ export class FormComponent implements OnInit, OnDestroy {
                   emitEvent: false,
                 }
               );
-              console.log(this.form);
             }
           })
       );
@@ -234,6 +233,8 @@ export class FormComponent implements OnInit, OnDestroy {
           .update({
             ...this.form.value,
             id: this.data.id,
+            doctorId: this.doctorControl.getRawValue()?.id,
+            patientId: this.doctorControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {

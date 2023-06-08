@@ -47,7 +47,7 @@ export class RecordController {
     return this.recordService.findByPatient(id);
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Get(':id')
   @ApiResponse({
     type: ResponseRecordDto,
@@ -66,7 +66,7 @@ export class RecordController {
     return this.recordService.findAll();
   }
 
-  @Role(Roles.Admin, Roles.Doctor, Roles.Asistente)
+  @Role(Roles.Admin, Roles.Doctor)
   @Post()
   @ApiResponse({
     type: ResponseRecordDto,
@@ -87,7 +87,7 @@ export class RecordController {
     return this.recordService.update(id, updateDto);
   }
 
-  // @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Put('report/:id')
   report(@Param('id', ParseIntPipe) id: number): Promise<ReportsResponseDto> {
     return this.recordService.generate(id);

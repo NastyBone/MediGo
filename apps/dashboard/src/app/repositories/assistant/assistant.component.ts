@@ -104,12 +104,11 @@ export class AssistantComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(assistant: AssistantItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${assistant}</strong>?`,
+          title: 'Eliminar Asistente',
+          body: `¿Está seguro que desea eliminar el asistente <strong>${assistant.user?.firstName} ${assistant.user?.lastName}</strong>?`,
         },
       },
       hasBackdrop: true,

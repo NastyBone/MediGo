@@ -108,12 +108,11 @@ export class PatientComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(patient: PatientItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${patient}</strong>?`,
+          title: 'Eliminar Paciente',
+          body: `¿Está seguro que desea eliminar el asistente <strong>${patient.user?.firstName} ${patient.user?.lastName}</strong>?`,
         },
       },
       hasBackdrop: true,

@@ -19,24 +19,26 @@ import { DoctorItemVM, RowActionDoctor } from './model';
   styleUrls: ['./doctor.component.scss'],
 })
 export class DoctorComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   doctorData: TableDataVM<DoctorItemVM> = {
     headers: [
       {
         columnDef: 'lastName',
         header: 'Apellido',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['user']['lastName']}`,
       },
       {
         columnDef: 'firstName',
         header: 'Nombre',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['user']['firstName']}`,
       },
       {
         columnDef: 'speciality',
         header: 'Especialidad',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['speciality']['name']}`,
       },
@@ -109,12 +111,11 @@ export class DoctorComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(doctor: DoctorItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${doctor}</strong>?`,
+          title: 'Eliminar Doctor',
+          body: `¿Está seguro que desea eliminar el doctor <strong>${doctor.user?.firstName} ${doctor.user?.lastName}</strong>?`,
         },
       },
       hasBackdrop: true,

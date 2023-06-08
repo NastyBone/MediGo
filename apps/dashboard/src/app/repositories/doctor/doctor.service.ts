@@ -46,7 +46,7 @@ export class DoctorService extends ListComponentService<DoctorItemVM> {
       .pipe(finalize(() => this.setLoading(false)));
   }
 
-  findBySpecialityId$(id: number): Observable<DoctorItemVM> {
+  findBySpecialityId$(id: number): Observable<DoctorItemVM[]> {
     this.setLoading(true);
     return this.findDoctorBySpeciality
       .exec({ id })

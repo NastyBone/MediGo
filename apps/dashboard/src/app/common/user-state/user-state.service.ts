@@ -5,7 +5,8 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserStateVM } from './models';
 @Injectable({ providedIn: 'root' })
 export class UserStateService {
-  constructor() { // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
+  constructor() {
+    // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
     return;
   }
 
@@ -51,5 +52,12 @@ export class UserStateService {
 
   getRole(): string {
     return this.getUser()?.role || '';
+  }
+
+  getFullRole(): any {
+    const data = localStorage.getItem('medigo-user');
+    if (data) {
+      return JSON.parse(data);
+    }
   }
 }

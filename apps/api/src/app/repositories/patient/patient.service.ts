@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -57,6 +58,12 @@ export class PatientService {
   async insert(
     createPatientDto: CreatePatientDto
   ): Promise<ResponsePatientDto> {
+    const user = await this.findByUserId(createPatientDto.userId);
+    if (user) {
+      throw new BadRequestException(
+        'Este usuario ya está asignado como paciente'
+      );
+    }
     try {
       const patient = this.repository.create({
         address: createPatientDto.address,
