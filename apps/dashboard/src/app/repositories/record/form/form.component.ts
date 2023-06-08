@@ -186,7 +186,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private createForm(): void {
     this.form = this.formBuilder.group({
       date: this.dateControl,
-      description: [null, [Validators.required, Validators.maxLength(256)]],
+      description: [null, [Validators.required, Validators.maxLength(2000)]],
       doctorId: this.doctorControl,
       patientId: this.patientControl,
     });

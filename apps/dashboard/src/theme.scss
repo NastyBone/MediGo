@@ -175,18 +175,18 @@ $mat-primary: (
 $theme-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
 body {
-  --accent-color: #ffd000;
-  --accent-lighter-color: #fff1b3;
-  --accent-darker-color: #ffbe00;
+  --accent-color: #3398cc;
+  --accent-lighter-color: #c2e0f0;
+  --accent-darker-color: #207bb9;
   --text-accent-color: #{$dark-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$dark-primary-text};
 }
 $mat-accent: (
-  main: #fff6a4,
-  lighter: #fffce4,
-  darker: #fff289,
-  200: #fff6a4,
+  main: #3398cc,
+  lighter: #c2e0f0,
+  darker: #207bb9,
+  200: #3398cc,
   // For slide toggle,
   contrast:
     (
