@@ -1,14 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import * as d3 from 'd3';
-import { PieArcDatum, select } from 'd3';
+import { StateService } from '../../common/state';
+import { Subscription, finalize } from 'rxjs';
+import { GetReportService } from './get-report.service';
 
 @Component({
   selector: 'medigo-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
 })
-export class ReportComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ReportComponent implements OnInit, OnDestroy {
+  constructor(
+    private stateService: StateService,
+    private reportService: GetReportService
+  ) {}
+  loading = false;
+  sub$ = new Subscription();
+
   data = [
     { name: 'Confirmadas', value: 20 },
     { name: 'No Confirmadas', value: 40 },
@@ -24,15 +34,28 @@ export class ReportComponent implements OnInit, AfterViewInit, OnDestroy {
   //TODO: Implementar con citas
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.loading = true;
+    this.stateService.setLoading(true);
+    this.sub$.add(
+      this.reportService
+        .exec()
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+            this.stateService.setLoading(false);
+          })
+        )
+        .subscribe((report) => {
+          this.data[0].value = report.completed;
+          this.data[1].value = report.notCompleted;
+          this.createSvg();
+          this.createColors();
+          this.drawChart();
+        })
+    );
   }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-  ngAfterViewInit(): void {
-    this.createSvg();
-    this.createColors();
-    this.drawChart();
+    this.sub$.unsubscribe();
   }
 
   private createSvg(): void {
@@ -56,10 +79,8 @@ export class ReportComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private drawChart(): void {
-    // Compute the position of each group on the pie:
     const pie = d3.pie<any>().value((d: any) => Number(d.value));
 
-    // Build the pie chart
     this.svg
       .selectAll('pieces')
       .data(pie(this.data))
@@ -71,7 +92,6 @@ export class ReportComponent implements OnInit, AfterViewInit, OnDestroy {
       .style('stroke-width', '1px')
       .style('opacity', 0.6);
 
-    // Add labels
     const labelLocation = d3.arc().innerRadius(100).outerRadius(this.radius);
 
     this.svg
