@@ -16,19 +16,49 @@
 <form mat-dialog-content [formGroup]="form!">
   <mat-form-field class="">
     <mat-label>Inicio</mat-label>
-    <input type="text" matInput formControlName="start" />
+    <input
+      type="text"
+      matInput
+      formControlName="start"
+      [ngxMatTimepicker]="pickerA"
+      [format]="12"
+      readonly
+      [max]="'11:00 AM'"
+      [min]="'07:00 AM'"
+    />
+    <ngx-mat-timepicker-toggle
+      (click)="pickerA.open()"
+      matSuffix
+    ></ngx-mat-timepicker-toggle>
+
     <mat-error *ngIf="form.controls['start'].hasError('required')"
       >Campo requerido</mat-error
     >
   </mat-form-field>
+  <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
 
   <mat-form-field class="">
     <mat-label>Fin</mat-label>
-    <input type="text" matInput formControlName="end" />
+    <input
+      type="text"
+      matInput
+      formControlName="end"
+      [ngxMatTimepicker]="pickerB"
+      [format]="12"
+      readonly
+      [max]="'12:00 PM'"
+      [min]="'08:00 AM'"
+    />
+    <ngx-mat-timepicker-toggle
+      (click)="pickerB.open()"
+      matSuffix
+    ></ngx-mat-timepicker-toggle>
+
     <mat-error *ngIf="form.controls['end'].hasError('required')"
       >Campo requerido</mat-error
     >
   </mat-form-field>
+  <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
 
   <mat-form-field>
     <mat-label>Dia</mat-label>
@@ -101,12 +131,13 @@
       id="available"
       matSelect
       [(value)]="availableSelect"
+      required
+      [(value)]="selected"
+      [compareWith]="compareObjects"
     >
-      <mat-option
-        *ngFor="let option of selectable"
-        [value]="option.value"
-        >{{ option.name }}</mat-option
-      >
+      <mat-option *ngFor="let option of selectable" [value]="option.value">{{
+        option.name
+      }}</mat-option>
     </mat-select>
     <mat-error *ngIf="form.controls['available'].hasError('required')"
       >Campo Requerido</mat-error
