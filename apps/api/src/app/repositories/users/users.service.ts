@@ -216,7 +216,6 @@ export class UsersService implements CrudRepository<User> {
   }
 
   async findAllByAssistantRole(): Promise<Array<ResponseUserPatientDto>> {
-    console.log('debug');
     const data = await this.usersRepository.find({
       where: {
         deleted: false,

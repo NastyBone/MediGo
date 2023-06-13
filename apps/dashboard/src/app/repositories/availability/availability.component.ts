@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
   OptionAction,
   ConfirmModalComponent,
+  UserStateService,
 } from '../../common';
 import { StateService } from '../../common/state';
 import { AvailabilityService } from './availability.service';
@@ -61,7 +62,8 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private availabilityService: AvailabilityService,
     private tableService: TableService,
-    private stateService: StateService
+    private stateService: StateService,
+    private userState: UserStateService
   ) {}
   ngOnInit(): void {
     this.sub$.add(
@@ -71,15 +73,15 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.availabilityService
-        .getData$()
-        .subscribe((availability: AvailabilityItemVM[] | null) => {
+      this.roleBasedData().subscribe(
+        (availability: AvailabilityItemVM[] | null) => {
           this.availabilityData = {
             ...this.availabilityData,
             body: availability || [],
           };
           this.tableService.setData(this.availabilityData);
-        })
+        }
+      )
     );
     this.availabilityService.get({});
   }
@@ -111,12 +113,11 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(availability: AvailabilityItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${availability}</strong>?`,
+          title: 'Eliminar Disponibilidad',
+          body: `¿Está seguro que desea eliminar la disponibilidad del  <strong>${availability.start}</strong>? al <strong>${availability.end}</strong>?`,
         },
       },
       hasBackdrop: true,
@@ -128,5 +129,23 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
         this.availabilityService.delete(availability?.id || 0);
       }
     });
+  }
+
+  private roleBasedData(): Observable<AvailabilityItemVM[] | null> {
+    const role = this.userState.getRole();
+    const roleData = this.userState.getFullRole();
+    switch (role) {
+      case 'asistente': {
+        return this.availabilityService.findByDoctor$(roleData.doctor.id);
+        break;
+      }
+      case 'doctor': {
+        return this.availabilityService.findByDoctor$(roleData.id);
+        break;
+      }
+      default: {
+        return this.availabilityService.getData$();
+      }
+    }
   }
 }

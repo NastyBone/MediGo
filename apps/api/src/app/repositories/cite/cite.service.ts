@@ -32,20 +32,6 @@ export class CiteService {
           speciality: true,
         },
       },
-      select: {
-        patient: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
     });
 
     return data.map((item) => new ResponseCiteDto(item));
@@ -64,20 +50,6 @@ export class CiteService {
         patient: true,
         doctor: {
           speciality: true,
-        },
-      },
-      select: {
-        patient: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       },
     });
@@ -128,6 +100,7 @@ export class CiteService {
         throw new BadRequestException('Fecha Invalida');
       }
       const cite = await this.repository.save({
+        id,
         subject: updateCiteDto.subject,
         date: new Date(updateCiteDto.date).toLocaleDateString('es-ES'),
         time: updateCiteDto.time,
@@ -178,20 +151,6 @@ export class CiteService {
             speciality: true,
           },
         },
-        select: {
-          patient: {
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-          doctor: {
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-        },
       });
       return cite.map((item) => new ResponseCiteDto(item));
     } catch (error) {
@@ -216,20 +175,6 @@ export class CiteService {
           patient: true,
           doctor: {
             speciality: true,
-          },
-        },
-        select: {
-          patient: {
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-          doctor: {
-            user: {
-              firstName: true,
-              lastName: true,
-            },
           },
         },
       });

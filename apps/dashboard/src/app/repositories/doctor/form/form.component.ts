@@ -142,6 +142,12 @@ export class FormComponent implements OnInit, OnDestroy {
               this.form.patchValue(
                 {
                   ...doctor,
+                  userId: this.incomingUsers.find(
+                    (user) => user.id == doctor.user?.id
+                  ),
+                  specialityId: this.incomingSpecialities.find(
+                    (speciality) => speciality.id == doctor.speciality?.id
+                  ),
                 },
                 {
                   emitEvent: false,
@@ -223,6 +229,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
   //
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   displayFn(item?: any): string {
     if (item) {
       if (item.name) return item.name;

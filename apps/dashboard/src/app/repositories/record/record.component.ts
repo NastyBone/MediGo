@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
   OptionAction,
   ConfirmModalComponent,
+  UserStateService,
 } from '../../common';
 import { StateService } from '../../common/state';
 import { FormComponent } from './form/form.component';
@@ -36,18 +37,24 @@ export class RecordComponent implements OnInit, OnDestroy {
       {
         columnDef: 'doctor',
         header: 'Doctor',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
       },
       {
         columnDef: 'patient',
         header: 'Paciente',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
           `${element['patient']['user']['lastName']} ${element['patient']['user']['firstName']}`,
       },
     ],
     body: [],
-    options: [],
+    options: [
+      { name: 'Editar', value: 'update', icon: 'edit' },
+      { name: 'Eliminar', value: 'delete', icon: 'delete' },
+      { name: 'Imprimir', value: 'print', icon: 'print' },
+    ],
   };
 
   sub$ = new Subscription();
@@ -59,7 +66,8 @@ export class RecordComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private recordService: RecordService,
     private tableService: TableService,
-    private stateService: StateService
+    private stateService: StateService,
+    private userState: UserStateService
   ) {}
   ngOnInit(): void {
     this.sub$.add(
@@ -69,15 +77,13 @@ export class RecordComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.recordService
-        .getData$()
-        .subscribe((record: RecordItemVM[] | null) => {
-          this.recordData = {
-            ...this.recordData,
-            body: record || [],
-          };
-          this.tableService.setData(this.recordData);
-        })
+      this.roleBasedData().subscribe((record: RecordItemVM[] | null) => {
+        this.recordData = {
+          ...this.recordData,
+          body: record || [],
+        };
+        this.tableService.setData(this.recordData);
+      })
     );
     this.recordService.get({});
   }
@@ -93,6 +99,10 @@ export class RecordComponent implements OnInit, OnDestroy {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.showConfirm(option.data as any);
         break;
+      case RowActionRecord.print:
+        this.recordService
+          .generateReport$(+option.data['id'])
+          .subscribe((res) => window.open(res as string, '_blank'));
     }
   }
 
@@ -109,12 +119,11 @@ export class RecordComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(record: RecordItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${record}</strong>?`,
+          title: 'Eliminar Informe',
+          body: `¿Está seguro que desea eliminar el informe?`,
         },
       },
       hasBackdrop: true,
@@ -126,5 +135,27 @@ export class RecordComponent implements OnInit, OnDestroy {
         this.recordService.delete(record?.id || 0);
       }
     });
+  }
+
+  private roleBasedData(): Observable<RecordItemVM[] | null> {
+    const role = this.userState.getRole();
+    const roleData = this.userState.getFullRole();
+    switch (role) {
+      case 'asistente': {
+        return this.recordService.findByDoctorId$(roleData.doctor.id);
+        break;
+      }
+      case 'doctor': {
+        return this.recordService.findByDoctorId$(roleData.id);
+        break;
+      }
+      case 'paciente': {
+        return this.recordService.findByPatientId$(roleData.id);
+        break;
+      }
+      default: {
+        return this.recordService.getData$();
+      }
+    }
   }
 }

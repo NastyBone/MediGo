@@ -34,7 +34,7 @@ export class AvailabilityService extends ListComponentService<AvailabilityItemVM
     );
   }
 
-  findByDoctor$(id: number): Observable<AvailabilityItemVM> {
+  findByDoctor$(id: number): Observable<AvailabilityItemVM[]> {
     this.setLoading(true);
     return this.findAvailabilityByDoctor
       .exec({ id })

@@ -9,9 +9,9 @@ import { DoctorItemVM, DoctorVM } from '../../model';
 export class FindDoctorBySpecialityService {
   constructor(private doctorService: DoctorService) {}
 
-  exec(data: BaseQuery): Observable<DoctorItemVM> {
+  exec(data: BaseQuery): Observable<DoctorItemVM[]> {
     return this.doctorService
       .doctorControllerFindBySpecialityId(data?.id || 0) //ERROR
-      .pipe(map(Doctor2DoctorItemVM));
+      .pipe(map((res) => res.map(Doctor2DoctorItemVM)));
   }
 }

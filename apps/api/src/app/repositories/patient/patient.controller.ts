@@ -21,7 +21,7 @@ import { Roles } from '../users';
 export class PatientController {
   constructor(private patientService: PatientService) {}
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get('user/:id')
   @ApiResponse({
     type: ResponsePatientDto,
@@ -33,7 +33,7 @@ export class PatientController {
     return this.patientService.findByUserId(id);
   }
 
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Role(Roles.Admin)
   @Get(':id')
   @ApiResponse({
     type: ResponsePatientDto,

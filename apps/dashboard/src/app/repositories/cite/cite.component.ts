@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
   OptionAction,
   ConfirmModalComponent,
+  UserStateService,
 } from '../../common';
 import { StateService } from '../../common/state';
 import { CiteService } from './cite.service';
@@ -19,7 +20,6 @@ import { CiteItemVM, RowActionCite } from './model';
   styleUrls: ['./cite.component.scss'],
 })
 export class CiteComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   citeData: TableDataVM<CiteItemVM> = {
     headers: [
       {
@@ -67,7 +67,8 @@ export class CiteComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private citeService: CiteService,
     private tableService: TableService,
-    private stateService: StateService
+    private stateService: StateService,
+    private userState: UserStateService
   ) {}
   ngOnInit(): void {
     this.sub$.add(
@@ -77,7 +78,7 @@ export class CiteComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      this.citeService.getData$().subscribe((cite: CiteItemVM[] | null) => {
+      this.roleBasedData().subscribe((cite: CiteItemVM[] | null) => {
         this.citeData = {
           ...this.citeData,
           body: cite || [],
@@ -115,12 +116,11 @@ export class CiteComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(cite: CiteItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
-          title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${cite}</strong>?`,
+          title: 'Eliminar Cita',
+          body: `¿Está seguro que desea eliminar la cita del día <strong>${cite.date}</strong>?`,
         },
       },
       hasBackdrop: true,
@@ -132,5 +132,27 @@ export class CiteComponent implements OnInit, OnDestroy {
         this.citeService.delete(cite?.id || 0);
       }
     });
+  }
+
+  private roleBasedData(): Observable<CiteItemVM[] | null> {
+    const role = this.userState.getRole();
+    const roleData = this.userState.getFullRole();
+    switch (role) {
+      case 'asistente': {
+        return this.citeService.findByDoctorId$(roleData.doctor.id);
+        break;
+      }
+      case 'doctor': {
+        return this.citeService.findByDoctorId$(roleData.id);
+        break;
+      }
+      case 'paciente': {
+        return this.citeService.findByPatient$(roleData.id);
+        break;
+      }
+      default: {
+        return this.citeService.getData$();
+      }
+    }
   }
 }

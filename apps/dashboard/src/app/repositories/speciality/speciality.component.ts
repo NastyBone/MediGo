@@ -19,7 +19,6 @@ import { SpecialityService } from './speciality.service';
   styleUrls: ['./speciality.component.scss'],
 })
 export class SpecialityComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   specialityData: TableDataVM<SpecialityItemVM> = {
     headers: [
       {
@@ -60,7 +59,6 @@ export class SpecialityComponent implements OnInit, OnDestroy {
       this.specialityService
         .getData$()
         .subscribe((speciality: SpecialityItemVM[] | null) => {
-          console.log(speciality);
           this.specialityData = {
             ...this.specialityData,
             body: speciality || [],
@@ -98,12 +96,11 @@ export class SpecialityComponent implements OnInit, OnDestroy {
   }
 
   showConfirm(speciality: SpecialityItemVM): void {
-    //TODO: Fix
     const dialogRef = this.matDialog.open(ConfirmModalComponent, {
       data: {
         message: {
           title: 'Eliminar Servicio',
-          body: `¿Está seguro que desea eliminar el asistente <strong>${speciality}</strong>?`,
+          body: `¿Está seguro que desea eliminar la especialidad <strong>${speciality.name}</strong>?`,
         },
       },
       hasBackdrop: true,

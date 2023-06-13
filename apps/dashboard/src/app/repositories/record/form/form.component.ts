@@ -88,51 +88,60 @@ export class FormComponent implements OnInit, OnDestroy {
       forkJoin({
         patients: this.recordService.getPatients$(),
         doctors: this.recordService.getDoctors$(),
-      }).subscribe(({ doctors, patients }) => {
-        if (patients) {
-          this.incomingPatients = patients;
-          this.filteredPatients = this.patientControl.valueChanges.pipe(
-            startWith<string | PatientItemVM | undefined | null>(''),
-            map((value) => {
-              if (value !== null) {
-                return typeof value === 'string'
-                  ? value
-                  : value?.user?.firstName + ' ' + value?.user?.lastName;
-              }
-              return '';
-            }),
-            map((name) => {
-              return name
-                ? this._filterPatients(name)
-                : this.incomingPatients.slice();
-            })
-          );
-        }
-        //
-        if (doctors) {
-          this.incomingDoctors = doctors;
-          this.filteredDoctors = this.doctorControl.valueChanges.pipe(
-            startWith<string | DoctorItemVM | null | undefined>(''),
-            map((value) => {
-              if (value !== null) {
-                return typeof value === 'string'
-                  ? value
-                  : value?.user?.firstName + ' ' + value?.user?.lastName;
-              }
-              return '';
-            }),
-            map((name) => {
-              return name
-                ? this._filterDoctors(name)
-                : this.incomingDoctors.slice();
-            })
-          );
-        }
       })
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+            this.stateService.setLoading(this.loading);
+          })
+        )
+        .subscribe(({ doctors, patients }) => {
+          if (patients) {
+            this.incomingPatients = patients;
+            this.filteredPatients = this.patientControl.valueChanges.pipe(
+              startWith<string | PatientItemVM | undefined | null>(''),
+              map((value) => {
+                if (value !== null) {
+                  return typeof value === 'string'
+                    ? value
+                    : value?.user?.firstName + ' ' + value?.user?.lastName;
+                }
+                return '';
+              }),
+              map((name) => {
+                return name
+                  ? this._filterPatients(name)
+                  : this.incomingPatients.slice();
+              })
+            );
+          }
+          //
+          if (doctors) {
+            this.incomingDoctors = doctors;
+            this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+              startWith<string | DoctorItemVM | null | undefined>(''),
+              map((value) => {
+                if (value !== null) {
+                  return typeof value === 'string'
+                    ? value
+                    : value?.user?.firstName + ' ' + value?.user?.lastName;
+                }
+                return '';
+              }),
+              map((name) => {
+                return name
+                  ? this._filterDoctors(name)
+                  : this.incomingDoctors.slice();
+              })
+            );
+          }
+        })
     );
     //
     this.createForm();
     if (this.data?.id) {
+      this.loading = true;
+      this.stateService.setLoading(this.loading);
       this.sub$.add(
         this.recordService
           .find$({ id: this.data.id })
@@ -150,6 +159,12 @@ export class FormComponent implements OnInit, OnDestroy {
               this.form.patchValue(
                 {
                   ...record,
+                  doctorId: this.incomingDoctors.find(
+                    (doctor) => doctor.id == record.doctor?.id
+                  ),
+                  patientId: this.incomingPatients.find(
+                    (patient) => patient.id == record.patient?.id
+                  ),
                 },
                 {
                   emitEvent: false,
@@ -159,8 +174,6 @@ export class FormComponent implements OnInit, OnDestroy {
           })
       );
     }
-    this.loading = false;
-    this.stateService.setLoading(this.loading);
   }
 
   ngOnDestroy(): void {
@@ -173,7 +186,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private createForm(): void {
     this.form = this.formBuilder.group({
       date: this.dateControl,
-      description: [null, [Validators.required, Validators.maxLength(256)]],
+      description: [null, [Validators.required, Validators.maxLength(2000)]],
       doctorId: this.doctorControl,
       patientId: this.patientControl,
     });
@@ -220,6 +233,8 @@ export class FormComponent implements OnInit, OnDestroy {
           .update({
             ...this.form.value,
             id: this.data.id,
+            doctorId: this.doctorControl.getRawValue()?.id,
+            patientId: this.doctorControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {
@@ -232,6 +247,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
   //
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   displayFn(item?: any): string {
     if (item) {
       if (item.firstName) return item.firstName + ' ' + item.lastName;

@@ -4,8 +4,9 @@ import { CronJob } from 'cron';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { ResponseCiteDto } from '../repositories/cite/dto';
+import { socketOptions } from './constants';
 
-@WebSocketGateway()
+@WebSocketGateway(+process.env.GATEWAY_PORT | 8080, socketOptions)
 @Injectable()
 export class CronService {
   constructor(private schedulerRegistry: SchedulerRegistry) {}
@@ -13,14 +14,10 @@ export class CronService {
 
   setCronJob(cite: ResponseCiteDto): void {
     console.log('Cite!');
-
     const job = new CronJob(this.formatDate(cite.date, cite.time), () => {
-      this.server.emit(
-        'alert',
-        `Cita con doctor(a) ${cite.doctor.user.firstName} ${cite.doctor.user.firstName}!`
-      ); //FIXME: Ser preciso con el tiempo: Agregar 5 minutos menos respecto a la hora y fecha
-
-      //TODO: Testear
+      this.server.emit('alert', {
+        data: cite,
+      });
       console.log('Emitting: ' + cite.date);
     });
     this.schedulerRegistry.addCronJob('' + cite.id, job);
@@ -28,8 +25,7 @@ export class CronService {
   }
 
   deleteCronJob(id: string): void {
-    const job = this.schedulerRegistry.getCronJob('' + id);
-    job.stop();
+    this.schedulerRegistry.deleteCronJob('' + id);
   }
 
   updateCronJob(cite: ResponseCiteDto): void {
@@ -44,8 +40,8 @@ export class CronService {
   }
 
   test(): void {
-    console.log('Cite!');
-    const myDate = this.formatDate('2023/05/20', '22:06'); //TODO: Check if this is the format
+    const myDate = new Date(new Date(Date.now() + 5000));
+    console.log(myDate);
     const job = new CronJob(myDate, () => {
       if (this.server) {
         this.server.emit('alert', `Cita: ${myDate}`);
@@ -59,14 +55,14 @@ export class CronService {
   }
 
   formatDate(_date: string, _time: string): Date {
-    let date = new Date(_date);
-    date = new Date(new Date(date).getDate() - 1);
+    const date = new Date(_date);
+    const yesterday = new Date();
+    yesterday.setHours(0, 0, 0, 0);
+    yesterday.setDate(date.getDate() - 1);
     const [hours, minutes] = _time.split(':');
-    date.setHours(+hours);
-    date.setMinutes(+minutes);
+    yesterday.setHours(+hours);
+    yesterday.setMinutes(+minutes);
 
-    console.log(date);
-
-    return date;
+    return yesterday;
   }
 }
