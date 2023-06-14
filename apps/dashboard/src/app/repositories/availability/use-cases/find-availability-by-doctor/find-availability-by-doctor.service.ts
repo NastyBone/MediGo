@@ -15,3 +15,4 @@ export class FindAvailabilityByDoctorService {
       .pipe(map((res) => res.map(AvailabilityItem2AvailabilityItemVM)));
   }
 }
+//suri tamos jodios
