@@ -14,13 +14,47 @@
   </div>
   
   <form mat-dialog-content [formGroup]="form!">
+    
+    
+    <!-- Doctor -->
     <mat-form-field class="">
-      <mat-label></mat-label>
+      <mat-label>Doctor</mat-label>
       <input type="text" matInput formControlName="" />
       <mat-error *ngIf="form.controls[''].hasError('required')"
         >Campo requerido</mat-error
       >
     </mat-form-field>
+
+    <!-- Especialidad -->
+
+    <mat-form-field class="">
+      <mat-label>Especialidad</mat-label>
+      <input type="text" matInput formControlName="" />
+      <mat-error *ngIf="form.controls[''].hasError('required')"
+        >Campo requerido</mat-error
+      >
+    </mat-form-field>
+    <!-- Fecha -->
+    <mat-form-field class="example-full-width">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Hora -->
+    <mat-form-field class="">
+      <mat-label>Hora</mat-label>
+      <input type="text" matInput formControlName="" />
+      <mat-error *ngIf="form.controls[''].hasError('required')"
+        >Campo requerido</mat-error
+      >
+    </mat-form-field>
+    
+
   </form>
   
   <div class="modal-footer" mat-dialog-actions>

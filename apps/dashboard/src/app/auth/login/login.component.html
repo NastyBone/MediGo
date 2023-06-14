@@ -15,57 +15,116 @@
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          <mat-form-field>
-            <mat-label for="email">Correo</mat-label>
-            <input name="email" formControlName="email" matInput type="email" />
-            <mat-error *ngIf="form.controls['email'].hasError('email')"
-              >Correo Invalido</mat-error
-            >
-            <mat-error *ngIf="form.controls['email'].hasError('required')"
-              >Correo Requerido</mat-error
-            >
-            <mat-error *ngIf="form.controls['email'].hasError('maxlength')"
-              >Longitud Excedida</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label for="password">Contraseña</mat-label>
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              formControlName="password"
-              matNativeControl="text"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-              type="button"
-            >
-              <span *ngIf="hide"
-                ><mat-icon>{{ 'visibility' }}</mat-icon></span
-              >
-              <span *ngIf="!hide"
-                ><mat-icon *ngIf="!hide">{{ 'visibility_off' }}</mat-icon></span
-              >
-            </button>
-            <mat-error *ngIf="form.controls['password'].hasError('required')"
-              >Contraseña requerida</mat-error
-            >
-            <mat-error *ngIf="form.controls['password'].hasError('minlength')"
-              >8 caracteres minimos</mat-error
-            >
-            <mat-error *ngIf="form.controls['password'].hasError('maxlength')"
-              >16 caracteres maximos</mat-error
-            >
-          </mat-form-field>
-          <div style="width: 100%">
-            <span class="recovery-link" routerLink="/recovery-password"
-              >Restablecer contraseña</span
-            >
-          </div>
+          <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+            <mat-tab label="Doctor">
+              <mat-form-field>
+                <mat-label for="email">Correo</mat-label>
+                <input name="email" formControlName="email" matInput type="email" />
+                <mat-error *ngIf="form.controls['email'].hasError('email')"
+                  >Correo Invalido</mat-error
+                >
+                <mat-error *ngIf="form.controls['email'].hasError('required')"
+                  >Correo Requerido</mat-error
+                >
+                <mat-error *ngIf="form.controls['email'].hasError('maxlength')"
+                  >Longitud Excedida</mat-error
+                >
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label for="password">Contraseña</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  matNativeControl="text"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                  type="button"
+                >
+                  <span *ngIf="hide"
+                    ><mat-icon>{{ 'visibility' }}</mat-icon></span
+                  >
+                  <span *ngIf="!hide"
+                    ><mat-icon *ngIf="!hide">{{ 'visibility_off' }}</mat-icon></span
+                  >
+                </button>
+                <mat-error *ngIf="form.controls['password'].hasError('required')"
+                  >Contraseña requerida</mat-error
+                >
+                <mat-error *ngIf="form.controls['password'].hasError('minlength')"
+                  >8 caracteres minimos</mat-error
+                >
+                <mat-error *ngIf="form.controls['password'].hasError('maxlength')"
+                  >16 caracteres maximos</mat-error
+                >
+              </mat-form-field>
+              <div style="width: 100%">
+                <span class="recovery-link" routerLink="/recovery-password"
+                  >Restablecer contraseña</span
+                >
+              </div>
+            </mat-tab>
+            <mat-tab label="Paciente">
+              <mat-form-field>
+                <mat-label for="email">Correo</mat-label>
+                <input name="email" formControlName="email" matInput type="email" />
+                <mat-error *ngIf="form.controls['email'].hasError('email')"
+                  >Correo Invalido</mat-error
+                >
+                <mat-error *ngIf="form.controls['email'].hasError('required')"
+                  >Correo Requerido</mat-error
+                >
+                <mat-error *ngIf="form.controls['email'].hasError('maxlength')"
+                  >Longitud Excedida</mat-error
+                >
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label for="password">Contraseña</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  matNativeControl="text"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                  type="button"
+                >
+                  <span *ngIf="hide"
+                    ><mat-icon>{{ 'visibility' }}</mat-icon></span
+                  >
+                  <span *ngIf="!hide"
+                    ><mat-icon *ngIf="!hide">{{ 'visibility_off' }}</mat-icon></span
+                  >
+                </button>
+                <mat-error *ngIf="form.controls['password'].hasError('required')"
+                  >Contraseña requerida</mat-error
+                >
+                <mat-error *ngIf="form.controls['password'].hasError('minlength')"
+                  >8 caracteres minimos</mat-error
+                >
+                <mat-error *ngIf="form.controls['password'].hasError('maxlength')"
+                  >16 caracteres maximos</mat-error
+                >
+              </mat-form-field>
+              <div style="width: 100%">
+                <span class="recovery-link" routerLink="/recovery-password"
+                  >Restablecer contraseña</span
+                >
+              </div>
+            </mat-tab>
+
+          </mat-tab-group>
+         
         </mat-card-content>
         <mat-card-actions>
           <button

@@ -15,6 +15,7 @@ import { ResetPasswordService } from './reset-password/reset-password.service';
 import { RecoveryPasswordService } from './recovery-password/recovery-password.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatTabsModule,
   ],
   providers: [LoginService, ResetPasswordService, RecoveryPasswordService],
 })
