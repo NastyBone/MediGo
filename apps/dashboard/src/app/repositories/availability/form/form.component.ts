@@ -22,6 +22,7 @@ import { forbiddenNamesValidator } from '../../../common/forbidden-names-validat
 import { DoctorItemVM } from '../../doctor/model';
 import { DAYS } from '../days/days';
 import { DayVM } from '../days/day-vm';
+import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
 
 @Component({
   selector: 'medigo-form',
@@ -47,10 +48,11 @@ export class FormComponent implements OnInit, OnDestroy {
   loading = false;
 
   selectable = [
-    { name: 'Disponible', value: 'true' },
     { name: 'No Disponible', value: 'false' },
+    { name: 'Disponible', value: 'true' },
   ];
   availableSelect!: string;
+  selected!: string;
 
   //
   incomingDoctors!: DoctorItemVM[];
@@ -160,12 +162,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       start: [null, [Validators.required]],
       end: [null, [Validators.required]],
-      day: [null, [Validators.required]],
+      day: this.dayControl,
       available: [false, [Validators.required]],
       doctor: this.doctorControl,
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
+        console.log(this.form.value);
+
         this.submitDisabled =
           isEqual(this.oldAvailabilityValue, this.form.getRawValue()) ||
           this.form.invalid;
@@ -174,11 +178,15 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickSave(): void {
-    if (this.data.id) {
-      this.update();
-    } else {
-      this.create();
-    }
+    this.form.value.available == 'true'
+      ? (this.form.value.status = true)
+      : (this.form.value.status = false);
+    console.log(this.form.value);
+    // if (this.data.id) {
+    //   this.update();
+    // } else {
+    //   this.create();
+    // }
   }
   private create(): void {
     if (!this.submitDisabled) {
@@ -219,6 +227,7 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   displayFn(item?: any): string {
     if (item) {
+      if (item.name) return item.name;
       if (item.firstName) return item.firstName + ' ' + item.lastName;
       if (item.user.firstName)
         return item.user.firstName + ' ' + item.user.lastName;
@@ -241,5 +250,12 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.days.filter(
       (option) => option.name.toLowerCase().indexOf(filterValue) === 0
     );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  compareObjects(o1: any, o2: any): boolean {
+    o1 == 'false' ? (o1 = false) : (o1 = true);
+    o2 == 'false' ? (o2 = false) : (o2 = true);
+    return o1 === o2;
   }
 }

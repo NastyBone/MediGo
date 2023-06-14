@@ -35,22 +35,6 @@ export class RecordService {
           user: true,
         },
       },
-      select: {
-        patient: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
     });
 
     return data.map((item) => new ResponseRecordDto(item));
@@ -60,6 +44,7 @@ export class RecordService {
     const data = this.repository.findOne({
       where: {
         deleted: false,
+        id,
       },
       order: {
         date: 'ASC',
@@ -71,22 +56,6 @@ export class RecordService {
         doctor: {
           speciality: true,
           user: true,
-        },
-      },
-      select: {
-        patient: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       },
     });
@@ -127,6 +96,7 @@ export class RecordService {
     await this.findValid(id);
     try {
       const record = await this.repository.save({
+        id,
         description: updateRecordDto.description,
         date: new Date(updateRecordDto.date).toLocaleDateString('es-ES'),
         doctor: {
@@ -157,6 +127,7 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
+          id,
         },
         order: {
           date: 'ASC',
@@ -168,22 +139,6 @@ export class RecordService {
           doctor: {
             speciality: true,
             user: true,
-          },
-        },
-        select: {
-          patient: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-          doctor: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
           },
         },
       });
@@ -199,6 +154,7 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
+          id,
         },
         order: {
           date: 'ASC',
@@ -238,6 +194,7 @@ export class RecordService {
 
   async generate(id: number): Promise<ReportsResponseDto> {
     const toGenerate = await this.findOne(id);
+    console.log(toGenerate);
     const response = await this.reportService.generateReport({
       data: toGenerate,
     });

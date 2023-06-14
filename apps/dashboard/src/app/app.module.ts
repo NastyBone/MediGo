@@ -14,6 +14,7 @@ import { ToastModule, ToastService } from '@medigo/toast';
 import { ErrorHandlerModule, ErrorHandlerService } from '@medigo/error-handler';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AuthGuard } from './auth/auth.guard';
+import { AlertSocketService } from './common/alert-socket/alert-socket.service';
 
 function apiConfigFactory(): Configuration {
   return new Configuration({
@@ -44,6 +45,7 @@ function apiConfigFactory(): Configuration {
     }),
   ],
   providers: [
+    AlertSocketService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     //  AuthGuard, //TODO: ADD
     {

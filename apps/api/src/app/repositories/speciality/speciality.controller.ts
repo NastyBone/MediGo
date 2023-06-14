@@ -20,12 +20,12 @@ import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 
 @UseGuards(RolesGuard)
-@Role(Roles.Admin)
 @ApiTags('speciality')
 @Controller('speciality')
 export class SpecialityController {
   constructor(private specialityService: SpecialityService) {}
 
+  @Role(Roles.Admin)
   @Get(':id')
   @ApiResponse({
     type: ResponseSpecialityDto,
@@ -36,6 +36,7 @@ export class SpecialityController {
     return this.specialityService.findOne(id);
   }
 
+  @Role(Roles.Admin, Roles.Paciente)
   @Get()
   @ApiResponse({
     type: ResponseSpecialityDto,
@@ -45,6 +46,7 @@ export class SpecialityController {
     return this.specialityService.findAll();
   }
 
+  @Role(Roles.Admin)
   @Post()
   @ApiResponse({
     type: ResponseSpecialityDto,
@@ -55,6 +57,7 @@ export class SpecialityController {
     return this.specialityService.insert(createDto);
   }
 
+  @Role(Roles.Admin)
   @Patch(':id')
   @ApiResponse({
     type: ResponseSpecialityDto,
@@ -66,14 +69,15 @@ export class SpecialityController {
     return this.specialityService.update(id, updateDto);
   }
 
+  @Role(Roles.Admin)
   @Delete(':id')
   @ApiResponse({
     type: ResponseSpecialityDto,
   })
+  @Role(Roles.Admin)
   remove(
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResponseSpecialityDto> {
     return this.specialityService.remove(id);
   }
 }
-//TODO: Cuadro de accesos

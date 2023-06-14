@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -28,12 +29,6 @@ export class PatientService {
       relations: {
         user: true,
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-      },
     });
 
     return data.map((item) => new ResponsePatientDto(item));
@@ -47,12 +42,6 @@ export class PatientService {
       },
       relations: {
         user: true,
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
       },
     });
     if (!data) {
@@ -69,6 +58,12 @@ export class PatientService {
   async insert(
     createPatientDto: CreatePatientDto
   ): Promise<ResponsePatientDto> {
+    const user = await this.findByUserId(createPatientDto.userId);
+    if (user) {
+      throw new BadRequestException(
+        'Este usuario ya está asignado como paciente'
+      );
+    }
     try {
       const patient = this.repository.create({
         address: createPatientDto.address,
@@ -91,6 +86,7 @@ export class PatientService {
     await this.findValid(id);
     try {
       const patient = await this.repository.save({
+        id,
         address: updatePatientDto.address,
         phone: updatePatientDto.phone,
         user: {
@@ -117,7 +113,7 @@ export class PatientService {
 
   async findByUserId(id: number) {
     try {
-      const cite = await this.repository.findOne({
+      const patient = await this.repository.findOne({
         where: {
           deleted: false,
           user: {
@@ -127,14 +123,8 @@ export class PatientService {
         relations: {
           user: true,
         },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
       });
-      return new ResponsePatientDto(cite);
+      return new ResponsePatientDto(patient);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar paciente');

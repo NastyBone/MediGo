@@ -24,6 +24,7 @@ import { TableModule } from '../../common';
 import { DoctorModule } from '../doctor/doctor.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 @NgModule({
   declarations: [AvailabilityComponent, FormComponent],
@@ -38,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
+    NgxMatTimepickerModule,
     MatSelectModule,
     MatInputModule,
     ReactiveFormsModule,

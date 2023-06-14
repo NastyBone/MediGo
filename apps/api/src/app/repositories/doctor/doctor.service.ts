@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -29,12 +30,6 @@ export class DoctorService {
         user: true,
         speciality: true,
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-      },
     });
 
     return data.map((item) => new ResponseDoctorDto(item));
@@ -50,12 +45,6 @@ export class DoctorService {
         user: true,
         speciality: true,
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-      },
     });
     if (!data) {
       throw new NotFoundException('Doctor no encontrado.');
@@ -68,6 +57,12 @@ export class DoctorService {
     return new ResponseDoctorDto(doctor);
   }
   async insert(createDoctorDto: CreateDoctorDto): Promise<ResponseDoctorDto> {
+    const user = await this.findByUserId(createDoctorDto.userId);
+    if (user) {
+      throw new BadRequestException(
+        'Este usuario ya está asignado como doctor'
+      );
+    }
     try {
       const doctor = this.repository.create({
         phone: createDoctorDto.phone,
@@ -91,6 +86,7 @@ export class DoctorService {
     await this.findValid(id);
     try {
       const doctor = await this.repository.save({
+        id,
         phone: updateDoctorDto.phone,
         speciality: {
           id: updateDoctorDto.specialityId,
@@ -128,12 +124,6 @@ export class DoctorService {
           user: true,
           speciality: true,
         },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
       });
       return new ResponseDoctorDto(doctor);
     } catch (error) {
@@ -152,12 +142,6 @@ export class DoctorService {
       relations: {
         user: true,
         speciality: true,
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
       },
     });
 

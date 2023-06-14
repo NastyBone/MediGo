@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -36,19 +37,6 @@ export class AssistantService {
           user: true,
         },
       },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-      },
     });
 
     return data.map((item) => new ResponseAssistantDto(item));
@@ -58,6 +46,7 @@ export class AssistantService {
     const data = this.repository.findOne({
       where: {
         deleted: false,
+        id,
       },
       order: {
         user: {
@@ -69,19 +58,6 @@ export class AssistantService {
         doctor: {
           speciality: true,
           user: true,
-        },
-      },
-      select: {
-        user: {
-          firstName: true,
-          lastName: true,
-        },
-        doctor: {
-          id: true,
-          user: {
-            firstName: true,
-            lastName: true,
-          },
         },
       },
     });
@@ -99,6 +75,12 @@ export class AssistantService {
   async insert(
     createAssistantDto: CreateAssistantDto
   ): Promise<ResponseAssistantDto> {
+    const user = await this.findByUserId(createAssistantDto.userId);
+    if (user) {
+      throw new BadRequestException(
+        'Este usuario ya está asignado como asistente'
+      );
+    }
     try {
       const assistant = this.repository.create({
         doctor: {
@@ -121,6 +103,7 @@ export class AssistantService {
     await this.findValid(id);
     try {
       const assistant = await this.repository.save({
+        id,
         doctor: {
           id: updateAssistantDto.doctorId,
         },
@@ -149,6 +132,9 @@ export class AssistantService {
       const assistant = await this.repository.findOne({
         where: {
           deleted: false,
+          user: {
+            id,
+          },
         },
         order: {
           user: {
@@ -162,20 +148,8 @@ export class AssistantService {
             user: true,
           },
         },
-        select: {
-          user: {
-            firstName: true,
-            lastName: true,
-          },
-          doctor: {
-            id: true,
-            user: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-        },
       });
+
       return new ResponseAssistantDto(assistant);
     } catch (error) {
       console.log(error);

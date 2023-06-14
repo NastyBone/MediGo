@@ -25,7 +25,7 @@ import { RolesGuard, Role } from '../users/users.guard';
 export class AvailabilityController {
   constructor(private availabilityService: AvailabilityService) {}
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Doctor)
   @Get(':id')
   @ApiResponse({
     type: ResponseAvailabilityDto,
@@ -40,6 +40,7 @@ export class AvailabilityController {
   @Get('doctor/:id')
   @ApiResponse({
     type: ResponseAvailabilityDto,
+    isArray: true,
   })
   findByDoctor(
     @Param('id', ParseIntPipe) id: number

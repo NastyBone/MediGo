@@ -41,14 +41,14 @@ export class RecordService extends ListComponentService<RecordItemVM> {
     );
   }
 
-  findByDoctorId$(id: number): Observable<RecordItemVM> {
+  findByDoctorId$(id: number): Observable<RecordItemVM[]> {
     this.setLoading(true);
     return this.findRecordByDoctor
       .exec({ id })
       .pipe(finalize(() => this.setLoading(false)));
   }
 
-  findByPatientId$(id: number): Observable<RecordItemVM> {
+  findByPatientId$(id: number): Observable<RecordItemVM[]> {
     this.setLoading(true);
     return this.findRecordByPatient
       .exec({ id })

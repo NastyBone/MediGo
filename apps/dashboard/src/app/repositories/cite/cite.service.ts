@@ -20,8 +20,8 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public getCitesService: GetCitesService,
     public updateCiteService: UpdateCiteService,
     public citesMemoryService: CiteMemoryService,
-    protected findCiteByDoctor: FindCitesByDoctorService,
-    protected findCiteByPatient: FindCitesByPatientService
+    public findCiteByDoctor: FindCitesByDoctorService,
+    public findCiteByPatient: FindCitesByPatientService
   ) {
     super(
       getCitesService,

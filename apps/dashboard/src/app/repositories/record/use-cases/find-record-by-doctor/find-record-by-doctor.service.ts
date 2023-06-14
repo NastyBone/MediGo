@@ -9,9 +9,9 @@ import { RecordItemVM } from '../../model';
 export class FindRecordByDoctorService {
   constructor(private recordService: RecordService) {}
 
-  exec(data: BaseQuery): Observable<RecordItemVM> {
+  exec(data: BaseQuery): Observable<RecordItemVM[]> {
     return this.recordService
       .recordControllerFindByDoctor(data?.id || 0) //ERROR
-      .pipe(map(RecordItem2RecordItemVM));
+      .pipe(map((res) => res.map(RecordItem2RecordItemVM)));
   }
 }

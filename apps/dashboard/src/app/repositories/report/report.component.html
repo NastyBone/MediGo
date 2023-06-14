@@ -1,1 +1,2 @@
-<p>report works!</p>
+<div #chart *ngIf="this.data[0].value !== 0 || this.data[1].value !== 0"></div>
+<div class="no-data" *ngIf="!(this.data[0].value !== 0 || this.data[1].value !== 0)">No hay información disponible</div>
