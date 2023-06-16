@@ -28,6 +28,7 @@ import { RecordService } from '../record.service';
 import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
 import { DoctorItemVM } from '../../doctor/model';
 import { PatientItemVM } from '../../patient/model';
+import { dateFixFormat } from '@medigo/time-handler';
 
 @Component({
   selector: 'medigo-form',
@@ -41,7 +42,7 @@ export class FormComponent implements OnInit, OnDestroy {
   submitDisabled = true;
   sub$ = new Subscription();
   oldRecordValue: RecordItemVM = {
-    date: '',
+    date: dateFixFormat(new Date().toLocaleDateString()),
     description: '',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doctorId: null as any,
@@ -153,7 +154,7 @@ export class FormComponent implements OnInit, OnDestroy {
           )
           .subscribe((record) => {
             if (record) {
-              this.dateControl.setValue(this.dateFix(record.date));
+              this.dateControl.setValue(dateFixFormat(record.date));
               record.date = this.dateControl.value || record.date;
               this.oldRecordValue = record;
               this.form.patchValue(
@@ -277,8 +278,4 @@ export class FormComponent implements OnInit, OnDestroy {
     );
   }
   //
-  private dateFix(date: string) {
-    const [day, month, year] = date.split('/');
-    return new Date(+year, +month - 1, +day, 0, 0, 0).toISOString();
-  }
 }

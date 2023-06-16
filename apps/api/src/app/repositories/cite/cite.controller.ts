@@ -50,6 +50,18 @@ export class CiteController {
   @ApiResponse({
     type: ResponseCiteDto,
   })
+  findByDoctorAndDate(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() date: string
+  ): Promise<ResponseCiteDto> {
+    return this.citeService.findByDoctorAndDate(id, date);
+  }
+
+  @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
+  @Get(':id')
+  @ApiResponse({
+    type: ResponseCiteDto,
+  })
   findOne(@Param('id', ParseIntPipe) id: number): Promise<ResponseCiteDto> {
     return this.citeService.findOne(id);
   }

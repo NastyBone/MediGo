@@ -17,6 +17,8 @@ export class GetAvailabilitiesService
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   exec(data: BaseQuery): Observable<Array<AvailabilityItemVM> | null> {
+    console.log('check');
+
     return this.availabilitysService.availabilityControllerFindAll().pipe(
       map((res) => res.map(AvailabilityItem2AvailabilityItemVM)),
       tap((Availability: AvailabilityItemVM[]) => {

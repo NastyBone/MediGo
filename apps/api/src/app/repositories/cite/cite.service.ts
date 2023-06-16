@@ -19,6 +19,7 @@ export class CiteService {
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
+    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -83,6 +84,11 @@ export class CiteService {
 
       //CRON
       this.cronService.setCronJob(cite);
+      if (cite.patientConfirm) {
+        this.cronService.startJob(cite.id);
+      } else {
+        this.cronService.pauseJob(cite.id);
+      }
 
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
@@ -115,6 +121,12 @@ export class CiteService {
 
       //CRON
       this.cronService.updateCronJob(cite);
+      if (cite.patientConfirm) {
+        this.cronService.startJob(cite.id);
+      } else {
+        this.cronService.pauseJob(cite.id);
+      }
+
       return this.findOne(cite.id);
     } catch (error) {
       console.log(error);
@@ -182,6 +194,32 @@ export class CiteService {
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar citas');
+    }
+  }
+
+  async findByDoctorAndDate(
+    doctor_id: number,
+    date: string
+  ): Promise<ResponseCiteDto> {
+    try {
+      const cite = await this.repository.findOne({
+        where: {
+          deleted: false,
+          date: date,
+          doctor: {
+            id: doctor_id,
+          },
+        },
+        relations: {
+          patient: true,
+          doctor: {
+            speciality: true,
+          },
+        },
+      });
+      return new ResponseCiteDto(cite);
+    } catch (e) {
+      throw new InternalServerErrorException('Error al encontrar cita');
     }
   }
 

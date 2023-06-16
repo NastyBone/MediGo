@@ -9,6 +9,7 @@ export function AvailabilityItem2AvailabilityItemVM(
   return {
     ...Availability2AvailabilityVM(Availability),
     doctor: Availability.doctor,
+    available: Availability.available ? 'Disponible' : 'No Disponible',
     options: {
       options: [
         {

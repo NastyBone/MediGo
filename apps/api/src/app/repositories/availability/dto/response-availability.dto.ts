@@ -42,5 +42,6 @@ export class ResponseAvailabilityDto {
     this.end = data.end;
     this.day = data.day;
     this.doctor = new ResponseDoctorDto(data.doctor);
+    this.available = data.available;
   }
 }
