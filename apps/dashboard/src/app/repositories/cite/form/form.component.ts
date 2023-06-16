@@ -9,10 +9,14 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription, finalize, Observable} from 'rxjs';
 import { StateService } from '../../../common/state';
 import { CiteService } from '../cite.service';
 import { CiteItemVM } from '../model';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { SpecialityItemVM } from '../../speciality/model';
+
 
 @Component({
   selector: 'medigo-form',
@@ -38,22 +42,27 @@ export class FormComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
   loading = false;
-
+  filteredSpeciality!: Observable<SpecialityItemVM[]>;
   constructor(
     private citeService: CiteService,
-    @Inject(MAT_DIALOG_DATA) public data: CiteItemVM,
+    
     private stateService: StateService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
     this.createForm();
-    if (this.data?.id) {
+    if (this.activatedRoute.snapshot.params['id']) {
+      this.id = this.activatedRoute.snapshot.params['id'];
+    }
+    if (this.id) {
       this.sub$.add(
         this.citeService
-          .find$({ id: this.data.id })
+          .find$({ id: this.id })
           .pipe(
             finalize(() => {
               this.loading = false;
@@ -84,7 +93,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickClosed(): void {
-    this.closed.emit();
+    this.router.navigate(['/dashboard/cite']);
   }
   private createForm(): void {
     this.form = this.formBuilder.group({
@@ -105,7 +114,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickSave(): void {
-    if (this.data.id) {
+    if (this.id) {
       this.update();
     } else {
       this.create();
@@ -135,7 +144,7 @@ export class FormComponent implements OnInit, OnDestroy {
         this.citeService
           .update({
             ...this.form.value,
-            id: this.data.id,
+            id: this.id,
           })
           .pipe(
             finalize(() => {

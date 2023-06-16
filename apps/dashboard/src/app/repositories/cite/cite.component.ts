@@ -13,6 +13,7 @@ import { StateService } from '../../common/state';
 import { CiteService } from './cite.service';
 import { FormComponent } from './form/form.component';
 import { CiteItemVM, RowActionCite } from './model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'medigo-cite',
@@ -62,13 +63,15 @@ export class CiteComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
+  indexes: number[] = [];
 
   constructor(
     private matDialog: MatDialog,
     private citeService: CiteService,
     private tableService: TableService,
     private stateService: StateService,
-    private userState: UserStateService
+    private userState: UserStateService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.sub$.add(
@@ -103,16 +106,16 @@ export class CiteComponent implements OnInit, OnDestroy {
     }
   }
 
-  showModal(id?: number): void {
-    const modal = this.matDialog.open(FormComponent, {
-      hasBackdrop: true,
-      data: {
-        id,
-      },
+  showModal(id?: number, reqId?: number): void {
+    this.citeService.setRef({
+      reqId: reqId || null,
+      indexes: this.indexes,
     });
-    modal.componentInstance.closed.subscribe(() => {
-      modal.close();
-    });
+    if (id) {
+      this.router.navigate([`/dashboard/cite/form/${id}`, { id: id }]);
+    } else {
+      this.router.navigate(['/dashboard/cite/form']);
+    }
   }
 
   showConfirm(cite: CiteItemVM): void {

@@ -22,7 +22,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
-
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 @NgModule({
   declarations: [CiteComponent, FormComponent],
   imports: [
@@ -37,6 +39,9 @@ import { TableModule } from '../../common';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatFormFieldModule, 
+    MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     CiteService,

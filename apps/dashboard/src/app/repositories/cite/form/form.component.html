@@ -1,82 +1,213 @@
-<div class="modal-header">
-    <span mat-dialog-title> Titulo </span>
-    <button
-      id="modal-close-button"
-      mat-dialog-close
-      mat-mini-fab
-      type="button"
-      aria-label="Cerrar"
-      color="basic"
-      (click)="clickClosed()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  
-  <form mat-dialog-content [formGroup]="form!">
-    
-    
-    <!-- Doctor -->
-    <mat-form-field class="">
-      <mat-label>Doctor</mat-label>
-      <input type="text" matInput formControlName="" />
-      <mat-error *ngIf="form.controls[''].hasError('required')"
-        >Campo requerido</mat-error
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="title">Crear o Modificar Cuenta</mat-card-title>
+      <button
+        class="close-button"
+        type="button"
+        mat-fab
+        color="basic"
+        aria-label="Close"
+        (click)="clickClosed()"
       >
-    </mat-form-field>
-
-    <!-- Especialidad -->
-
-    <mat-form-field class="">
-      <mat-label>Especialidad</mat-label>
-      <input type="text" matInput formControlName="" />
-      <mat-error *ngIf="form.controls[''].hasError('required')"
-        >Campo requerido</mat-error
-      >
-    </mat-form-field>
-    <!-- Fecha -->
-    <mat-form-field class="example-full-width">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker">
-        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <!-- Hora -->
-    <mat-form-field class="">
-      <mat-label>Hora</mat-label>
-      <input type="text" matInput formControlName="" />
-      <mat-error *ngIf="form.controls[''].hasError('required')"
-        >Campo requerido</mat-error
-      >
-    </mat-form-field>
-    
-
-  </form>
-  
-  <div class="modal-footer" mat-dialog-actions>
-    <button
-      mat-button
-      mat-dialog-close
-      type="button"
-      (click)="clickSave()"
-      color="primary"
-      [disabled]="submitDisabled || loading"
+        <mat-icon>undo</mat-icon>
+      </button></mat-card-header
     >
-      Guardar
-    </button>
-    <button
-      mat-button
-      mat-dialog-close
-      cdkFocusInitial
-      type="button"
-      (click)="clickClosed()"
-    >
-      Cancelar
-    </button>
-  </div>
-  <!-- <app-state *ngIf="loading"> </app-state> -->
-  
+
+    <form [formGroup]="form" class="form-control">
+      <mat-card-content>
+        <div class="bill-distribution">
+          <mat-form-field>
+            <mat-label>Serial</mat-label>
+            <input
+              type="text"
+              name="serial"
+              id="serial"
+
+            />
+            <mat-error>
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input
+              
+
+            />
+            <mat-hint>Presione el calendario</mat-hint>
+            <mat-datepicker-toggle
+              
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+            <mat-error>
+              Seleccione una fecha mayor
+            </mat-error>
+            <mat-error >
+              Seleccione una fecha menor
+            </mat-error>
+            <mat-error >
+              Campo Requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Solicitud</mat-label>
+            <input
+              type="text"
+
+            />
+            <mat-autocomplete
+              name="request"
+
+            >
+              <mat-option
+             
+                ></mat-option
+              >
+              <mat-option
+               
+                >No se encontraron solicitudes</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error
+              >Campo Requerido</mat-error
+            >
+            <mat-error 
+              >Seleccione una opción</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <input
+              type="text"
+              matInput
+
+            />
+            <mat-autocomplete
+              name="client"
+              id="client"
+
+            >
+              <mat-option
+            
+                ></mat-option
+              >
+              <mat-option
+
+                >No se encontraron clientes</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error 
+              >Campo Requerido</mat-error
+            >
+            <mat-error 
+              >Seleccione una opción</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Descuento</mat-label>
+            <input
+              type="number"
+              name="discount"
+              id="discount"
+       
+            />
+            <mat-error>
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+            <mat-error 
+              >Valor invalido</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Subtotal</mat-label>
+            <input
+              type="number"
+              name="subtotal"
+              id="subtotal"
+          
+            />
+            <mat-error >
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+            <mat-error
+              >Valor invalido</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Total</mat-label>
+            <input
+              type="number"
+              name="total"
+          
+             
+            />
+            <mat-error>
+              Campo Requerido
+            </mat-error>
+            <mat-error
+              >Longitud Excedida</mat-error
+            >
+            <mat-error 
+              >Valor invalido</mat-error
+            >
+          </mat-form-field>
+        </div>
+      
+
+       
+
+        <div class="item-container-buttons">
+          <button
+            mat-raised-button
+      
+          >
+            <mat-icon class="add-course-btn">add</mat-icon>
+            Añadir Producto
+          </button>
+          <button
+            mat-raised-button
+       
+          >
+            <mat-icon class="add-course-btn">add</mat-icon>
+            Añadir Servicio
+          </button>
+        </div>
+        <mat-error
+         
+          >La lista de items no debe estar vacía</mat-error
+        >
+
+        <!-- BILL ITEMS -->
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          type="submit"
+
+        >
+          Guardar
+        </button>
+        <button
+          mat-button
+      
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
