@@ -200,9 +200,9 @@ export class CiteService {
   async findByDoctorAndDate(
     doctor_id: number,
     date: string
-  ): Promise<ResponseCiteDto> {
+  ): Promise<ResponseCiteDto[]> {
     try {
-      const cite = await this.repository.findOne({
+      const cites = await this.repository.find({
         where: {
           deleted: false,
           date: date,
@@ -217,7 +217,7 @@ export class CiteService {
           },
         },
       });
-      return new ResponseCiteDto(cite);
+      return cites.map((cite) => new ResponseCiteDto(cite));
     } catch (e) {
       throw new InternalServerErrorException('Error al encontrar cita');
     }

@@ -10,6 +10,7 @@ import { CiteItemVM } from './model';
 import { FindCitesByDoctorService } from './use-cases/find-cites-by-doctor/find-cites-by-doctor.service';
 import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/find-cites-by-patient.service';
 import { Observable, finalize } from 'rxjs';
+import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
 
 @Injectable()
 export class CiteService extends ListComponentService<CiteItemVM> {
@@ -21,7 +22,8 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public updateCiteService: UpdateCiteService,
     public citesMemoryService: CiteMemoryService,
     public findCiteByDoctor: FindCitesByDoctorService,
-    public findCiteByPatient: FindCitesByPatientService
+    public findCiteByPatient: FindCitesByPatientService,
+    public findCitesByDoctorAndDate: FindByDateAndDoctorService
   ) {
     super(
       getCitesService,
@@ -44,6 +46,16 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     this.setLoading(true);
     return this.findCiteByPatient
       .exec({ id })
+      .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  findByDoctorAndDate$(
+    date: string,
+    id: number
+  ): Observable<Array<CiteItemVM>> {
+    this.setLoading(true);
+    return this.findCitesByDoctorAndDate
+      .exec({ date, id })
       .pipe(finalize(() => this.setLoading(false)));
   }
 }

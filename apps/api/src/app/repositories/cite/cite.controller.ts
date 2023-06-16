@@ -46,14 +46,15 @@ export class CiteController {
   }
 
   @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
-  @Get(':id')
+  @Get('date/:id')
   @ApiResponse({
     type: ResponseCiteDto,
+    isArray: true,
   })
   findByDoctorAndDate(
     @Param('id', ParseIntPipe) id: number,
     @Body() date: string
-  ): Promise<ResponseCiteDto> {
+  ): Promise<ResponseCiteDto[]> {
     return this.citeService.findByDoctorAndDate(id, date);
   }
 
