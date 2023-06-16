@@ -11,12 +11,12 @@ export const userSettings: menuOptions[] = [
 export const adminOptions: menuOptions[] = [
   {
     name: 'Asistentes',
-    icon: 'diversity_3',
+    icon: 'wc',
     path: 'assistant',
   },
   {
     name: 'Citas',
-    icon: 'diversity_3',
+    icon: 'insert_invitation',
     path: 'cite',
   },
   {
@@ -26,7 +26,7 @@ export const adminOptions: menuOptions[] = [
   },
   {
     name: 'Doctores',
-    icon: 'diversity_3',
+    icon: 'group',
     path: 'doctor',
   },
   {
@@ -36,27 +36,27 @@ export const adminOptions: menuOptions[] = [
   },
   {
     name: 'Especialidades',
-    icon: 'diversity_3',
+    icon: 'account_box',
     path: 'speciality',
   },
   {
     name: 'Informes',
-    icon: 'diversity_3',
+    icon: 'folder',
     path: 'record',
   },
   {
     name: 'Pacientes',
-    icon: 'diversity_3',
+    icon: 'supervised_user_circle',
     path: 'patient',
   },
   {
     name: 'Reporte',
-    icon: 'diversity_3',
+    icon: 'assignment',
     path: 'report',
   },
   {
     name: 'Usuarios',
-    icon: 'diversity_3',
+    icon: 'perm_identity',
     path: 'users',
   },
 ];

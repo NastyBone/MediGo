@@ -9,11 +9,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
+        console.log(process.env);
         return {
           transport: {
             host: configService.get('SMTP_HOST'),
             secure: false,
             port: 587,
+            tls: { rejectUnauthorized: false },
+
             auth: {
               user: configService.get('SMTP_USER'),
               pass: configService.get('SMTP_PASS'),
