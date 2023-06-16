@@ -19,6 +19,7 @@ export class CiteService {
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
+    this.testCronJob();
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -82,8 +83,11 @@ export class CiteService {
       });
 
       //CRON
+      this.cronService.setCronJob(cite);
       if (cite.patientConfirm) {
-        this.cronService.setCronJob(cite);
+        this.cronService.startJob(cite.id);
+      } else {
+        this.cronService.pauseJob(cite.id);
       }
 
       return new ResponseCiteDto(await this.repository.save(cite));
@@ -116,9 +120,13 @@ export class CiteService {
       });
 
       //CRON
+      this.cronService.updateCronJob(cite);
       if (cite.patientConfirm) {
-        this.cronService.updateCronJob(cite);
+        this.cronService.startJob(cite.id);
+      } else {
+        this.cronService.pauseJob(cite.id);
       }
+
       return this.findOne(cite.id);
     } catch (error) {
       console.log(error);

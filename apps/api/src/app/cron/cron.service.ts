@@ -5,6 +5,7 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { ResponseCiteDto } from '../repositories/cite/dto';
 import { socketOptions } from './constants';
+import { timeStringToDate, checkTimeRange } from '@medigo/time-handler';
 
 @WebSocketGateway(+process.env.GATEWAY_PORT | 8080, socketOptions)
 @Injectable()
@@ -13,15 +14,15 @@ export class CronService {
   @WebSocketServer() server: Server;
 
   setCronJob(cite: ResponseCiteDto): void {
-    console.log('Cite!');
-    const job = new CronJob(this.formatDate(cite.date, cite.time), () => {
-      this.server.emit('alert', {
-        data: cite,
-      });
-      console.log('Emitting: ' + cite.date);
-    });
+    const job = new CronJob(
+      timeStringToDate(cite.date, cite.time, true),
+      () => {
+        this.server.emit('alert', {
+          data: cite,
+        });
+      }
+    );
     this.schedulerRegistry.addCronJob('' + cite.id, job);
-    job.start();
   }
 
   deleteCronJob(id: string): void {
@@ -33,6 +34,16 @@ export class CronService {
     this.setCronJob(cite);
   }
 
+  pauseJob(id: number): void {
+    const job = this.schedulerRegistry.getCronJob('' + id);
+    job.stop();
+  }
+
+  startJob(id: number): void {
+    const job = this.schedulerRegistry.getCronJob('' + id);
+    job.start();
+  }
+
   deleteManyCronJobs(cites: ResponseCiteDto[]): void {
     cites.forEach((cite) => {
       this.deleteCronJob('' + cite.id);
@@ -40,8 +51,9 @@ export class CronService {
   }
 
   test(): void {
+    checkTimeRange('10:00 AM', '10:01 AM');
+
     const myDate = new Date(new Date(Date.now() + 5000));
-    console.log(myDate);
     const job = new CronJob(myDate, () => {
       if (this.server) {
         this.server.emit('alert', `Cita: ${myDate}`);
@@ -52,17 +64,5 @@ export class CronService {
     });
     this.schedulerRegistry.addCronJob('' + 'test', job);
     job.start();
-  }
-
-  formatDate(_date: string, _time: string): Date {
-    const date = new Date(_date);
-    const yesterday = new Date();
-    yesterday.setHours(0, 0, 0, 0);
-    yesterday.setDate(date.getDate() - 1);
-    const [hours, minutes] = _time.split(':');
-    yesterday.setHours(+hours);
-    yesterday.setMinutes(+minutes);
-
-    return yesterday;
   }
 }

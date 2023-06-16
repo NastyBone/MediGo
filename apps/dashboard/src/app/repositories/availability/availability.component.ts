@@ -20,13 +20,13 @@ import { AvailabilityItemVM, RowActionAvailability } from './model';
   styleUrls: ['./availability.component.scss'],
 })
 export class AvailabilityComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   availabilityData: TableDataVM<AvailabilityItemVM> = {
     headers: [
       {
         columnDef: 'doctor',
         header: 'Doctor',
-        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+        cell: (element: { [key: string]: string } | any) =>
+          `${element['doctor']['user']['firstName']} ${element['doctor']['user']['lastName']}`,
       },
       {
         columnDef: 'day',
@@ -57,6 +57,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
+  data!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -75,6 +76,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.roleBasedData().subscribe(
         (availability: AvailabilityItemVM[] | null) => {
+          this.data = availability;
           this.availabilityData = {
             ...this.availabilityData,
             body: availability || [],
@@ -105,6 +107,9 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
       hasBackdrop: true,
       data: {
         id,
+        availabilities: this.data,
+        fullRole: this.userState.getFullRole(),
+        role: this.userState.getRole(),
       },
     });
     modal.componentInstance.closed.subscribe(() => {

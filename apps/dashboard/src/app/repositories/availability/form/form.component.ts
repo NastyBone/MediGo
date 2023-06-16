@@ -22,7 +22,8 @@ import { forbiddenNamesValidator } from '../../../common/forbidden-names-validat
 import { DoctorItemVM } from '../../doctor/model';
 import { DAYS } from '../days/days';
 import { DayVM } from '../days/day-vm';
-import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
+import { TimeConflictValidator } from '../../../common/time-conflict-validator.directive';
+import { TimeRangeCheck } from '../../../common/time-range-validator.directive';
 
 @Component({
   selector: 'medigo-form',
@@ -46,6 +47,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
   loading = false;
+  disableSelectDoctor = false;
 
   selectable = [
     { name: 'No Disponible', value: 'false' },
@@ -72,7 +74,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private availabilityService: AvailabilityService,
-    @Inject(MAT_DIALOG_DATA) public data: AvailabilityItemVM,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}
@@ -159,16 +161,40 @@ export class FormComponent implements OnInit, OnDestroy {
     this.closed.emit();
   }
   private createForm(): void {
+    //
     this.form = this.formBuilder.group({
-      start: [null, [Validators.required]],
-      end: [null, [Validators.required]],
+      start: [
+        null,
+        [
+          Validators.required,
+          TimeRangeCheck,
+          TimeConflictValidator(this.data.availabilities),
+        ],
+      ],
+      end: [
+        null,
+        [
+          Validators.required,
+          TimeRangeCheck,
+          TimeConflictValidator(this.data.availabilities),
+        ],
+      ],
       day: this.dayControl,
-      available: [false, [Validators.required]],
+      available: [true, [Validators.required]],
       doctor: this.doctorControl,
     });
+    this.setDoctorDefault();
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
-        console.log(this.form.value);
+        this.form.controls['end'].updateValueAndValidity({
+          onlySelf: true,
+          emitEvent: true,
+        });
+
+        this.form.controls['start'].updateValueAndValidity({
+          onlySelf: true,
+          emitEvent: true,
+        });
 
         this.submitDisabled =
           isEqual(this.oldAvailabilityValue, this.form.getRawValue()) ||
@@ -178,15 +204,14 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickSave(): void {
-    this.form.value.available == 'true'
-      ? (this.form.value.status = true)
-      : (this.form.value.status = false);
-    console.log(this.form.value);
-    // if (this.data.id) {
-    //   this.update();
-    // } else {
-    //   this.create();
-    // }
+    this.form.value.available == 'true' || this.form.value.available == true
+      ? (this.form.value.available = true)
+      : (this.form.value.available = false);
+    if (this.data.id) {
+      this.update();
+    } else {
+      this.create();
+    }
   }
   private create(): void {
     if (!this.submitDisabled) {
@@ -194,6 +219,8 @@ export class FormComponent implements OnInit, OnDestroy {
         this.availabilityService
           .create({
             ...this.form.value,
+            doctorId: this.doctorControl.value?.id,
+            day: this.dayControl.value.name,
           })
           .pipe(
             finalize(() => {
@@ -257,5 +284,15 @@ export class FormComponent implements OnInit, OnDestroy {
     o1 == 'false' ? (o1 = false) : (o1 = true);
     o2 == 'false' ? (o2 = false) : (o2 = true);
     return o1 === o2;
+  }
+
+  private setDoctorDefault(): void {
+    const role = this.data.role;
+    if (role == 'doctor') {
+      this.form.patchValue({
+        doctor: this.data.fullRole,
+      });
+      this.disableSelectDoctor = true;
+    }
   }
 }

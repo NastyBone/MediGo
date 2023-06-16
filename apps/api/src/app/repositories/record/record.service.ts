@@ -82,7 +82,8 @@ export class RecordService {
           id: createRecordDto.patientId,
         },
       });
-      return new ResponseRecordDto(await this.repository.save(record));
+      const newRecord = await this.repository.save(record);
+      return this.findOne(newRecord.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar informe');
