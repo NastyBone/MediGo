@@ -98,30 +98,33 @@ export class FormComponent implements OnInit, OnDestroy {
       );
     }
     //
-    this.sub$.add(
-      this.availabilityService.getDoctors$().subscribe((doctors) => {
-        //
-        if (doctors) {
-          this.incomingDoctors = doctors;
-          this.filteredDoctors = this.doctorControl.valueChanges.pipe(
-            startWith<string | DoctorItemVM | null | undefined>(''),
-            map((value) => {
-              if (value !== null) {
-                return typeof value === 'string'
-                  ? value
-                  : value?.user?.firstName + ' ' + value?.user?.lastName;
-              }
-              return '';
-            }),
-            map((name) => {
-              return name
-                ? this._filterDoctors(name)
-                : this.incomingDoctors.slice();
-            })
-          );
-        }
-      })
-    );
+    if (this.data.role == 'administrador') {
+      this.sub$.add(
+        this.availabilityService.getDoctors$().subscribe((doctors) => {
+          //
+          if (doctors) {
+            this.incomingDoctors = doctors;
+            this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+              startWith<string | DoctorItemVM | null | undefined>(''),
+              map((value) => {
+                if (value !== null) {
+                  return typeof value === 'string'
+                    ? value
+                    : value?.user?.firstName + ' ' + value?.user?.lastName;
+                }
+                return '';
+              }),
+              map((name) => {
+                return name
+                  ? this._filterDoctors(name)
+                  : this.incomingDoctors.slice();
+              })
+            );
+          }
+        })
+      );
+    }
+
     //
     this.createForm();
     if (this.data?.id) {

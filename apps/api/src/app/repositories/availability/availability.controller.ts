@@ -19,12 +19,12 @@ import { AvailabilityService } from './availability.service';
 import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 
-@UseGuards(RolesGuard)
 @ApiTags('availability')
 @Controller('availability')
 export class AvailabilityController {
   constructor(private availabilityService: AvailabilityService) {}
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin, Roles.Doctor)
   @Get(':id')
   @ApiResponse({
@@ -36,6 +36,7 @@ export class AvailabilityController {
     return this.availabilityService.findOne(id);
   }
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
   @Get('doctor/:id')
   @ApiResponse({
@@ -48,6 +49,7 @@ export class AvailabilityController {
     return this.availabilityService.findByDoctor(id);
   }
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin)
   @Get()
   @ApiResponse({
@@ -58,6 +60,7 @@ export class AvailabilityController {
     return this.availabilityService.findAll();
   }
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin, Roles.Doctor)
   @Post()
   @ApiResponse({
@@ -69,6 +72,7 @@ export class AvailabilityController {
     return this.availabilityService.insert(createDto);
   }
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin, Roles.Doctor)
   @Patch(':id')
   @ApiResponse({
@@ -81,6 +85,7 @@ export class AvailabilityController {
     return this.availabilityService.update(id, updateDto);
   }
 
+  @UseGuards(RolesGuard)
   @Role(Roles.Admin, Roles.Doctor)
   @Delete(':id')
   @ApiResponse({

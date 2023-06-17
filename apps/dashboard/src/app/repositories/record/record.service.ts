@@ -15,6 +15,7 @@ import { GetDoctorsService } from '../doctor/use-cases/get-doctors/get-doctors.s
 import { GetPatientsService } from '../patient/use-cases/get-patients/get-patients.service';
 import { PatientItemVM } from '../patient/model';
 import { DoctorItemVM } from '../doctor/model';
+import { FindPatientsCitesByDoctorService } from './use-cases/find-patients-cites-by-doctor/find-patients-cites-by-doctor.service';
 
 @Injectable()
 export class RecordService extends ListComponentService<RecordItemVM> {
@@ -29,7 +30,7 @@ export class RecordService extends ListComponentService<RecordItemVM> {
     protected findRecordByPatient: FindRecordByPatientService,
     protected generateRecord: GenerateRecordService,
     private getDoctorsService: GetDoctorsService,
-    private getPatientsService: GetPatientsService
+    private getPatientsService: FindPatientsCitesByDoctorService
   ) {
     super(
       getRecordsService,
@@ -63,11 +64,14 @@ export class RecordService extends ListComponentService<RecordItemVM> {
       .pipe(finalize(() => this.setLoading(false)));
   }
 
-  getPatients$(load = true): Observable<Array<PatientItemVM> | null> {
+  getPatients$(
+    id: number,
+    load = true
+  ): Observable<Array<PatientItemVM> | null> {
     if (load) {
       this.setLoading(load);
     }
-    return this.getPatientsService.exec({}).pipe(
+    return this.getPatientsService.exec({ id }).pipe(
       finalize(() => {
         if (load) {
           this.setLoading(false);

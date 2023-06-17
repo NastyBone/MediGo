@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
+import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
 
 @NgModule({
   declarations: [CiteComponent, FormComponent],
@@ -45,6 +46,7 @@ import { TableModule } from '../../common';
     FindCiteService,
     FindCitesByDoctorService,
     FindCitesByPatientService,
+    FindByDateAndDoctorService,
     GetCitesService,
     UpdateCiteService,
     CiteMemoryService,

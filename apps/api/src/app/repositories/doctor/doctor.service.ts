@@ -56,6 +56,7 @@ export class DoctorService {
     const doctor = await this.findValid(id);
     return new ResponseDoctorDto(doctor);
   }
+
   async insert(createDoctorDto: CreateDoctorDto): Promise<ResponseDoctorDto> {
     const user = await this.findByUserId(createDoctorDto.userId);
     if (user) {
@@ -73,7 +74,8 @@ export class DoctorService {
           id: createDoctorDto.userId,
         },
       });
-      return new ResponseDoctorDto(await this.repository.save(doctor));
+      await this.repository.save(doctor);
+      return this.findOne(doctor.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar doctor');
@@ -104,13 +106,16 @@ export class DoctorService {
   async remove(id: number): Promise<ResponseDoctorDto> {
     try {
       const doctor = await this.findValid(id);
+      doctor.user = null;
       doctor.deleted = true;
-      return new ResponseDoctorDto(await this.repository.save(doctor));
+      await this.repository.save(doctor);
+      return doctor;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al eliminar doctor');
     }
   }
+
   async findByUserId(id: number): Promise<ResponseDoctorDto> {
     try {
       const doctor = await this.repository.findOne({
@@ -125,10 +130,12 @@ export class DoctorService {
           speciality: true,
         },
       });
-      return new ResponseDoctorDto(doctor);
+      if (doctor) {
+        return new ResponseDoctorDto(doctor);
+      }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar asistante');
+      throw new InternalServerErrorException('Error al encontrar doctor');
     }
   }
   async findBySpeciality(specialityId: number): Promise<ResponseDoctorDto[]> {

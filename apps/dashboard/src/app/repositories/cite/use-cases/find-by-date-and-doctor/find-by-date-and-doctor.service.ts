@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseQuery } from '../../../../common';
 import { Observable, map } from 'rxjs';
 import { CiteService } from '@medigo/dashboard-sdk';
 import { CiteItem2CiteItemVM } from '../../mappers';
-import { CiteItemVM, CiteVM } from '../../model';
+import { CiteItemVM } from '../../model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class FindByDateAndDoctorService {
   constructor(private citeService: CiteService) {}
 

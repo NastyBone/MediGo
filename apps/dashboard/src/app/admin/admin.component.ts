@@ -15,6 +15,7 @@ import {
   menuOptions,
   patientOptions,
 } from './models';
+import { UserStateVM } from '../common/user-state/models';
 
 export interface NavLink {
   name: string;
@@ -62,6 +63,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     rif: '123456',
     type: 'default',
   };
+  userInfo!: UserStateVM | null;
 
   itemMenuLogout = {
     name: 'Cerrar Sesión',
@@ -74,7 +76,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   checkRole() {
     const userRole = this.userStateService.getRole();
     const userId = this.userStateService.getUserId() || 0;
-    let role: unknown;
     switch (userRole) {
       case 'doctor': {
         this.sub$.add(
@@ -82,7 +83,7 @@ export class AdminComponent implements OnInit, OnDestroy {
             .findByUserId$(userId)
             .pipe(take(1))
             .subscribe((doctor) => {
-              role = doctor;
+              this.userStateService.setRole(doctor);
             })
         );
         break;
@@ -93,7 +94,7 @@ export class AdminComponent implements OnInit, OnDestroy {
             .findByUserId$(userId)
             .pipe(take(1))
             .subscribe((assistant) => {
-              role = assistant;
+              this.userStateService.setRole(assistant);
             })
         );
         break;
@@ -104,20 +105,20 @@ export class AdminComponent implements OnInit, OnDestroy {
             .findByUser(userId)
             .pipe(take(1))
             .subscribe((patient) => {
-              role = patient;
+              this.userStateService.setRole(patient);
             })
         );
         break;
       }
       default: {
-        role = 'administrador';
+        this.userStateService.setRole('administrador');
         break;
       }
     }
-    this.userStateService.setRole(role);
   }
 
   ngOnInit(): void {
+    this.userInfo = this.userStateService.getUser();
     this.checkRole();
 
     this.sub$.add(this.settingsService.getSettingsData().subscribe());
@@ -131,7 +132,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       })
     );
     const user = this.userStateService.getUser();
-    this.sideMenuOptions = this.asignOptions(this.userStateService.getRole()); //TODO: Volver a meter en el if
+    this.sideMenuOptions = this.asignOptions(this.userStateService.getRole());
     if (user) {
       const now = new Date();
       const loginStamp = new Date(user.loginStamp);
@@ -169,7 +170,6 @@ export class AdminComponent implements OnInit, OnDestroy {
         break;
       case 'Cerrar Sesión':
         this.adminSettings.logout();
-        this.router.navigate(['/login']);
         break;
       default:
         this.router.navigate([`/dashboard/${item.path}`]);
