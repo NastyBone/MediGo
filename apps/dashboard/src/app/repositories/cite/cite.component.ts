@@ -40,12 +40,14 @@ export class CiteComponent implements OnInit, OnDestroy {
       {
         columnDef: 'doctor',
         header: 'Doctor',
-        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
       },
       {
         columnDef: 'patient',
         header: 'Paciente',
-        cell: (element: { [key: string]: string }) => `${element['patient']}`,
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['patient']['user']['firstName']} ${element['patient']['user']['lastName']}`,
       },
       {
         columnDef: 'patinetConfirm',

@@ -105,6 +105,10 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickSave(): void {
+    this.form.value.patientConfirm == 'true' ||
+    this.form.value.patientConfirm == true
+      ? (this.form.value.patientConfirm = true)
+      : (this.form.value.patientConfirm = false);
     if (this.data.id) {
       this.update();
     } else {

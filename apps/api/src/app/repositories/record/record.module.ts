@@ -16,5 +16,6 @@ import { ReportsModule } from '../../reports/reports.module';
   ],
   providers: [RecordService],
   controllers: [RecordController],
+  exports: [RecordService],
 })
 export class RecordModule {}

@@ -169,4 +169,23 @@ export class AvailabilityService {
       );
     }
   }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const availabilities = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (availabilities.length) {
+      availabilities.map((item) => (item.deleted = true));
+      await this.repository.save(availabilities);
+    }
+    console.log('SOFT DELETION: AVAILABILITES BY DOCTOR');
+
+    return true;
+  }
 }

@@ -8,12 +8,18 @@ import { Doctor } from './entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateDoctorDto, ResponseDoctorDto, UpdateDoctorDto } from './dto';
+import { RecordService } from '../record/record.service';
+import { CiteService } from '../cite/cite.service';
+import { AvailabilityService } from '../availability/availability.service';
 
 @Injectable()
 export class DoctorService {
   constructor(
     @InjectRepository(Doctor)
-    private repository: Repository<Doctor>
+    private repository: Repository<Doctor>,
+    private recordService: RecordService,
+    private citeService: CiteService,
+    private availabilittyService: AvailabilityService
   ) {}
 
   async findAll(): Promise<ResponseDoctorDto[]> {
@@ -108,6 +114,9 @@ export class DoctorService {
       const doctor = await this.findValid(id);
       doctor.user = null;
       doctor.deleted = true;
+      await this.availabilittyService.deleteByDoctors(doctor.id);
+      await this.recordService.deleteByDoctors(doctor.id);
+      await this.citeService.deleteByDoctors(doctor.id);
       await this.repository.save(doctor);
       return doctor;
     } catch (error) {

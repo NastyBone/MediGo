@@ -128,7 +128,9 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
-          id,
+          patient: {
+            id,
+          },
         },
         order: {
           date: 'ASC',
@@ -151,11 +153,14 @@ export class RecordService {
   }
 
   async findByDoctor(id: number): Promise<ResponseRecordDto[]> {
+    console.log('here');
     try {
       const record = await this.repository.find({
         where: {
           deleted: false,
-          id,
+          doctor: {
+            id,
+          },
         },
         order: {
           date: 'ASC',
@@ -200,5 +205,42 @@ export class RecordService {
       data: toGenerate,
     });
     return response;
+  }
+
+  async deleteByPatients(id: number): Promise<void | boolean> {
+    const records = await this.repository.find({
+      where: {
+        deleted: false,
+        patient: {
+          id,
+        },
+      },
+    });
+
+    if (records.length) {
+      records.map((item) => (item.deleted = true));
+      await this.repository.save(records);
+    }
+    console.log('SOFT DELETION: RECORDS BY PATIENT');
+    return true;
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const records = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (records.length) {
+      records.map((item) => (item.deleted = true));
+      await this.repository.save(records);
+    }
+    console.log('SOFT DELETION: RECORDS BY DOCTOR');
+
+    return true;
   }
 }

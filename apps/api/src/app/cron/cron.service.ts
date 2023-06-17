@@ -26,7 +26,11 @@ export class CronService {
   }
 
   deleteCronJob(id: string): void {
-    this.schedulerRegistry.deleteCronJob('' + id);
+    const job = this.schedulerRegistry.getCronJob('' + id);
+    console.log(job);
+    if (job) {
+      this.schedulerRegistry.deleteCronJob('' + id);
+    }
   }
 
   updateCronJob(cite: ResponseCiteDto): void {
@@ -45,9 +49,13 @@ export class CronService {
   }
 
   deleteManyCronJobs(cites: ResponseCiteDto[]): void {
-    cites.forEach((cite) => {
-      this.deleteCronJob('' + cite.id);
-    });
+    try {
+      cites.forEach((cite) => {
+        this.deleteCronJob('' + cite.id);
+      });
+    } catch (e) {
+      console.log();
+    }
   }
 
   test(): void {

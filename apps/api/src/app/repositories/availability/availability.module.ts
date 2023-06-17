@@ -14,5 +14,6 @@ import { UsersModule } from '../users';
   ],
   providers: [AvailabilityService],
   controllers: [AvailabilityController],
+  exports: [AvailabilityService],
 })
 export class AvailabilityModule {}

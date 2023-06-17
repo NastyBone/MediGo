@@ -13,7 +13,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { isEqual } from 'lodash';
+import { isEqual, uniq } from 'lodash';
 import {
   Observable,
   Subscription,
@@ -186,6 +186,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.doctorControl.valueChanges.subscribe((doctor) => {
         if (doctor && doctor.id) {
           this.selectedDoctorId = doctor.id;
+          this.loadPatients();
         }
       })
     );
@@ -255,7 +256,7 @@ export class FormComponent implements OnInit, OnDestroy {
         )
         .subscribe((patients) => {
           if (patients) {
-            this.incomingPatients = patients;
+            this.incomingPatients = this.removeDuplicates(patients);
             this.filteredPatients = this.patientControl.valueChanges.pipe(
               startWith<string | PatientItemVM | undefined | null>(''),
               map((value) => {
@@ -319,5 +320,17 @@ export class FormComponent implements OnInit, OnDestroy {
       this.disableSelectDoctor = true;
       this.loadPatients();
     }
+  }
+
+  removeDuplicates(array: Array<any>): Array<any> {
+    const uniqueIds = new Set();
+    return array.filter((obj) => {
+      if (uniqueIds.has(obj.id)) {
+        return false;
+      } else {
+        uniqueIds.add(obj.id);
+        return true;
+      }
+    });
   }
 }
