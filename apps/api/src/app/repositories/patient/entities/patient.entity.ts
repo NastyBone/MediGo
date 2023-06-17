@@ -10,7 +10,7 @@ export class Patient extends IdEntity {
   @Column({ length: 256, nullable: false })
   phone: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: false })
+  @ManyToOne(() => User, (user) => user.id, { nullable: true })
   @JoinColumn()
   user!: User;
 }

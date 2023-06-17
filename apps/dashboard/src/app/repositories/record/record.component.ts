@@ -85,7 +85,6 @@ export class RecordComponent implements OnInit, OnDestroy {
         this.tableService.setData(this.recordData);
       })
     );
-    this.recordService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -111,6 +110,8 @@ export class RecordComponent implements OnInit, OnDestroy {
       hasBackdrop: true,
       data: {
         id,
+        fullRole: this.userState.getFullRole(),
+        role: this.userState.getRole(),
       },
     });
     modal.componentInstance.closed.subscribe(() => {
@@ -154,6 +155,7 @@ export class RecordComponent implements OnInit, OnDestroy {
         break;
       }
       default: {
+        this.recordService.get({});
         return this.recordService.getData$();
       }
     }

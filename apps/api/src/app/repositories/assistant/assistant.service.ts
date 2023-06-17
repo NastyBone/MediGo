@@ -90,7 +90,8 @@ export class AssistantService {
           id: createAssistantDto.userId,
         },
       });
-      return new ResponseAssistantDto(await this.repository.save(assistant));
+      await this.repository.save(assistant);
+      return this.findOne(assistant.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar asistente');
@@ -120,8 +121,10 @@ export class AssistantService {
   async remove(id: number): Promise<ResponseAssistantDto> {
     try {
       const assistant = await this.findValid(id);
+      assistant.user = null;
       assistant.deleted = true;
-      return new ResponseAssistantDto(await this.repository.save(assistant));
+      await this.repository.save(assistant);
+      return assistant;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al eliminar asistante');
@@ -150,7 +153,9 @@ export class AssistantService {
         },
       });
 
-      return new ResponseAssistantDto(assistant);
+      if (assistant) {
+        return new ResponseAssistantDto(assistant);
+      }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar asistante');

@@ -55,7 +55,7 @@ export class UserStateService {
   }
 
   getFullRole(): any {
-    const data = localStorage.getItem('medigo-user');
+    const data = localStorage.getItem('medigo-role');
     if (data) {
       return JSON.parse(data);
     }

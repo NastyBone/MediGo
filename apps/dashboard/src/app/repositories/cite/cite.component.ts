@@ -86,7 +86,6 @@ export class CiteComponent implements OnInit, OnDestroy {
         this.tableService.setData(this.citeData);
       })
     );
-    this.citeService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -151,6 +150,7 @@ export class CiteComponent implements OnInit, OnDestroy {
         break;
       }
       default: {
+        this.citeService.get({});
         return this.citeService.getData$();
       }
     }

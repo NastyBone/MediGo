@@ -43,7 +43,7 @@
       Campo Requerido
     </mat-error>
   </mat-form-field>
-  
+
   <mat-form-field>
     <mat-label>Doctor</mat-label>
     <input
@@ -51,6 +51,7 @@
       matInput
       [formControl]="doctorControl"
       [matAutocomplete]="autodoctor"
+      [readonly]="disableSelectDoctor"
     />
     <mat-autocomplete
       name="doctor"
@@ -119,8 +120,8 @@
       >Longitud Excedida</mat-error
     >
     <mat-error *ngIf="form.controls['description'].hasError('required')"
-    >Campo requerido</mat-error
-  >
+      >Campo requerido</mat-error
+    >
   </mat-form-field>
 </form>
 

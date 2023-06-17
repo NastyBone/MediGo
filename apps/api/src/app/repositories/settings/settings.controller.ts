@@ -5,8 +5,6 @@ import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 import { SettingsDeleteDto, SettingsDto, SettingsResponseDto } from './dto';
 
-@UseGuards(RolesGuard)
-@Role(Roles.Admin)
 @ApiTags('settings')
 @Controller('settings')
 export class SettingsController {
@@ -20,6 +18,8 @@ export class SettingsController {
     return this.settingsService.getSettingsResponse();
   }
 
+  @UseGuards(RolesGuard)
+  @Role(Roles.Admin)
   @Post()
   @UseGuards(RolesGuard)
   @Role(Roles.Admin)

@@ -76,6 +76,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.roleBasedData().subscribe(
         (availability: AvailabilityItemVM[] | null) => {
+          console.log(availability);
           this.data = availability;
           this.availabilityData = {
             ...this.availabilityData,
@@ -85,7 +86,6 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
         }
       )
     );
-    this.availabilityService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -149,7 +149,9 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
         break;
       }
       default: {
+        this.availabilityService.get({});
         return this.availabilityService.getData$();
+        break;
       }
     }
   }

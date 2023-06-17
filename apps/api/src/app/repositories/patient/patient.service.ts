@@ -72,7 +72,8 @@ export class PatientService {
           id: createPatientDto.userId,
         },
       });
-      return new ResponsePatientDto(await this.repository.save(patient));
+      await this.repository.save(patient);
+      return this.findOne(patient.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar paciente');
@@ -104,7 +105,9 @@ export class PatientService {
     try {
       const patient = await this.findValid(id);
       patient.deleted = true;
-      return new ResponsePatientDto(await this.repository.save(patient));
+      patient.user = null;
+      await this.repository.save(patient);
+      return patient;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al eliminar paciente');
@@ -124,7 +127,9 @@ export class PatientService {
           user: true,
         },
       });
-      return new ResponsePatientDto(patient);
+      if (patient) {
+        return new ResponsePatientDto(patient);
+      }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al encontrar paciente');

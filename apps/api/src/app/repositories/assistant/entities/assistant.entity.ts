@@ -9,7 +9,7 @@ export class Assistant extends IdEntity {
   @JoinColumn()
   doctor!: Doctor;
 
-  @OneToOne(() => User, (user) => user.id, { nullable: false })
+  @OneToOne(() => User, (user) => user.id, { nullable: true })
   @JoinColumn()
   user!: User;
 }
