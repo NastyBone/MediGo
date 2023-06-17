@@ -1,99 +1,103 @@
-<div class="modal-header">
-  <span mat-dialog-title> Titulo </span>
-  <button
-    id="modal-close-button"
-    mat-dialog-close
-    mat-mini-fab
-    type="button"
-    aria-label="Cerrar"
-    color="basic"
-    (click)="clickClosed()"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+<div class="Container">
+  <div class="modal-header Title">
+    <span mat-dialog-title> Agregar nuevo asistente</span>
+    <button
+      id="modal-close-button"
+      mat-dialog-close
+      mat-mini-fab
+      type="button"
+      aria-label="Cerrar"
+      color="basic"
+      (click)="clickClosed()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-<form mat-dialog-content [formGroup]="form!">
-  <mat-form-field>
-    <mat-label>Usuario</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="userControl"
-      [matAutocomplete]="autouser"
-    />
-    <mat-autocomplete
-      name="user"
-      id="user"
-      #autouser="matAutocomplete"
-      [displayWith]="displayFn"
-    >
-      <mat-option *ngFor="let option of filteredUsers | async" [value]="option"
-        >{{ option.firstName }} {{ option.lastName }}</mat-option
+  <form class="FormAssistant" mat-dialog-content [formGroup]="form!">
+    <mat-form-field>
+      <mat-label>Usuario</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="userControl"
+        [matAutocomplete]="autouser"
+      />
+      <mat-autocomplete
+        name="user"
+        id="user"
+        #autouser="matAutocomplete"
+        [displayWith]="displayFn"
       >
-      <mat-option *ngIf="(filteredUsers | async)?.length === 0" disabled
-        >No se encontraron usuarios</mat-option
+        <mat-option
+          *ngFor="let option of filteredUsers | async"
+          [value]="option"
+          >{{ option.firstName }} {{ option.lastName }}</mat-option
+        >
+        <mat-option *ngIf="(filteredUsers | async)?.length === 0" disabled
+          >No se encontraron usuarios</mat-option
+        >
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('user')?.hasError('required')"
+        >Campo Requerido</mat-error
       >
-    </mat-autocomplete>
-    <mat-error *ngIf="form.get('user')?.hasError('required')"
-      >Campo Requerido</mat-error
-    >
-    <mat-error *ngIf="form.get('user')?.hasError('forbiddenNames')"
-      >Seleccione una opción</mat-error
-    >
-  </mat-form-field>
+      <mat-error *ngIf="form.get('user')?.hasError('forbiddenNames')"
+        >Seleccione una opción</mat-error
+      >
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Doctor</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="doctorControl"
-      [matAutocomplete]="autodoctor"
-    />
-    <mat-autocomplete
-      name="doctor"
-      id="doctor"
-      #autodoctor="matAutocomplete"
-      [displayWith]="displayFn"
-    >
-      <mat-option
-        *ngFor="let option of filteredDoctors | async"
-        [value]="option"
-        >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
+    <mat-form-field>
+      <mat-label>Doctor</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="doctorControl"
+        [matAutocomplete]="autodoctor"
+      />
+      <mat-autocomplete
+        name="doctor"
+        id="doctor"
+        #autodoctor="matAutocomplete"
+        [displayWith]="displayFn"
       >
-      <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
-        >No se encontraron doctores</mat-option
+        <mat-option
+          *ngFor="let option of filteredDoctors | async"
+          [value]="option"
+          >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
+        >
+        <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
+          >No se encontraron doctores</mat-option
+        >
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+        >Campo Requerido</mat-error
       >
-    </mat-autocomplete>
-    <mat-error *ngIf="form.get('doctor')?.hasError('required')"
-      >Campo Requerido</mat-error
-    >
-    <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
-      >Seleccione una opción</mat-error
-    >
-  </mat-form-field>
-</form>
+      <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
+        >Seleccione una opción</mat-error
+      >
+    </mat-form-field>
+  </form>
 
-<div class="modal-footer" mat-dialog-actions>
-  <button
-    mat-button
-    mat-dialog-close
-    type="button"
-    (click)="clickSave()"
-    color="primary"
-    [disabled]="submitDisabled || loading"
-  >
-    Guardar
-  </button>
-  <button
-    mat-button
-    mat-dialog-close
-    cdkFocusInitial
-    type="button"
-    (click)="clickClosed()"
-  >
-    Cancelar
-  </button>
+  <div class="modal-footer" mat-dialog-actions>
+    <button
+      mat-button
+      mat-dialog-close
+      type="button"
+      (click)="clickSave()"
+      color="primary"
+      [disabled]="submitDisabled || loading"
+    >
+      Guardar
+    </button>
+    <button
+      mat-button
+      mat-dialog-close
+      cdkFocusInitial
+      type="button"
+      (click)="clickClosed()"
+    >
+      Cancelar
+    </button>
+  </div>
 </div>
 <!-- <app-state *ngIf="loading"> </app-state> -->
