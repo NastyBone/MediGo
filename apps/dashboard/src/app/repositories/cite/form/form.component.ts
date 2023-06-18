@@ -1,13 +1,12 @@
 import {
   Component,
   EventEmitter,
-  Inject,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, FormControl, } from '@angular/forms';
+
 import { isEqual } from 'lodash';
 import { Subscription, finalize, Observable} from 'rxjs';
 import { StateService } from '../../../common/state';
@@ -16,6 +15,7 @@ import { CiteItemVM } from '../model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SpecialityItemVM } from '../../speciality/model';
+import { DoctorItemVM } from '../../doctor/model';
 
 
 @Component({
@@ -39,10 +39,14 @@ export class FormComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     patientId: null as any,
   };
+  maxDate = new Date(2100, 11, 31);
+  minDate = new Date(2000, 0, 1);
 
   form!: FormGroup;
   loading = false;
   filteredSpeciality!: Observable<SpecialityItemVM[]>;
+  filteredDoctors!: Observable<DoctorItemVM[]>;
+  dateControl = new FormControl( [Validators.required]);
   constructor(
     private citeService: CiteService,
     
@@ -155,5 +159,13 @@ export class FormComponent implements OnInit, OnDestroy {
           .subscribe()
       );
     }
+  }
+  displayFn(item?: any): string {
+    if (item) {
+      if (item.name) return item.name;
+      if (item.firstName) return item.firstName + ' ' + item.lastName;
+      if (item.vehicle) return item.vehicle.brand + ' ' + item.vehicle.model;
+    }
+    return '';
   }
 }

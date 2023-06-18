@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="title">Crear o Modificar Cuenta</mat-card-title>
+      <mat-card-title class="title">Crear o Modificar Cita</mat-card-title>
       <button
         class="close-button"
         type="button"
@@ -18,14 +18,65 @@
       <mat-card-content>
         <div class="bill-distribution">
           <mat-form-field>
-            <mat-label>Serial</mat-label>
+            <mat-label>Especialidad</mat-label>
             <input
-              type="text"
-              name="serial"
-              id="serial"
-
+              type="speciality"
+              name="speciality"
+              id="speciality"
+              formControlName="speciality"
+              matInput
             />
-            <mat-error>
+            <mat-autocomplete
+              name="speciality"
+              id="speciality"
+              #autoclient="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let option of filteredSpeciality | async"
+                [value]="option"
+                > </mat-option
+              >
+              <mat-option
+                *ngIf="(filteredSpeciality | async)?.length === 0"
+                disabled
+                >No se encontraron especialidades</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['speciality'].hasError('required')">
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Doctor</mat-label>
+            <input
+              type="doctor"
+              name="doctor"
+              id="doctor"
+              formControlName="doctor"
+              matInput
+            />
+            <mat-autocomplete
+              name="doctor"
+              id="doctor"
+              #autoclient="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let option of filteredDoctors | async"
+                [value]="option"
+                ></mat-option
+              >
+              <mat-option
+                *ngIf="(filteredDoctors | async)?.length === 0"
+                disabled
+                >No se encontraron clientes</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['doctor'].hasError('required')">
               Campo Requerido
             </mat-error>
             <mat-error 
@@ -36,7 +87,15 @@
           <mat-form-field appearance="fill">
             <mat-label>Fecha</mat-label>
             <input
-              
+            matInput
+            [matDatepicker]="picker"
+              id="date"
+              name="date"
+              formControlName="date"
+              [formControl]="dateControl"
+              [min]="minDate"
+              [max]="maxDate"
+              readonly
 
             />
             <mat-hint>Presione el calendario</mat-hint>
@@ -56,10 +115,17 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Solicitud</mat-label>
+            <mat-label>Hora</mat-label>
             <input
               type="text"
-
+              matInput
+              [matDatepicker]="picker"
+              id="date"
+              name="date"
+              formControlName="date"
+              
+             
+              readonly
             />
             <mat-autocomplete
               name="request"
@@ -82,128 +148,29 @@
             >
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Cliente</mat-label>
-            <input
-              type="text"
-              matInput
-
-            />
-            <mat-autocomplete
-              name="client"
-              id="client"
-
-            >
-              <mat-option
-            
-                ></mat-option
-              >
-              <mat-option
-
-                >No se encontraron clientes</mat-option
-              >
-            </mat-autocomplete>
-            <mat-error 
-              >Campo Requerido</mat-error
-            >
-            <mat-error 
-              >Seleccione una opción</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Descuento</mat-label>
-            <input
-              type="number"
-              name="discount"
-              id="discount"
-       
-            />
-            <mat-error>
-              Campo Requerido
-            </mat-error>
-            <mat-error 
-              >Longitud Excedida</mat-error
-            >
-            <mat-error 
-              >Valor invalido</mat-error
-            >
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Subtotal</mat-label>
-            <input
-              type="number"
-              name="subtotal"
-              id="subtotal"
-          
-            />
-            <mat-error >
-              Campo Requerido
-            </mat-error>
-            <mat-error 
-              >Longitud Excedida</mat-error
-            >
-            <mat-error
-              >Valor invalido</mat-error
-            >
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Total</mat-label>
-            <input
-              type="number"
-              name="total"
-          
-             
-            />
-            <mat-error>
-              Campo Requerido
-            </mat-error>
-            <mat-error
-              >Longitud Excedida</mat-error
-            >
-            <mat-error 
-              >Valor invalido</mat-error
-            >
-          </mat-form-field>
         </div>
       
 
-       
+    
 
-        <div class="item-container-buttons">
-          <button
-            mat-raised-button
-      
-          >
-            <mat-icon class="add-course-btn">add</mat-icon>
-            Añadir Producto
-          </button>
-          <button
-            mat-raised-button
-       
-          >
-            <mat-icon class="add-course-btn">add</mat-icon>
-            Añadir Servicio
-          </button>
-        </div>
-        <mat-error
-         
-          >La lista de items no debe estar vacía</mat-error
-        >
-
-        <!-- BILL ITEMS -->
+        
       </mat-card-content>
       <mat-card-actions>
         <button
           type="submit"
-
+          mat-button
+          color="primary"
+          [disabled]="submitDisabled"
+          (click)="clickSave()"
+          class="action-button"
         >
           Guardar
         </button>
         <button
           mat-button
-      
+          type="button"
+          (click)="clickClosed()"
+          class="action-button"
         >
           Cancelar
         </button>
