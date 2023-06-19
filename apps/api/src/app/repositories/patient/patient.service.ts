@@ -8,12 +8,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Patient } from './entities';
 import { CreatePatientDto, ResponsePatientDto, UpdatePatientDto } from './dto';
+import { CiteService } from '../cite/cite.service';
+import { RecordService } from '../record/record.service';
 
 @Injectable()
 export class PatientService {
   constructor(
     @InjectRepository(Patient)
-    private repository: Repository<Patient>
+    private repository: Repository<Patient>,
+    private citeService: CiteService,
+    private recordService: RecordService
   ) {}
 
   async findAll(): Promise<ResponsePatientDto[]> {
@@ -72,7 +76,8 @@ export class PatientService {
           id: createPatientDto.userId,
         },
       });
-      return new ResponsePatientDto(await this.repository.save(patient));
+      await this.repository.save(patient);
+      return this.findOne(patient.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar paciente');
@@ -104,7 +109,11 @@ export class PatientService {
     try {
       const patient = await this.findValid(id);
       patient.deleted = true;
-      return new ResponsePatientDto(await this.repository.save(patient));
+      patient.user = null;
+      await this.citeService.deleteByPatients(patient.id);
+      await this.recordService.deleteByPatients(patient.id);
+      await this.repository.save(patient);
+      return patient;
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al eliminar paciente');
@@ -124,10 +133,14 @@ export class PatientService {
           user: true,
         },
       });
-      return new ResponsePatientDto(patient);
+      if (patient) {
+        return new ResponsePatientDto(patient);
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar paciente');
+      throw new InternalServerErrorException('Paciente no asignado');
     }
   }
 }

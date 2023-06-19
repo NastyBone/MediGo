@@ -34,11 +34,13 @@ export class AvailabilityService extends ListComponentService<AvailabilityItemVM
     );
   }
 
-  findByDoctor$(id: number): Observable<AvailabilityItemVM[]> {
+  findByDoctor$(id: number): Observable<AvailabilityItemVM[] | null> {
     this.setLoading(true);
-    return this.findAvailabilityByDoctor
+    this.findAvailabilityByDoctor
       .exec({ id })
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(finalize(() => this.setLoading(false)))
+      .subscribe();
+    return this.availabilityMemoryService.getDataSource$();
   }
 
   getDoctors$(load = true): Observable<Array<DoctorItemVM> | null> {

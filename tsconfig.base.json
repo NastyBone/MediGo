@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
@@ -24,7 +25,8 @@
       ],
       "@medigo/logger": ["libs/logger/src/index.ts"],
       "@medigo/login": ["libs/login/src/index.ts"],
-      "@medigo/toast": ["libs/toast/src/index.ts"]
+      "@medigo/toast": ["libs/toast/src/index.ts"],
+      "@medigo/time-handler": ["libs/time-handler/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

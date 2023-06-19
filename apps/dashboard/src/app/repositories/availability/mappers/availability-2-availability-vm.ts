@@ -8,7 +8,7 @@ export function Availability2AvailabilityVM(Availability: any): AvailabilityVM {
     start: Availability.start,
     end: Availability.end,
     day: Availability.day,
-    available: Availability.available,
+    available: Availability.available == 'Disponible' ? true : false,
     doctorId: Availability.doctor.id,
   };
 }

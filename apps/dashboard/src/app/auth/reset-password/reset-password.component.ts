@@ -57,7 +57,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
               { duration: 3000 }
             );
             setTimeout(() => {
-              this.router.navigate(['login']);
+              this.router.navigate(['/login']);
             }, 2000);
           },
         })

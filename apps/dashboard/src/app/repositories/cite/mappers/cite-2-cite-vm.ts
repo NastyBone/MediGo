@@ -8,7 +8,7 @@ export function Cite2CiteVM(Cite: any): CiteVM {
     subject: Cite.subject,
     date: Cite.date,
     time: Cite.time,
-    patientConfirm: Cite.patientConfirm,
+    patientConfirm: Cite.patientConfirm == 'Confirmada' ? true : false,
     doctorId: Cite.doctor.id,
     patientId: Cite.patient.id,
   };

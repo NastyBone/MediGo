@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, lastValueFrom } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -61,6 +61,7 @@ export class RecordComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
+  roleData!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -70,6 +71,7 @@ export class RecordComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
+    this.roleData = this.userState.getFullRole();
     this.sub$.add(
       this.recordService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -81,11 +83,14 @@ export class RecordComponent implements OnInit, OnDestroy {
         this.recordData = {
           ...this.recordData,
           body: record || [],
+          options:
+            this.roleData == 'asistente' || this.roleData == 'paciente'
+              ? [{ name: 'Imprimir', value: 'print', icon: 'print' }]
+              : [...this.recordData.options],
         };
         this.tableService.setData(this.recordData);
       })
     );
-    this.recordService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -111,6 +116,8 @@ export class RecordComponent implements OnInit, OnDestroy {
       hasBackdrop: true,
       data: {
         id,
+        fullRole: this.userState.getFullRole(),
+        role: this.userState.getRole(),
       },
     });
     modal.componentInstance.closed.subscribe(() => {
@@ -139,23 +146,27 @@ export class RecordComponent implements OnInit, OnDestroy {
 
   private roleBasedData(): Observable<RecordItemVM[] | null> {
     const role = this.userState.getRole();
-    const roleData = this.userState.getFullRole();
-    switch (role) {
-      case 'asistente': {
-        return this.recordService.findByDoctorId$(roleData.doctor.id);
-        break;
+    if (this.roleData) {
+      switch (role) {
+        case 'asistente': {
+          return this.recordService.findByDoctorId$(this.roleData.doctor.id);
+          break;
+        }
+        case 'doctor': {
+          return this.recordService.findByDoctorId$(this.roleData.id);
+          break;
+        }
+        case 'paciente': {
+          return this.recordService.findByPatientId$(this.roleData.id);
+          break;
+        }
+        default: {
+          this.recordService.get({});
+          return this.recordService.getData$();
+        }
       }
-      case 'doctor': {
-        return this.recordService.findByDoctorId$(roleData.id);
-        break;
-      }
-      case 'paciente': {
-        return this.recordService.findByPatientId$(roleData.id);
-        break;
-      }
-      default: {
-        return this.recordService.getData$();
-      }
+    } else {
+      return new Observable<null>();
     }
   }
 }

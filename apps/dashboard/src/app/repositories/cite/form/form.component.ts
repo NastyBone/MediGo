@@ -5,10 +5,15 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import { isEqual } from 'lodash';
-import { Subscription, finalize, Observable} from 'rxjs';
+import { Subscription, finalize, Observable } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { CiteService } from '../cite.service';
 import { CiteItemVM } from '../model';
@@ -16,7 +21,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { SpecialityItemVM } from '../../speciality/model';
 import { DoctorItemVM } from '../../doctor/model';
-
 
 @Component({
   selector: 'medigo-form',
@@ -46,10 +50,10 @@ export class FormComponent implements OnInit, OnDestroy {
   loading = false;
   filteredSpeciality!: Observable<SpecialityItemVM[]>;
   filteredDoctors!: Observable<DoctorItemVM[]>;
-  dateControl = new FormControl( [Validators.required]);
+  dateControl = new FormControl([Validators.required]);
   constructor(
     private citeService: CiteService,
-    
+
     private stateService: StateService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -118,6 +122,10 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickSave(): void {
+    this.form.value.patientConfirm == 'true' ||
+    this.form.value.patientConfirm == true
+      ? (this.form.value.patientConfirm = true)
+      : (this.form.value.patientConfirm = false);
     if (this.id) {
       this.update();
     } else {

@@ -20,13 +20,13 @@ import { AvailabilityItemVM, RowActionAvailability } from './model';
   styleUrls: ['./availability.component.scss'],
 })
 export class AvailabilityComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   availabilityData: TableDataVM<AvailabilityItemVM> = {
     headers: [
       {
         columnDef: 'doctor',
         header: 'Doctor',
-        cell: (element: { [key: string]: string }) => `${element['doctor']}`,
+        cell: (element: { [key: string]: string } | any) =>
+          `${element['doctor']['user']['firstName']} ${element['doctor']['user']['lastName']}`,
       },
       {
         columnDef: 'day',
@@ -57,6 +57,8 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
+  data!: any;
+  roleData!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -66,6 +68,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
+    this.roleData = this.userState.getFullRole();
     this.sub$.add(
       this.availabilityService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -75,15 +78,19 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.roleBasedData().subscribe(
         (availability: AvailabilityItemVM[] | null) => {
+          this.data = availability;
           this.availabilityData = {
             ...this.availabilityData,
             body: availability || [],
+            options:
+              this.roleData == 'asistente'
+                ? [{ name: 'No disponible', value: null, icon: 'none' }]
+                : [],
           };
           this.tableService.setData(this.availabilityData);
         }
       )
     );
-    this.availabilityService.get({});
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
@@ -105,6 +112,9 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
       hasBackdrop: true,
       data: {
         id,
+        availabilities: this.data,
+        fullRole: this.userState.getFullRole(),
+        role: this.userState.getRole(),
       },
     });
     modal.componentInstance.closed.subscribe(() => {
@@ -133,19 +143,25 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
 
   private roleBasedData(): Observable<AvailabilityItemVM[] | null> {
     const role = this.userState.getRole();
-    const roleData = this.userState.getFullRole();
-    switch (role) {
-      case 'asistente': {
-        return this.availabilityService.findByDoctor$(roleData.doctor.id);
-        break;
+
+    if (this.roleData) {
+      switch (role) {
+        case 'asistente': {
+          return this.availabilityService.findByDoctor$(
+            this.roleData.doctor.id
+          );
+          break;
+        }
+        case 'doctor': {
+          return this.availabilityService.findByDoctor$(this.roleData.id);
+          break;
+        }
+        default: {
+          this.availabilityService.get({});
+          return this.availabilityService.getData$();
+          break;
+        }
       }
-      case 'doctor': {
-        return this.availabilityService.findByDoctor$(roleData.id);
-        break;
-      }
-      default: {
-        return this.availabilityService.getData$();
-      }
-    }
+    } else return new Observable<null>();
   }
 }

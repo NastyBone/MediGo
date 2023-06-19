@@ -13,6 +13,7 @@ import {
   UpdateAvailabilityDto,
 } from './dto';
 import { daysOfTheWeek } from '../../common/enums';
+import { checkTimeConflict, checkTimeRange } from '@medigo/time-handler';
 
 @Injectable()
 export class AvailabilityService {
@@ -27,7 +28,10 @@ export class AvailabilityService {
         deleted: false,
       },
       relations: {
-        doctor: true,
+        doctor: {
+          speciality: true,
+          user: true,
+        },
       },
       order: {
         day: 'ASC',
@@ -44,7 +48,10 @@ export class AvailabilityService {
         deleted: false,
       },
       relations: {
-        doctor: true,
+        doctor: {
+          speciality: true,
+          user: true,
+        },
       },
     });
     if (!data) {
@@ -60,15 +67,29 @@ export class AvailabilityService {
   async insert(
     createAvailabilityDto: CreateAvailabilityDto
   ): Promise<ResponseAvailabilityDto> {
-    try {
-      if (
-        !Object.values(daysOfTheWeek).includes(
-          createAvailabilityDto.day as daysOfTheWeek
-        )
-      ) {
-        throw new BadRequestException('Día no definido');
-      }
+    if (!checkTimeRange(createAvailabilityDto.start, createAvailabilityDto.end))
+      throw new BadRequestException('Rango Invalido');
 
+    if (
+      checkTimeConflict(
+        createAvailabilityDto.start,
+        createAvailabilityDto.end,
+        createAvailabilityDto.day,
+        createAvailabilityDto.doctor.id,
+        await this.findByDoctor(createAvailabilityDto.doctor.id)
+      )
+    ) {
+      throw new BadRequestException('Rango En Conflicto');
+    }
+    if (
+      !Object.values(daysOfTheWeek).includes(
+        createAvailabilityDto.day as daysOfTheWeek
+      )
+    ) {
+      throw new BadRequestException('Día no definido');
+    }
+
+    try {
       const availability = this.repository.create({
         start: createAvailabilityDto.start,
         end: createAvailabilityDto.end,
@@ -78,9 +99,8 @@ export class AvailabilityService {
           id: createAvailabilityDto.doctorId,
         },
       });
-      return new ResponseAvailabilityDto(
-        await this.repository.save(availability)
-      );
+      const newAvailability = await this.repository.save(availability);
+      return this.findOne(newAvailability.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(
@@ -93,6 +113,20 @@ export class AvailabilityService {
     updateAvailabilityDto: UpdateAvailabilityDto
   ): Promise<ResponseAvailabilityDto> {
     await this.findValid(id);
+    if (!checkTimeRange(updateAvailabilityDto.start, updateAvailabilityDto.end))
+      throw new BadRequestException('Rango Invalido');
+
+    if (
+      checkTimeConflict(
+        updateAvailabilityDto.start,
+        updateAvailabilityDto.end,
+        updateAvailabilityDto.day,
+        updateAvailabilityDto.doctor.id,
+        await this.findByDoctor(updateAvailabilityDto.doctor.id)
+      )
+    ) {
+      throw new BadRequestException('Rango En Conflicto');
+    }
     try {
       if (
         !Object.values(daysOfTheWeek).includes(
@@ -144,7 +178,10 @@ export class AvailabilityService {
           deleted: false,
         },
         relations: {
-          doctor: true,
+          doctor: {
+            speciality: true,
+            user: true,
+          },
         },
       });
       return availability.map((item) => new ResponseAvailabilityDto(item));
@@ -154,5 +191,24 @@ export class AvailabilityService {
         'Error al encontrar disponibilidad'
       );
     }
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const availabilities = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (availabilities.length) {
+      availabilities.map((item) => (item.deleted = true));
+      await this.repository.save(availabilities);
+    }
+    console.log('SOFT DELETION: AVAILABILITES BY DOCTOR');
+
+    return true;
   }
 }

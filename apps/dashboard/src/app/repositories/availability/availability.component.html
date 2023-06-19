@@ -1,27 +1,27 @@
 <div class="container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          <span class="module-title">Disponibilidades</span>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <medigo-table
-          emptyMessage="No hay disponibilidades para mostrar"
-          emptySearchMessage="Ningún disponibilidad coincide con la busqueda"
-          (clickOption)="clickAction($event)"
-        ></medigo-table>
-      </mat-card-content>
-    </mat-card>
-    <button
-      mat-fab
-      matTooltip="Agregar nueva disponibilidad"
-      color="accent"
-      aria-label="Agregar nueva disponibilidad"
-      class="btn-fixed"
-      (click)="showModal()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <span class="module-title">Disponibilidades</span>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <medigo-table
+        emptyMessage="No hay disponibilidades para mostrar"
+        emptySearchMessage="Ningún disponibilidad coincide con la busqueda"
+        (clickOption)="clickAction($event)"
+      ></medigo-table>
+    </mat-card-content>
+  </mat-card>
+  <button
+    mat-fab
+    matTooltip="Agregar nueva disponibilidad"
+    color="accent"
+    aria-label="Agregar nueva disponibilidad"
+    class="btn-fixed"
+    (click)="showModal()"
+    [hidden]="this.roleData === 'asistente' || this.roleData === 'paciente'"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -13,7 +13,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { isEqual } from 'lodash';
+import { isEqual, uniq } from 'lodash';
 import {
   Observable,
   Subscription,
@@ -28,6 +28,7 @@ import { RecordService } from '../record.service';
 import { forbiddenNamesValidator } from '../../../common/forbidden-names-validator.directive';
 import { DoctorItemVM } from '../../doctor/model';
 import { PatientItemVM } from '../../patient/model';
+import { dateFixFormat } from '@medigo/time-handler';
 
 @Component({
   selector: 'medigo-form',
@@ -41,7 +42,7 @@ export class FormComponent implements OnInit, OnDestroy {
   submitDisabled = true;
   sub$ = new Subscription();
   oldRecordValue: RecordItemVM = {
-    date: '',
+    date: dateFixFormat(new Date().toLocaleDateString()),
     description: '',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doctorId: null as any,
@@ -55,88 +56,71 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   incomingDoctors!: DoctorItemVM[];
   selectedDoctor!: DoctorItemVM[];
+  selectedDoctorId!: number;
   doctorControl = new FormControl(this.oldRecordValue.doctor, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredDoctors!: Observable<DoctorItemVM[]>;
   //
   //
-  incomingPatients!: PatientItemVM[];
+  incomingPatients: PatientItemVM[] = [];
   selectedPatients!: PatientItemVM[];
   patientControl = new FormControl(this.oldRecordValue.patient, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredPatients!: Observable<PatientItemVM[]>;
   //
-
+  disableSelectDoctor = false;
+  //
   maxDate = new Date(2100, 11, 31);
   minDate = new Date(2000, 0, 1);
   dateControl = new FormControl(this.oldRecordValue.date, Validators.required);
 
   constructor(
     private recordService: RecordService,
-    @Inject(MAT_DIALOG_DATA) public data: RecordItemVM,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
-    this.stateService.setLoading(this.loading);
     //
-    this.sub$.add(
-      forkJoin({
-        patients: this.recordService.getPatients$(),
-        doctors: this.recordService.getDoctors$(),
-      })
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.stateService.setLoading(this.loading);
+    if (this.data.role == 'administrador') {
+      this.loading = true;
+      this.stateService.setLoading(this.loading);
+      this.sub$.add(
+        this.recordService
+          .getDoctors$()
+          .pipe(
+            finalize(() => {
+              this.loading = false;
+              this.stateService.setLoading(this.loading);
+            })
+          )
+          .subscribe((doctors) => {
+            if (doctors) {
+              this.incomingDoctors = doctors;
+              this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+                startWith<string | DoctorItemVM | null | undefined>(''),
+                map((value) => {
+                  if (value !== null) {
+                    return typeof value === 'string'
+                      ? value
+                      : value?.user?.firstName + ' ' + value?.user?.lastName;
+                  }
+                  return '';
+                }),
+                map((name) => {
+                  return name
+                    ? this._filterDoctors(name)
+                    : this.incomingDoctors.slice();
+                })
+              );
+            }
           })
-        )
-        .subscribe(({ doctors, patients }) => {
-          if (patients) {
-            this.incomingPatients = patients;
-            this.filteredPatients = this.patientControl.valueChanges.pipe(
-              startWith<string | PatientItemVM | undefined | null>(''),
-              map((value) => {
-                if (value !== null) {
-                  return typeof value === 'string'
-                    ? value
-                    : value?.user?.firstName + ' ' + value?.user?.lastName;
-                }
-                return '';
-              }),
-              map((name) => {
-                return name
-                  ? this._filterPatients(name)
-                  : this.incomingPatients.slice();
-              })
-            );
-          }
-          //
-          if (doctors) {
-            this.incomingDoctors = doctors;
-            this.filteredDoctors = this.doctorControl.valueChanges.pipe(
-              startWith<string | DoctorItemVM | null | undefined>(''),
-              map((value) => {
-                if (value !== null) {
-                  return typeof value === 'string'
-                    ? value
-                    : value?.user?.firstName + ' ' + value?.user?.lastName;
-                }
-                return '';
-              }),
-              map((name) => {
-                return name
-                  ? this._filterDoctors(name)
-                  : this.incomingDoctors.slice();
-              })
-            );
-          }
-        })
-    );
+      );
+    }
+
     //
     this.createForm();
     if (this.data?.id) {
@@ -153,23 +137,22 @@ export class FormComponent implements OnInit, OnDestroy {
           )
           .subscribe((record) => {
             if (record) {
-              this.dateControl.setValue(this.dateFix(record.date));
+              this.selectedDoctorId = record.doctor?.id as number;
+
+              this.dateControl.setValue(dateFixFormat(record.date));
               record.date = this.dateControl.value || record.date;
               this.oldRecordValue = record;
               this.form.patchValue(
                 {
                   ...record,
-                  doctorId: this.incomingDoctors.find(
-                    (doctor) => doctor.id == record.doctor?.id
-                  ),
-                  patientId: this.incomingPatients.find(
-                    (patient) => patient.id == record.patient?.id
-                  ),
+                  doctorId: record.doctor,
+                  patientId: record.patient,
                 },
                 {
                   emitEvent: false,
                 }
               );
+              this.loadPatients();
             }
           })
       );
@@ -190,11 +173,20 @@ export class FormComponent implements OnInit, OnDestroy {
       doctorId: this.doctorControl,
       patientId: this.patientControl,
     });
+    this.setRoleDefault();
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
         this.submitDisabled =
           isEqual(this.oldRecordValue, this.form.getRawValue()) ||
           this.form.invalid;
+      })
+    );
+    this.sub$.add(
+      this.doctorControl.valueChanges.subscribe((doctor) => {
+        if (doctor && doctor.id) {
+          this.selectedDoctorId = doctor.id;
+          this.loadPatients();
+        }
       })
     );
   }
@@ -247,6 +239,45 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
   //
+
+  loadPatients(): void {
+    this.loading = true;
+    this.stateService.setLoading(this.loading);
+    //
+    this.sub$.add(
+      this.recordService
+        .getPatients$(this.selectedDoctorId)
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+            this.stateService.setLoading(this.loading);
+          })
+        )
+        .subscribe((patients) => {
+          if (patients) {
+            this.incomingPatients = this.removeDuplicates(patients);
+
+            this.filteredPatients = this.patientControl.valueChanges.pipe(
+              startWith<string | PatientItemVM | undefined | null>(''),
+              map((value) => {
+                if (value !== null) {
+                  return typeof value === 'string'
+                    ? value
+                    : value?.user?.firstName + ' ' + value?.user?.lastName;
+                }
+                return '';
+              }),
+              map((name) => {
+                return name
+                  ? this._filterPatients(name)
+                  : this.incomingPatients.slice();
+              })
+            );
+          }
+        })
+    );
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   displayFn(item?: any): string {
     if (item) {
@@ -277,8 +308,29 @@ export class FormComponent implements OnInit, OnDestroy {
     );
   }
   //
-  private dateFix(date: string) {
-    const [day, month, year] = date.split('/');
-    return new Date(+year, +month - 1, +day, 0, 0, 0).toISOString();
+  private setRoleDefault(): void {
+    const role = this.data.role;
+    if (role == 'doctor') {
+      this.form.patchValue(
+        {
+          doctorId: this.data.fullRole,
+        },
+        { emitEvent: true }
+      );
+      this.disableSelectDoctor = true;
+      this.loadPatients();
+    }
+  }
+
+  removeDuplicates(array: Array<any>): Array<any> {
+    const uniqueIds = new Set();
+    return array.filter((obj) => {
+      if (uniqueIds.has(obj.id)) {
+        return false;
+      } else {
+        uniqueIds.add(obj.id);
+        return true;
+      }
+    });
   }
 }

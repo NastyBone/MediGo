@@ -82,7 +82,8 @@ export class RecordService {
           id: createRecordDto.patientId,
         },
       });
-      return new ResponseRecordDto(await this.repository.save(record));
+      const newRecord = await this.repository.save(record);
+      return this.findOne(newRecord.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar informe');
@@ -127,7 +128,9 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
-          id,
+          patient: {
+            id,
+          },
         },
         order: {
           date: 'ASC',
@@ -154,7 +157,9 @@ export class RecordService {
       const record = await this.repository.find({
         where: {
           deleted: false,
-          id,
+          doctor: {
+            id,
+          },
         },
         order: {
           date: 'ASC',
@@ -199,5 +204,42 @@ export class RecordService {
       data: toGenerate,
     });
     return response;
+  }
+
+  async deleteByPatients(id: number): Promise<void | boolean> {
+    const records = await this.repository.find({
+      where: {
+        deleted: false,
+        patient: {
+          id,
+        },
+      },
+    });
+
+    if (records.length) {
+      records.map((item) => (item.deleted = true));
+      await this.repository.save(records);
+    }
+    console.log('SOFT DELETION: RECORDS BY PATIENT');
+    return true;
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const records = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (records.length) {
+      records.map((item) => (item.deleted = true));
+      await this.repository.save(records);
+    }
+    console.log('SOFT DELETION: RECORDS BY DOCTOR');
+
+    return true;
   }
 }

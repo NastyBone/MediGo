@@ -22,9 +22,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
+
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   declarations: [CiteComponent, FormComponent],
   imports: [
@@ -39,7 +41,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
   ],
@@ -50,6 +52,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FindCiteService,
     FindCitesByDoctorService,
     FindCitesByPatientService,
+    FindByDateAndDoctorService,
     GetCitesService,
     UpdateCiteService,
     CiteMemoryService,

@@ -3,6 +3,6 @@ export interface AvailabilityVM {
   start: string;
   end: string;
   day: any;
-  available: boolean;
+  available: any;
   doctorId: number;
 }

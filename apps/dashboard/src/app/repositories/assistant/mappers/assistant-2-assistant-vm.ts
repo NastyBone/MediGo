@@ -3,6 +3,11 @@ import { AssistantVM } from '../model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Assistant2AssistantVM(Assistant: any): AssistantVM {
+  try {
+    if (!Assistant) throw Error();
+  } catch (e) {
+    throw new Error('Su usuario no ha sido asignado');
+  }
   return {
     id: Assistant.id,
     doctorId: Assistant.doctor.id,

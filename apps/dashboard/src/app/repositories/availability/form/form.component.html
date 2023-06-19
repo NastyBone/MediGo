@@ -34,6 +34,12 @@
     <mat-error *ngIf="form.controls['start'].hasError('required')"
       >Campo requerido</mat-error
     >
+    <mat-error *ngIf="form.controls['start'].hasError('timeRangeError')"
+    >Rango Invalido</mat-error
+  >
+  <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
+  >Rango Ocupado</mat-error
+>
   </mat-form-field>
   <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
 
@@ -57,6 +63,12 @@
     <mat-error *ngIf="form.controls['end'].hasError('required')"
       >Campo requerido</mat-error
     >
+    <mat-error *ngIf="form.controls['end'].hasError('timeRangeError')"
+    >Rango Invalido</mat-error
+  >
+  <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
+  >Rango Ocupado</mat-error
+>
   </mat-form-field>
   <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
 
@@ -98,6 +110,7 @@
       matInput
       [formControl]="doctorControl"
       [matAutocomplete]="autoclient"
+      [readonly]="disableSelectDoctor"
     />
     <mat-autocomplete
       name="doctor"

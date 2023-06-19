@@ -1,0 +1,91 @@
+import moment from 'moment';
+
+export function timeStringToDate(
+  date: string,
+  time: string,
+  yesterday: boolean = false
+): Date {
+  let fixedDate = new Date(
+    moment
+      .utc(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
+      .add(5, 'second')
+      .format('MM/DD/YYYY hh:mm a')
+  );
+  if (yesterday) {
+    fixedDate = new Date(
+      moment
+        .utc(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
+        .subtract(1, 'day')
+        .add(5, 'second')
+        .format('MM/DD/YYYY hh:mm a')
+    );
+  }
+  return fixedDate;
+}
+
+export function checkTimeRange(start: string, end: string): boolean {
+  return moment.utc(end, 'hh:mm a') > moment.utc(start, 'hh:mm a');
+}
+
+export function checkTimeConflict(
+  start: string,
+  end: string,
+  day: string,
+  doctorId: number,
+  data: any
+): boolean {
+  let flag = true;
+
+  data.map((aval: any) => {
+    let id = null;
+    if (aval.doctorId) id = aval.doctorId;
+    else id = aval.doctor.id;
+    if (doctorId == id) {
+      if (day == aval.day) {
+        if (
+          moment.utc(start, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
+          moment.utc(start, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+        ) {
+          flag = false;
+        }
+        if (
+          moment.utc(end, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
+          moment.utc(end, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+        ) {
+          flag = false;
+        }
+        if (
+          moment.utc(start, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
+          moment.utc(end, 'hh:mm a') <= moment.utc(aval.start, 'hh:mm a')
+        ) {
+          flag = false;
+        }
+        if (
+          moment.utc(start, 'hh:mm a') >= moment.utc(aval.end, 'hh:mm a') &&
+          moment.utc(end, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+        ) {
+          flag = false;
+        }
+      }
+    }
+  });
+  return flag;
+}
+
+export function formatDate(str: string | Date): string | Date {
+  return new Date(
+    moment.utc(str, 'DD/MM/YYYY hh:mm a').format('MM/DD/YYYY hh:mm a')
+  );
+}
+
+export function dateFixFormat(date: string) {
+  const [day, month, year] = date.split('/');
+  return new Date(+year, +month - 1, +day, 0, 0, 0).toISOString();
+}
+
+export function getMonthRange(): [Date, Date] {
+  const now = moment(new Date()).date(31);
+  const lastMonth = moment(now).subtract(1, 'month');
+
+  return [now.toDate(), lastMonth.toDate()];
+}

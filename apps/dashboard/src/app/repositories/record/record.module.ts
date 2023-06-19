@@ -26,6 +26,8 @@ import { TableModule } from '../../common';
 import { PatientModule } from '../patient/patient.module';
 import { DoctorModule } from '../doctor/doctor.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CiteModule } from '../cite/cite.module';
+import { FindPatientsCitesByDoctorService } from './use-cases/find-patients-cites-by-doctor/find-patients-cites-by-doctor.service';
 
 @NgModule({
   declarations: [RecordComponent, FormComponent],
@@ -42,7 +44,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    PatientModule,
+    CiteModule,
     DoctorModule,
   ],
   providers: [
@@ -52,6 +54,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     FindRecordService,
     FindRecordByDoctorService,
     FindRecordByPatientService,
+    FindPatientsCitesByDoctorService,
     GetRecordsService,
     UpdateRecordService,
     GenerateRecordService,
