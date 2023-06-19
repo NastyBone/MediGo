@@ -225,4 +225,38 @@ export class UsersService implements CrudRepository<User> {
 
     return data.map((item) => new ResponseUserPatientDto(item));
   }
+
+  async insertAdmin(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    role: string
+  ): Promise<void> {
+    const UsersAdmins = await this.usersRepository.find({
+      where: {
+        role: 'administrador',
+        status: true,
+      },
+    });
+
+    if (UsersAdmins.length !== 0) {
+      const AdminEmail = await this.findOneByEmail(email);
+      if (AdminEmail) {
+        this.usersRepository.remove(AdminEmail);
+      }
+    } else {
+      const user = this.usersRepository.create({
+        email,
+        password: await hashPassword(password),
+        firstName,
+        lastName,
+        role,
+      });
+
+      await this.usersRepository.save(user);
+    }
+
+    //return new ResponseUserDto(_userRes);
+  }
 }
