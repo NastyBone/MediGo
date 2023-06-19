@@ -74,6 +74,16 @@
                   >Restablecer contraseña</span
                 >
               </div>
+              <mat-card-actions style="width: 100%">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="submitDisable || loading"
+                  type="submit"
+                >
+                  Iniciar Sesión
+                </button>
+              </mat-card-actions>
             </mat-tab>
             <mat-tab label="Paciente">
               <mat-form-field>
@@ -137,19 +147,19 @@
                   >Restablecer contraseña</span
                 >
               </div>
+              <mat-card-actions style="width: 100%">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="submitDisable || loading"
+                  type="submit"
+                >
+                  Iniciar Sesión  
+                </button>
+              </mat-card-actions>
             </mat-tab>
           </mat-tab-group>
         </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-raised-button
-            color="primary"
-            [disabled]="submitDisable || loading"
-            type="submit"
-          >
-            Iniciar Sesión
-          </button>
-        </mat-card-actions>
       </form>
     </mat-card>
   </div>
