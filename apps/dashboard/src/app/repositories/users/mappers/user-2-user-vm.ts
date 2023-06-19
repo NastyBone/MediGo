@@ -8,7 +8,7 @@ export function User2UserVM(user: any): UserVM {
     lastName: user.lastName,
     email: user.email,
     status: user.status,
-    role: user.role,
+    role: user.role.charAt(0).toUpperCase() + user.role.slice(1),
     options: {
       options: [
         {
