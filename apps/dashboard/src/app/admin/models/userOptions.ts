@@ -64,7 +64,7 @@ export const doctorOptions: menuOptions[] = [
   {
     name: 'Citas',
     icon: 'diversity_3',
-    path: 'Cite',
+    path: 'cite',
   },
   {
     name: 'Disponibilidad',
@@ -81,7 +81,7 @@ export const assistantOptions: menuOptions[] = [
   {
     name: 'Citas',
     icon: 'diversity_3',
-    path: 'Cite',
+    path: 'cite',
   },
   {
     name: 'Disponibilidad',
@@ -98,7 +98,7 @@ export const patientOptions: menuOptions[] = [
   {
     name: 'Citas',
     icon: 'diversity_3',
-    path: 'Cite',
+    path: 'cite',
   },
   {
     name: 'Informes',

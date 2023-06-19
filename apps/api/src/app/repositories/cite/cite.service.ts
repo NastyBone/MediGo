@@ -262,7 +262,6 @@ export class CiteService {
         createdAt: Between(prevMonth, presentMonth),
       },
     });
-    console.log(getMonthRange());
     return { completed: countCompleted, notCompleted: countNotCompleted };
   }
 

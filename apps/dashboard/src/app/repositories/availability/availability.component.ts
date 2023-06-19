@@ -58,6 +58,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   disableDateSubmit = true;
   loading = false;
   data!: any;
+  roleData!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -67,6 +68,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
+    this.roleData = this.userState.getFullRole();
     this.sub$.add(
       this.availabilityService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -80,6 +82,10 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
           this.availabilityData = {
             ...this.availabilityData,
             body: availability || [],
+            options:
+              this.roleData == 'asistente'
+                ? [{ name: 'No disponible', value: null, icon: 'none' }]
+                : [],
           };
           this.tableService.setData(this.availabilityData);
         }
@@ -137,21 +143,25 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
 
   private roleBasedData(): Observable<AvailabilityItemVM[] | null> {
     const role = this.userState.getRole();
-    const roleData = this.userState.getFullRole();
-    switch (role) {
-      case 'asistente': {
-        return this.availabilityService.findByDoctor$(roleData.doctor.id);
-        break;
+
+    if (this.roleData) {
+      switch (role) {
+        case 'asistente': {
+          return this.availabilityService.findByDoctor$(
+            this.roleData.doctor.id
+          );
+          break;
+        }
+        case 'doctor': {
+          return this.availabilityService.findByDoctor$(this.roleData.id);
+          break;
+        }
+        default: {
+          this.availabilityService.get({});
+          return this.availabilityService.getData$();
+          break;
+        }
       }
-      case 'doctor': {
-        return this.availabilityService.findByDoctor$(roleData.id);
-        break;
-      }
-      default: {
-        this.availabilityService.get({});
-        return this.availabilityService.getData$();
-        break;
-      }
-    }
+    } else return new Observable<null>();
   }
 }

@@ -152,13 +152,14 @@ export class AssistantService {
           },
         },
       });
-
       if (assistant) {
         return new ResponseAssistantDto(assistant);
+      } else {
+        throw new Error();
       }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar asistante');
+      throw new InternalServerErrorException('Asistente no asignado');
     }
   }
 }

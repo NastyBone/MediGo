@@ -64,7 +64,7 @@ export class CiteComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
-
+  roleData!: any;
   constructor(
     private matDialog: MatDialog,
     private citeService: CiteService,
@@ -73,6 +73,7 @@ export class CiteComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
+    this.roleData = this.userState.getFullRole();
     this.sub$.add(
       this.citeService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -137,24 +138,26 @@ export class CiteComponent implements OnInit, OnDestroy {
 
   private roleBasedData(): Observable<CiteItemVM[] | null> {
     const role = this.userState.getRole();
-    const roleData = this.userState.getFullRole();
-    switch (role) {
-      case 'asistente': {
-        return this.citeService.findByDoctorId$(roleData.doctor.id);
-        break;
+
+    if (this.roleData) {
+      switch (role) {
+        case 'asistente': {
+          return this.citeService.findByDoctorId$(this.roleData.doctor.id);
+          break;
+        }
+        case 'doctor': {
+          return this.citeService.findByDoctorId$(this.roleData.id);
+          break;
+        }
+        case 'paciente': {
+          return this.citeService.findByPatient$(this.roleData.id);
+          break;
+        }
+        default: {
+          this.citeService.get({});
+          return this.citeService.getData$();
+        }
       }
-      case 'doctor': {
-        return this.citeService.findByDoctorId$(roleData.id);
-        break;
-      }
-      case 'paciente': {
-        return this.citeService.findByPatient$(roleData.id);
-        break;
-      }
-      default: {
-        this.citeService.get({});
-        return this.citeService.getData$();
-      }
-    }
+    } else return new Observable<null>();
   }
 }

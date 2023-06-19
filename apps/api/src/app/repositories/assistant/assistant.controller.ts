@@ -20,12 +20,12 @@ import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 
 @UseGuards(RolesGuard)
-@Role(Roles.Admin)
 @ApiTags('assistant')
 @Controller('assistant')
 export class AssistantController {
   constructor(private assistantService: AssistantService) {}
 
+  @Role(Roles.Admin)
   @Get(':id')
   @ApiResponse({
     type: ResponseAssistantDto,
@@ -35,7 +35,7 @@ export class AssistantController {
   ): Promise<ResponseAssistantDto> {
     return this.assistantService.findOne(id);
   }
-
+  @Role(Roles.Admin, Roles.Asistente)
   @Get('user/:id')
   @ApiResponse({
     type: ResponseAssistantDto,
@@ -46,6 +46,7 @@ export class AssistantController {
     return this.assistantService.findByUserId(id);
   }
 
+  @Role(Roles.Admin)
   @Get()
   @ApiResponse({
     type: ResponseAssistantDto,
@@ -54,7 +55,7 @@ export class AssistantController {
   findAll(): Promise<ResponseAssistantDto[]> {
     return this.assistantService.findAll();
   }
-
+  @Role(Roles.Admin)
   @Post()
   @ApiResponse({
     type: ResponseAssistantDto,
@@ -63,6 +64,7 @@ export class AssistantController {
     return this.assistantService.insert(createDto);
   }
 
+  @Role(Roles.Admin)
   @Patch(':id')
   @ApiResponse({
     type: ResponseAssistantDto,
@@ -73,7 +75,7 @@ export class AssistantController {
   ): Promise<ResponseAssistantDto> {
     return this.assistantService.update(id, updateDto);
   }
-
+  @Role(Roles.Admin)
   @Delete(':id')
   @ApiResponse({
     type: ResponseAssistantDto,

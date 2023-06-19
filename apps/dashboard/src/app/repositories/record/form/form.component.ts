@@ -63,7 +63,7 @@ export class FormComponent implements OnInit, OnDestroy {
   filteredDoctors!: Observable<DoctorItemVM[]>;
   //
   //
-  incomingPatients!: PatientItemVM[];
+  incomingPatients: PatientItemVM[] = [];
   selectedPatients!: PatientItemVM[];
   patientControl = new FormControl(this.oldRecordValue.patient, {
     validators: [Validators.required, forbiddenNamesValidator],
@@ -137,23 +137,22 @@ export class FormComponent implements OnInit, OnDestroy {
           )
           .subscribe((record) => {
             if (record) {
+              this.selectedDoctorId = record.doctor?.id as number;
+
               this.dateControl.setValue(dateFixFormat(record.date));
               record.date = this.dateControl.value || record.date;
               this.oldRecordValue = record;
               this.form.patchValue(
                 {
                   ...record,
-                  doctorId: this.incomingDoctors.find(
-                    (doctor) => doctor.id == record.doctor?.id
-                  ),
-                  patientId: this.incomingPatients.find(
-                    (patient) => patient.id == record.patient?.id
-                  ),
+                  doctorId: record.doctor,
+                  patientId: record.patient,
                 },
                 {
                   emitEvent: false,
                 }
               );
+              this.loadPatients();
             }
           })
       );
@@ -257,6 +256,7 @@ export class FormComponent implements OnInit, OnDestroy {
         .subscribe((patients) => {
           if (patients) {
             this.incomingPatients = this.removeDuplicates(patients);
+
             this.filteredPatients = this.patientControl.valueChanges.pipe(
               startWith<string | PatientItemVM | undefined | null>(''),
               map((value) => {

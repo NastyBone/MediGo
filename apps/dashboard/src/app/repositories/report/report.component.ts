@@ -46,7 +46,6 @@ export class ReportComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((report) => {
-          console.log(report);
           this.data[0].value = report.completed;
           this.data[1].value = report.notCompleted;
           this.createSvg();

@@ -135,10 +135,12 @@ export class PatientService {
       });
       if (patient) {
         return new ResponsePatientDto(patient);
+      } else {
+        throw new Error();
       }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar paciente');
+      throw new InternalServerErrorException('Paciente no asignado');
     }
   }
 }

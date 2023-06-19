@@ -153,7 +153,6 @@ export class RecordService {
   }
 
   async findByDoctor(id: number): Promise<ResponseRecordDto[]> {
-    console.log('here');
     try {
       const record = await this.repository.find({
         where: {

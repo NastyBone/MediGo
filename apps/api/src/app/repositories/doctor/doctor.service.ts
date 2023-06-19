@@ -144,7 +144,7 @@ export class DoctorService {
       }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar doctor');
+      throw new InternalServerErrorException('Doctor no asignado');
     }
   }
   async findBySpeciality(specialityId: number): Promise<ResponseDoctorDto[]> {

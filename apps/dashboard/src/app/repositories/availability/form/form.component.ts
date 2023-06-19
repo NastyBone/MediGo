@@ -143,6 +143,7 @@ export class FormComponent implements OnInit, OnDestroy {
               this.form.patchValue(
                 {
                   ...availability,
+                  day: this.days.find((day) => day.name === availability.day),
                 },
                 {
                   emitEvent: false,
@@ -242,6 +243,8 @@ export class FormComponent implements OnInit, OnDestroy {
         this.availabilityService
           .update({
             ...this.form.value,
+            doctorId: this.doctorControl.value?.id,
+            day: this.dayControl.value.name,
             id: this.data.id,
           })
           .pipe(
