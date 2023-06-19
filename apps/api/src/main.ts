@@ -10,7 +10,8 @@ import cookieParser from 'cookie-parser';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-
+import { UsersService } from './app/repositories/users/users.service';
+import process = require('process');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //SOCKET
@@ -20,6 +21,20 @@ async function bootstrap() {
     credentials: true,
     origin: true,
   });
+
+  //USER
+  try {
+    const userService = app.get(UsersService);
+    userService.insertAdmin(
+      process.env.ADMIN_EMAIL,
+      process.env.ADMIN_PASSWORD,
+      process.env.ADMIN_FIRST_NAME,
+      process.env.ADMIN_LAST_NAME,
+      process.env.ADMIN_ROLE
+    );
+  } catch (error) {
+    console.log(error);
+  }
 
   //COOKIES
   app.use(cookieParser());
