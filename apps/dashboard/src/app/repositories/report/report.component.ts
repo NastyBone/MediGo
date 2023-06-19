@@ -75,7 +75,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.colors = d3
       .scaleOrdinal()
       .domain(this.data.map((d) => d.value.toString()))
-      .range(['#2ca25f', '#e34a33']);
+      .range(['#45CD80', '#FF5545', '#00A76C', '#FF1500']);
   }
 
   private drawChart(): void {
@@ -88,8 +88,8 @@ export class ReportComponent implements OnInit, OnDestroy {
       .append('path')
       .attr('d', d3.arc().innerRadius(0).outerRadius(this.radius))
       .attr('fill', (d: any, i: any) => this.colors(i))
-      .attr('stroke', '#121926')
-      .style('stroke-width', '1px')
+      .attr('stroke', (d: any, i: any) => this.colors(i + 2))
+      .style('stroke-width', '25px')
       .style('opacity', 0.6);
 
     const labelLocation = d3.arc().innerRadius(100).outerRadius(this.radius);

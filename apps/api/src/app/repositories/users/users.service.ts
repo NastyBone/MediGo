@@ -239,7 +239,6 @@ export class UsersService implements CrudRepository<User> {
         status: true,
       },
     });
-
     if (UsersAdmins.length !== 0) {
       const AdminEmail = await this.findOneByEmail(email);
       if (AdminEmail) {
