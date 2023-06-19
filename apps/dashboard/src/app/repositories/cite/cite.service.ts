@@ -34,7 +34,10 @@ export class CiteService extends ListComponentService<CiteItemVM> {
       findCiteService
     );
   }
-
+  referData!: {
+    reqId: number | null;
+    indexes: number[];
+  };
   findByDoctorId$(id: number): Observable<Array<CiteItemVM> | null> {
     this.setLoading(true);
     this.findCiteByDoctor
@@ -61,5 +64,9 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     return this.findCitesByDoctorAndDate
       .exec({ date, id })
       .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  setRef(ref: { reqId: number | null; indexes: number[] }) {
+    this.referData = ref;
   }
 }

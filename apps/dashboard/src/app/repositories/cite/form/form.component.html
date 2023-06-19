@@ -1,48 +1,180 @@
-<div class="modal-header">
-    <span mat-dialog-title> Titulo </span>
-    <button
-      id="modal-close-button"
-      mat-dialog-close
-      mat-mini-fab
-      type="button"
-      aria-label="Cerrar"
-      color="basic"
-      (click)="clickClosed()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  
-  <form mat-dialog-content [formGroup]="form!">
-    <mat-form-field class="">
-      <mat-label></mat-label>
-      <input type="text" matInput formControlName="" />
-      <mat-error *ngIf="form.controls[''].hasError('required')"
-        >Campo requerido</mat-error
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="title">Crear o Modificar Cita</mat-card-title>
+      <button
+        class="close-button"
+        type="button"
+        mat-fab
+        color="basic"
+        aria-label="Close"
+        (click)="clickClosed()"
       >
-    </mat-form-field>
-  </form>
-  
-  <div class="modal-footer" mat-dialog-actions>
-    <button
-      mat-button
-      mat-dialog-close
-      type="button"
-      (click)="clickSave()"
-      color="primary"
-      [disabled]="submitDisabled || loading"
+        <mat-icon>undo</mat-icon>
+      </button></mat-card-header
     >
-      Guardar
-    </button>
-    <button
-      mat-button
-      mat-dialog-close
-      cdkFocusInitial
-      type="button"
-      (click)="clickClosed()"
-    >
-      Cancelar
-    </button>
-  </div>
-  <!-- <app-state *ngIf="loading"> </app-state> -->
-  
+
+    <form [formGroup]="form" class="form-control">
+      <mat-card-content>
+        <div class="bill-distribution">
+          <mat-form-field>
+            <mat-label>Especialidad</mat-label>
+            <input
+              type="speciality"
+              name="speciality"
+              id="speciality"
+              formControlName="speciality"
+              matInput
+            />
+            <mat-autocomplete
+              name="speciality"
+              id="speciality"
+              #autoclient="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let option of filteredSpeciality | async"
+                [value]="option"
+                > </mat-option
+              >
+              <mat-option
+                *ngIf="(filteredSpeciality | async)?.length === 0"
+                disabled
+                >No se encontraron especialidades</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['speciality'].hasError('required')">
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Doctor</mat-label>
+            <input
+              type="doctor"
+              name="doctor"
+              id="doctor"
+              formControlName="doctor"
+              matInput
+            />
+            <mat-autocomplete
+              name="doctor"
+              id="doctor"
+              #autoclient="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              <mat-option
+                *ngFor="let option of filteredDoctors | async"
+                [value]="option"
+                ></mat-option
+              >
+              <mat-option
+                *ngIf="(filteredDoctors | async)?.length === 0"
+                disabled
+                >No se encontraron clientes</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['doctor'].hasError('required')">
+              Campo Requerido
+            </mat-error>
+            <mat-error 
+              >Longitud Excedida</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input
+            matInput
+            [matDatepicker]="picker"
+              id="date"
+              name="date"
+              formControlName="date"
+              [formControl]="dateControl"
+              [min]="minDate"
+              [max]="maxDate"
+              readonly
+
+            />
+            <mat-hint>Presione el calendario</mat-hint>
+            <mat-datepicker-toggle
+              
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+            <mat-error>
+              Seleccione una fecha mayor
+            </mat-error>
+            <mat-error >
+              Seleccione una fecha menor
+            </mat-error>
+            <mat-error >
+              Campo Requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <input
+              type="text"
+              matInput
+              [matDatepicker]="picker"
+              id="date"
+              name="date"
+              formControlName="date"
+              
+             
+              readonly
+            />
+            <mat-autocomplete
+              name="request"
+
+            >
+              <mat-option
+             
+                ></mat-option
+              >
+              <mat-option
+               
+                >No se encontraron solicitudes</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error
+              >Campo Requerido</mat-error
+            >
+            <mat-error 
+              >Seleccione una opción</mat-error
+            >
+          </mat-form-field>
+
+        </div>
+      
+
+    
+
+        
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-button
+          color="primary"
+          [disabled]="submitDisabled"
+          (click)="clickSave()"
+          class="action-button"
+        >
+          Guardar
+        </button>
+        <button
+          mat-button
+          type="button"
+          (click)="clickClosed()"
+          class="action-button"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

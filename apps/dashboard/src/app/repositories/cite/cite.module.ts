@@ -24,6 +24,9 @@ import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
 import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   declarations: [CiteComponent, FormComponent],
   imports: [
@@ -38,6 +41,9 @@ import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/
     MatNativeDateModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     CiteService,

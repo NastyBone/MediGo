@@ -1,0 +1,21 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.7rem;
+  height: 15rem;
+  width: 30rem;
+}
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.FormAssistant {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.modal-footer {
+  justify-content: center;
+}

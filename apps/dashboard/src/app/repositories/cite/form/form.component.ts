@@ -1,18 +1,26 @@
 import {
   Component,
   EventEmitter,
-  Inject,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
+
 import { isEqual } from 'lodash';
-import { Subscription, finalize } from 'rxjs';
+import { Subscription, finalize, Observable } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { CiteService } from '../cite.service';
 import { CiteItemVM } from '../model';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { SpecialityItemVM } from '../../speciality/model';
+import { DoctorItemVM } from '../../doctor/model';
 
 @Component({
   selector: 'medigo-form',
@@ -35,25 +43,34 @@ export class FormComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     patientId: null as any,
   };
+  maxDate = new Date(2100, 11, 31);
+  minDate = new Date(2000, 0, 1);
 
   form!: FormGroup;
   loading = false;
-
+  filteredSpeciality!: Observable<SpecialityItemVM[]>;
+  filteredDoctors!: Observable<DoctorItemVM[]>;
+  dateControl = new FormControl([Validators.required]);
   constructor(
     private citeService: CiteService,
-    @Inject(MAT_DIALOG_DATA) public data: CiteItemVM,
+
     private stateService: StateService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
     this.createForm();
-    if (this.data?.id) {
+    if (this.activatedRoute.snapshot.params['id']) {
+      this.id = this.activatedRoute.snapshot.params['id'];
+    }
+    if (this.id) {
       this.sub$.add(
         this.citeService
-          .find$({ id: this.data.id })
+          .find$({ id: this.id })
           .pipe(
             finalize(() => {
               this.loading = false;
@@ -84,7 +101,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   clickClosed(): void {
-    this.closed.emit();
+    this.router.navigate(['/dashboard/cite']);
   }
   private createForm(): void {
     this.form = this.formBuilder.group({
@@ -109,7 +126,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form.value.patientConfirm == true
       ? (this.form.value.patientConfirm = true)
       : (this.form.value.patientConfirm = false);
-    if (this.data.id) {
+    if (this.id) {
       this.update();
     } else {
       this.create();
@@ -139,7 +156,7 @@ export class FormComponent implements OnInit, OnDestroy {
         this.citeService
           .update({
             ...this.form.value,
-            id: this.data.id,
+            id: this.id,
           })
           .pipe(
             finalize(() => {
@@ -150,5 +167,13 @@ export class FormComponent implements OnInit, OnDestroy {
           .subscribe()
       );
     }
+  }
+  displayFn(item?: any): string {
+    if (item) {
+      if (item.name) return item.name;
+      if (item.firstName) return item.firstName + ' ' + item.lastName;
+      if (item.vehicle) return item.vehicle.brand + ' ' + item.vehicle.model;
+    }
+    return '';
   }
 }

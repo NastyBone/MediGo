@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <span mat-dialog-title> Titulo </span>
+  <span mat-dialog-title> Agregar nuevo doctor</span>
   <button
     id="modal-close-button"
     mat-dialog-close
@@ -13,7 +13,7 @@
   </button>
 </div>
 
-<form mat-dialog-content [formGroup]="form!">
+<form class="FormDoctor" mat-dialog-content [formGroup]="form!">
   <mat-form-field>
     <mat-label>Usuario</mat-label>
     <input
@@ -52,7 +52,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Espacialidad</mat-label>
+    <mat-label>Especialidad</mat-label>
     <input
       type="text"
       matInput

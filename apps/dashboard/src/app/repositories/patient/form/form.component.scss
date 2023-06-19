@@ -1,0 +1,14 @@
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.FormP {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.modal-footer {
+  justify-content: center;
+}
