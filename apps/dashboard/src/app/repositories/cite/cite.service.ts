@@ -35,18 +35,22 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     );
   }
 
-  findByDoctorId$(id: number): Observable<Array<CiteItemVM>> {
+  findByDoctorId$(id: number): Observable<Array<CiteItemVM> | null> {
     this.setLoading(true);
-    return this.findCiteByDoctor
+    this.findCiteByDoctor
       .exec({ id })
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(finalize(() => this.setLoading(false)))
+      .subscribe();
+    return this.citesMemoryService.getDataSource$();
   }
 
-  findByPatient$(id: number): Observable<Array<CiteItemVM>> {
+  findByPatient$(id: number): Observable<Array<CiteItemVM> | null> {
     this.setLoading(true);
-    return this.findCiteByPatient
+    this.findCiteByPatient
       .exec({ id })
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(finalize(() => this.setLoading(false)))
+      .subscribe();
+    return this.citesMemoryService.getDataSource$();
   }
 
   findByDoctorAndDate$(

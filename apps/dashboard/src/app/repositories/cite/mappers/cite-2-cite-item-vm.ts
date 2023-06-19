@@ -8,6 +8,7 @@ export function CiteItem2CiteItemVM(Cite: any): CiteItemVM {
     ...Cite2CiteVM(Cite),
     doctor: Cite.doctor,
     patient: Cite.patient,
+    patientConfirm: Cite.patientConfirm ? 'Confirmada' : 'No confirmada',
     options: {
       options: [
         {

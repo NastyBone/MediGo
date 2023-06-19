@@ -8,12 +8,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Patient } from './entities';
 import { CreatePatientDto, ResponsePatientDto, UpdatePatientDto } from './dto';
+import { CiteService } from '../cite/cite.service';
+import { RecordService } from '../record/record.service';
 
 @Injectable()
 export class PatientService {
   constructor(
     @InjectRepository(Patient)
-    private repository: Repository<Patient>
+    private repository: Repository<Patient>,
+    private citeService: CiteService,
+    private recordService: RecordService
   ) {}
 
   async findAll(): Promise<ResponsePatientDto[]> {
@@ -106,6 +110,8 @@ export class PatientService {
       const patient = await this.findValid(id);
       patient.deleted = true;
       patient.user = null;
+      await this.citeService.deleteByPatients(patient.id);
+      await this.recordService.deleteByPatients(patient.id);
       await this.repository.save(patient);
       return patient;
     } catch (error) {
@@ -129,10 +135,12 @@ export class PatientService {
       });
       if (patient) {
         return new ResponsePatientDto(patient);
+      } else {
+        throw new Error();
       }
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error al encontrar paciente');
+      throw new InternalServerErrorException('Paciente no asignado');
     }
   }
 }

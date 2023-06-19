@@ -25,6 +25,11 @@ export class ResponseCiteDto {
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsString()
+  subject: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsBoolean()
   patientConfirm: boolean;
 
@@ -42,6 +47,7 @@ export class ResponseCiteDto {
     this.id = data.id;
     this.date = data.date;
     this.time = data.time;
+    this.subject = data.subject;
     this.patientConfirm = data.patientConfirm;
     this.doctor = new ResponseDoctorDto(data.doctor);
     this.patient = new ResponsePatientDto(data.patient);

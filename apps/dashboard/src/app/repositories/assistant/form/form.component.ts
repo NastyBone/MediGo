@@ -138,15 +138,12 @@ export class FormComponent implements OnInit, OnDestroy {
           .subscribe((assistant) => {
             if (assistant) {
               this.oldAssistantValue = assistant;
+
               this.form.patchValue(
                 {
                   ...assistant,
-                  userId: this.incomingUsers.find(
-                    (user) => user.id == assistant.user?.id
-                  ),
-                  doctorId: this.incomingDoctors.find(
-                    (doctor) => doctor.id == assistant.doctor?.id
-                  ),
+                  userId: assistant.user,
+                  doctorId: assistant.doctor,
                 },
                 {
                   emitEvent: false,

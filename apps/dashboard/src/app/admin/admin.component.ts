@@ -76,43 +76,45 @@ export class AdminComponent implements OnInit, OnDestroy {
   checkRole() {
     const userRole = this.userStateService.getRole();
     const userId = this.userStateService.getUserId() || 0;
-    switch (userRole) {
-      case 'doctor': {
-        this.sub$.add(
-          this.doctorsService
-            .findByUserId$(userId)
-            .pipe(take(1))
-            .subscribe((doctor) => {
-              this.userStateService.setRole(doctor);
-            })
-        );
-        break;
-      }
-      case 'asistente': {
-        this.sub$.add(
-          this.assistantService
-            .findByUserId$(userId)
-            .pipe(take(1))
-            .subscribe((assistant) => {
-              this.userStateService.setRole(assistant);
-            })
-        );
-        break;
-      }
-      case 'paciente': {
-        this.sub$.add(
-          this.patientService
-            .findByUser(userId)
-            .pipe(take(1))
-            .subscribe((patient) => {
-              this.userStateService.setRole(patient);
-            })
-        );
-        break;
-      }
-      default: {
-        this.userStateService.setRole('administrador');
-        break;
+    if (userRole) {
+      switch (userRole) {
+        case 'doctor': {
+          this.sub$.add(
+            this.doctorsService
+              .findByUserId$(userId)
+              .pipe(take(1))
+              .subscribe((doctor) => {
+                this.userStateService.setRole(doctor);
+              })
+          );
+          break;
+        }
+        case 'asistente': {
+          this.sub$.add(
+            this.assistantService
+              .findByUserId$(userId)
+              .pipe(take(1))
+              .subscribe((assistant) => {
+                this.userStateService.setRole(assistant);
+              })
+          );
+          break;
+        }
+        case 'paciente': {
+          this.sub$.add(
+            this.patientService
+              .findByUser(userId)
+              .pipe(take(1))
+              .subscribe((patient) => {
+                this.userStateService.setRole(patient);
+              })
+          );
+          break;
+        }
+        default: {
+          this.userStateService.setRole('administrador');
+          break;
+        }
       }
     }
   }

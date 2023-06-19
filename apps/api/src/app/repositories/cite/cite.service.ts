@@ -9,6 +9,7 @@ import { Between, Repository } from 'typeorm';
 import { Cite } from './entities';
 import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
 import { CronService } from '../../cron/cron.service';
+import { getMonthRange } from '@medigo/time-handler';
 
 @Injectable()
 export class CiteService {
@@ -19,7 +20,7 @@ export class CiteService {
   ) {}
 
   async findAll(): Promise<ResponseCiteDto[]> {
-    this.testCronJob();
+    // this.testCronJob(); //TODO: Delete
     const data = await this.repository.find({
       where: {
         deleted: false,
@@ -28,13 +29,15 @@ export class CiteService {
         date: 'ASC',
       },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
     });
-
     return data.map((item) => new ResponseCiteDto(item));
   }
 
@@ -48,9 +51,12 @@ export class CiteService {
         date: 'ASC',
       },
       relations: {
-        patient: true,
+        patient: {
+          user: true,
+        },
         doctor: {
           speciality: true,
+          user: true,
         },
       },
     });
@@ -66,7 +72,8 @@ export class CiteService {
   }
   async insert(createCiteDto: CreateCiteDto): Promise<ResponseCiteDto> {
     try {
-      if (new Date(createCiteDto.date).getDate() < Date.now()) {
+      if (new Date(createCiteDto.date) < new Date(Date.now())) {
+        console.log(new Date(createCiteDto.date));
         throw new BadRequestException('Fecha Invalida');
       }
       const cite = this.repository.create({
@@ -90,7 +97,8 @@ export class CiteService {
         this.cronService.pauseJob(cite.id);
       }
 
-      return new ResponseCiteDto(await this.repository.save(cite));
+      const newCite = await this.repository.save(cite);
+      return this.findOne(newCite.id);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Error al registrar cita');
@@ -134,11 +142,15 @@ export class CiteService {
     }
   }
   async remove(id: number): Promise<ResponseCiteDto> {
+    //CRON
+    try {
+      this.cronService.deleteCronJob('' + id);
+    } catch (e) {
+      console.log();
+    }
     try {
       const cite = await this.findValid(id);
       cite.deleted = true;
-      //CRON
-      this.cronService.deleteCronJob('' + id);
       return new ResponseCiteDto(await this.repository.save(cite));
     } catch (error) {
       console.log(error);
@@ -158,9 +170,12 @@ export class CiteService {
           date: 'ASC',
         },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
       });
@@ -184,9 +199,12 @@ export class CiteService {
           date: 'ASC',
         },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
           doctor: {
             speciality: true,
+            user: true,
           },
         },
       });
@@ -211,9 +229,13 @@ export class CiteService {
           },
         },
         relations: {
-          patient: true,
+          patient: {
+            user: true,
+          },
+
           doctor: {
             speciality: true,
+            user: true,
           },
         },
       });
@@ -224,30 +246,12 @@ export class CiteService {
   }
 
   async getData(): Promise<{ completed: number; notCompleted: number }> {
-    const now = new Date(); // obtener la fecha y hora actual
-    const presentMonth = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDay(),
-      0,
-      0,
-      0,
-      0
-    ).toLocaleDateString('es-ES');
-    const prevMonth = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDay(),
-      0,
-      0,
-      0,
-      0
-    ).toLocaleDateString('es-ES');
+    const [presentMonth, prevMonth] = getMonthRange();
     const countCompleted = await this.repository.count({
       where: {
         deleted: false,
         patientConfirm: true,
-        date: Between(prevMonth, presentMonth),
+        createdAt: Between(prevMonth, presentMonth),
       },
     });
 
@@ -255,7 +259,7 @@ export class CiteService {
       where: {
         deleted: false,
         patientConfirm: false,
-        date: Between(prevMonth, presentMonth),
+        createdAt: Between(prevMonth, presentMonth),
       },
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };
@@ -284,6 +288,44 @@ export class CiteService {
       },
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };
+  }
+
+  async deleteByPatients(id: number): Promise<void | boolean> {
+    const cites = await this.repository.find({
+      where: {
+        deleted: false,
+        patient: {
+          id,
+        },
+      },
+    });
+
+    if (cites.length) {
+      this.cronService.deleteManyCronJobs(cites);
+      cites.map((item) => (item.deleted = true));
+      await this.repository.save(cites);
+    }
+
+    console.log('SOFT DELETION: CITES BY PATIENT');
+    return true;
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const cites = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+    if (cites.length) {
+      this.cronService.deleteManyCronJobs(cites);
+      cites.map((item) => (item.deleted = true));
+      await this.repository.save(cites);
+    }
+    console.log('SOFT DELETION: CITES BY DOCTOR');
+    return true;
   }
 
   testCronJob(): string {

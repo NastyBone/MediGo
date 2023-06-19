@@ -42,18 +42,22 @@ export class RecordService extends ListComponentService<RecordItemVM> {
     );
   }
 
-  findByDoctorId$(id: number): Observable<RecordItemVM[]> {
-    this.setLoading(true);
-    return this.findRecordByDoctor
+  findByDoctorId$(id: number): Observable<RecordItemVM[] | null> {
+    // this.setLoading(true);
+    this.findRecordByDoctor
       .exec({ id })
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(finalize(() => this.setLoading(false)))
+      .subscribe();
+    return this.recordMemoryService.getDataSource$();
   }
 
-  findByPatientId$(id: number): Observable<RecordItemVM[]> {
+  findByPatientId$(id: number): Observable<RecordItemVM[] | null> {
     this.setLoading(true);
-    return this.findRecordByPatient
+    this.findRecordByPatient
       .exec({ id })
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(finalize(() => this.setLoading(false)))
+      .subscribe();
+    return this.recordMemoryService.getDataSource$();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

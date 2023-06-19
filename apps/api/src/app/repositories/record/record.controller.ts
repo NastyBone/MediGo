@@ -44,7 +44,7 @@ export class RecordController {
   findByDoctor(
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResponseRecordDto[]> {
-    return this.recordService.findByPatient(id);
+    return this.recordService.findByDoctor(id);
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)

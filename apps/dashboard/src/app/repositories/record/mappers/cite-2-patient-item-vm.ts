@@ -5,6 +5,6 @@ import { PatientItem2PatientItemVM } from '../../patient/mappers/patient-2-patie
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function CiteItem2PatientItemVM(Cite: any): PatientItemVM {
   return {
-    ...PatientItem2PatientItemVM(Cite.Patient),
+    ...PatientItem2PatientItemVM(Cite.patient),
   };
 }

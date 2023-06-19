@@ -13,7 +13,7 @@ import {
   UpdateAvailabilityDto,
 } from './dto';
 import { daysOfTheWeek } from '../../common/enums';
-import { checkTimeRange } from '@medigo/time-handler';
+import { checkTimeConflict, checkTimeRange } from '@medigo/time-handler';
 
 @Injectable()
 export class AvailabilityService {
@@ -71,6 +71,17 @@ export class AvailabilityService {
       throw new BadRequestException('Rango Invalido');
 
     if (
+      checkTimeConflict(
+        createAvailabilityDto.start,
+        createAvailabilityDto.end,
+        createAvailabilityDto.day,
+        createAvailabilityDto.doctor.id,
+        await this.findByDoctor(createAvailabilityDto.doctor.id)
+      )
+    ) {
+      throw new BadRequestException('Rango En Conflicto');
+    }
+    if (
       !Object.values(daysOfTheWeek).includes(
         createAvailabilityDto.day as daysOfTheWeek
       )
@@ -104,6 +115,18 @@ export class AvailabilityService {
     await this.findValid(id);
     if (!checkTimeRange(updateAvailabilityDto.start, updateAvailabilityDto.end))
       throw new BadRequestException('Rango Invalido');
+
+    if (
+      checkTimeConflict(
+        updateAvailabilityDto.start,
+        updateAvailabilityDto.end,
+        updateAvailabilityDto.day,
+        updateAvailabilityDto.doctor.id,
+        await this.findByDoctor(updateAvailabilityDto.doctor.id)
+      )
+    ) {
+      throw new BadRequestException('Rango En Conflicto');
+    }
     try {
       if (
         !Object.values(daysOfTheWeek).includes(
@@ -168,5 +191,24 @@ export class AvailabilityService {
         'Error al encontrar disponibilidad'
       );
     }
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const availabilities = await this.repository.find({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (availabilities.length) {
+      availabilities.map((item) => (item.deleted = true));
+      await this.repository.save(availabilities);
+    }
+    console.log('SOFT DELETION: AVAILABILITES BY DOCTOR');
+
+    return true;
   }
 }
