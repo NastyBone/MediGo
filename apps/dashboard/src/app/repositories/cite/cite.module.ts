@@ -23,10 +23,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TableModule } from '../../common';
 import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
-
+import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { PatientModule } from '../patient/patient.module';
+import { DoctorModule } from '../doctor/doctor.module';
+import { AvailabilityModule } from '../availability/availability.module';
 @NgModule({
   declarations: [CiteComponent, FormComponent],
   imports: [
@@ -44,6 +48,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
+    NgxMatTimepickerModule,
+    MatDividerModule,
+    PatientModule,
+    DoctorModule,
+    AvailabilityModule,
   ],
   providers: [
     CiteService,

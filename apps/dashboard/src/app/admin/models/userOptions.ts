@@ -11,7 +11,7 @@ export const userSettings: menuOptions[] = [
 export const adminOptions: menuOptions[] = [
   {
     name: 'Asistentes',
-    icon: 'wc',
+    icon: 'group_add',
     path: 'assistant',
   },
   {
@@ -26,22 +26,22 @@ export const adminOptions: menuOptions[] = [
   },
   {
     name: 'Doctores',
-    icon: 'group',
+    icon: 'medical_services',
     path: 'doctor',
   },
   {
     name: 'Disponibilidad',
-    icon: 'diversity_3',
+    icon: 'pending_actions',
     path: 'availability',
   },
   {
     name: 'Especialidades',
-    icon: 'account_box',
+    icon: 'medical_information',
     path: 'speciality',
   },
   {
     name: 'Informes',
-    icon: 'folder',
+    icon: 'assignment_ind',
     path: 'record',
   },
   {
@@ -63,46 +63,46 @@ export const adminOptions: menuOptions[] = [
 export const doctorOptions: menuOptions[] = [
   {
     name: 'Citas',
-    icon: 'diversity_3',
+    icon: 'insert_invitation',
     path: 'cite',
   },
   {
     name: 'Disponibilidad',
-    icon: 'diversity_3',
+    icon: 'pending_actions',
     path: 'availability',
   },
   {
     name: 'Informes',
-    icon: 'diversity_3',
+    icon: 'assignment_ind',
     path: 'record',
   },
 ];
 export const assistantOptions: menuOptions[] = [
   {
     name: 'Citas',
-    icon: 'diversity_3',
+    icon: 'insert_invitation',
     path: 'cite',
   },
   {
     name: 'Disponibilidad',
-    icon: 'diversity_3',
+    icon: 'pending_actions',
     path: 'availability',
   },
   {
     name: 'Informes',
-    icon: 'diversity_3',
+    icon: 'assignment_ind',
     path: 'record',
   },
 ];
 export const patientOptions: menuOptions[] = [
   {
     name: 'Citas',
-    icon: 'diversity_3',
+    icon: 'insert_invitation',
     path: 'cite',
   },
   {
     name: 'Informes',
-    icon: 'diversity_3',
+    icon: 'assignment_ind',
     path: 'record',
   },
 ];

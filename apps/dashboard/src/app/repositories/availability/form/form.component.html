@@ -59,6 +59,7 @@
       (click)="pickerB.open()"
       matSuffix
     ></ngx-mat-timepicker-toggle>
+    <mat-hint>Presione el reloj</mat-hint>
 
     <mat-error *ngIf="form.controls['end'].hasError('required')"
       >Campo requerido</mat-error
@@ -69,8 +70,8 @@
   <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
   >Rango Ocupado</mat-error
 >
+<ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
   </mat-form-field>
-  <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
 
   <mat-form-field>
     <mat-label>Dia</mat-label>

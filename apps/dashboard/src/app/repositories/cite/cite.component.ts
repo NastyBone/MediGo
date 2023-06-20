@@ -13,7 +13,6 @@ import { StateService } from '../../common/state';
 import { CiteService } from './cite.service';
 import { FormComponent } from './form/form.component';
 import { CiteItemVM, RowActionCite } from './model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'medigo-cite',
@@ -66,17 +65,16 @@ export class CiteComponent implements OnInit, OnDestroy {
   disableDateSubmit = true;
   loading = false;
   indexes: number[] = [];
-  roleData!: any;
+  role!: any;
   constructor(
     private matDialog: MatDialog,
     private citeService: CiteService,
     private tableService: TableService,
     private stateService: StateService,
-    private userState: UserStateService,
-    private router: Router
+    private userState: UserStateService
   ) {}
   ngOnInit(): void {
-    this.roleData = this.userState.getFullRole();
+    this.role = this.userState.getRole();
     this.sub$.add(
       this.citeService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -108,16 +106,16 @@ export class CiteComponent implements OnInit, OnDestroy {
     }
   }
 
-  showModal(id?: number, reqId?: number): void {
-    this.citeService.setRef({
-      reqId: reqId || null,
-      indexes: this.indexes,
+  showModal(id?: number): void {
+    const modal = this.matDialog.open(FormComponent, {
+      hasBackdrop: true,
+      data: {
+        id,
+      },
     });
-    if (id) {
-      this.router.navigate([`/dashboard/cite/form/${id}`, { id: id }]);
-    } else {
-      this.router.navigate(['/dashboard/cite/form']);
-    }
+    modal.componentInstance.closed.subscribe(() => {
+      modal.close();
+    });
   }
 
   showConfirm(cite: CiteItemVM): void {
@@ -140,20 +138,19 @@ export class CiteComponent implements OnInit, OnDestroy {
   }
 
   private roleBasedData(): Observable<CiteItemVM[] | null> {
-    const role = this.userState.getRole();
-
-    if (this.roleData) {
-      switch (role) {
+    const roleData = this.userState.getFullRole();
+    if (roleData) {
+      switch (this.role) {
         case 'asistente': {
-          return this.citeService.findByDoctorId$(this.roleData.doctor.id);
+          return this.citeService.findByDoctorId$(roleData.doctor.id);
           break;
         }
         case 'doctor': {
-          return this.citeService.findByDoctorId$(this.roleData.id);
+          return this.citeService.findByDoctorId$(roleData.id);
           break;
         }
         case 'paciente': {
-          return this.citeService.findByPatient$(this.roleData.id);
+          return this.citeService.findByPatient$(roleData.id);
           break;
         }
         default: {

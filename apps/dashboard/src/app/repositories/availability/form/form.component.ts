@@ -47,7 +47,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
   loading = false;
-  disableSelectDoctor = false;
 
   selectable = [
     { name: 'No Disponible', value: 'false' },
@@ -58,11 +57,11 @@ export class FormComponent implements OnInit, OnDestroy {
 
   //
   incomingDoctors!: DoctorItemVM[];
-  selectedDoctor!: DoctorItemVM[];
   doctorControl = new FormControl(this.oldAvailabilityValue.doctor, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredDoctors!: Observable<DoctorItemVM[]>;
+  disableSelectDoctor = false;
   //
   days: Array<DayVM> = DAYS;
   selectedDay!: DayVM[];

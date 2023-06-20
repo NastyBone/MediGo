@@ -55,22 +55,20 @@ export class FormComponent implements OnInit, OnDestroy {
 
   //
   incomingDoctors!: DoctorItemVM[];
-  selectedDoctor!: DoctorItemVM[];
   selectedDoctorId!: number;
   doctorControl = new FormControl(this.oldRecordValue.doctor, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredDoctors!: Observable<DoctorItemVM[]>;
+  disableSelectDoctor = false;
   //
   //
   incomingPatients: PatientItemVM[] = [];
-  selectedPatients!: PatientItemVM[];
   patientControl = new FormControl(this.oldRecordValue.patient, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredPatients!: Observable<PatientItemVM[]>;
   //
-  disableSelectDoctor = false;
   //
   maxDate = new Date(2100, 11, 31);
   minDate = new Date(2000, 0, 1);

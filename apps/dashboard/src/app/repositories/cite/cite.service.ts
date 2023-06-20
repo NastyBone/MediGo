@@ -11,6 +11,12 @@ import { FindCitesByDoctorService } from './use-cases/find-cites-by-doctor/find-
 import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/find-cites-by-patient.service';
 import { Observable, finalize } from 'rxjs';
 import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
+import { PatientItemVM } from '../patient/model';
+import { GetPatientsService } from '../patient/use-cases/get-patients/get-patients.service';
+import { GetSpecialitiesService } from '../speciality/use-cases/get-specialities/get-specialities.service';
+import { FindDoctorBySpecialityService } from '../doctor/use-cases/find-doctor-by-speciality/find-doctor-by-speciality.service';
+import { SpecialityItemVM } from '../speciality/model/speciality-item-vm';
+import { DoctorItemVM } from '../doctor/model';
 
 @Injectable()
 export class CiteService extends ListComponentService<CiteItemVM> {
@@ -23,7 +29,10 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public citesMemoryService: CiteMemoryService,
     public findCiteByDoctor: FindCitesByDoctorService,
     public findCiteByPatient: FindCitesByPatientService,
-    public findCitesByDoctorAndDate: FindByDateAndDoctorService
+    public findCitesByDoctorAndDate: FindByDateAndDoctorService,
+    public getPatientsService: GetPatientsService,
+    public getSpecialities: GetSpecialitiesService,
+    public getDoctorsBySpeciality: FindDoctorBySpecialityService
   ) {
     super(
       getCitesService,
@@ -68,5 +77,47 @@ export class CiteService extends ListComponentService<CiteItemVM> {
 
   setRef(ref: { reqId: number | null; indexes: number[] }) {
     this.referData = ref;
+  }
+
+  getPatients$(load = true): Observable<Array<PatientItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getPatientsService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getSpecialities$(load = true): Observable<Array<SpecialityItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getSpecialities.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getDoctorsBySpeciality$(
+    id: number,
+    load = true
+  ): Observable<Array<DoctorItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getDoctorsBySpeciality.exec({ id }).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }

@@ -44,7 +44,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   //
   incomingUsers!: UserVM[];
-  selectedUser!: UserVM[];
   userControl = new FormControl(this.oldPatientValue.user, {
     validators: [Validators.required, forbiddenNamesValidator],
   });

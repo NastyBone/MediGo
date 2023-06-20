@@ -61,7 +61,7 @@ export class RecordComponent implements OnInit, OnDestroy {
   reportForm!: FormGroup;
   disableDateSubmit = true;
   loading = false;
-  roleData!: any;
+  role!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -71,7 +71,7 @@ export class RecordComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
-    this.roleData = this.userState.getFullRole();
+    this.role = this.userState.getRole();
     this.sub$.add(
       this.recordService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -84,7 +84,7 @@ export class RecordComponent implements OnInit, OnDestroy {
           ...this.recordData,
           body: record || [],
           options:
-            this.roleData == 'asistente' || this.roleData == 'paciente'
+            this.role == 'asistente' || this.role == 'paciente'
               ? [{ name: 'Imprimir', value: 'print', icon: 'print' }]
               : [...this.recordData.options],
         };
@@ -145,19 +145,20 @@ export class RecordComponent implements OnInit, OnDestroy {
   }
 
   private roleBasedData(): Observable<RecordItemVM[] | null> {
-    const role = this.userState.getRole();
-    if (this.roleData) {
-      switch (role) {
+    const roleData = this.userState.getFullRole();
+
+    if (roleData) {
+      switch (this.role) {
         case 'asistente': {
-          return this.recordService.findByDoctorId$(this.roleData.doctor.id);
+          return this.recordService.findByDoctorId$(roleData.doctor.id);
           break;
         }
         case 'doctor': {
-          return this.recordService.findByDoctorId$(this.roleData.id);
+          return this.recordService.findByDoctorId$(roleData.id);
           break;
         }
         case 'paciente': {
-          return this.recordService.findByPatientId$(this.roleData.id);
+          return this.recordService.findByPatientId$(roleData.id);
           break;
         }
         default: {

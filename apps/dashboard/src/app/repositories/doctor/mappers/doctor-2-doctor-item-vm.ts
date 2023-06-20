@@ -7,7 +7,7 @@ export function Doctor2DoctorItemVM(Doctor: any): DoctorItemVM {
   try {
     if (!Doctor) throw Error();
   } catch (e) {
-    throw new Error('Su usuario no ha sido asignado');
+    throw new Error('Su usuario no ha sido asignado como doctor');
   }
   return {
     ...Doctor2DoctorVM(Doctor),

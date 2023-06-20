@@ -20,7 +20,7 @@
       aria-label="Agregar nuevo informe"
       class="btn-fixed"
       (click)="showModal()"
-      [hidden]="this.roleData === 'asistente' || this.roleData === 'paciente'"
+      [hidden]="this.role === 'asistente' || this.role === 'paciente'"
     >
       <mat-icon>add</mat-icon>
     </button>
