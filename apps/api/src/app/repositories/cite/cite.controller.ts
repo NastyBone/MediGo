@@ -14,6 +14,7 @@ import { CiteService } from './cite.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
+import { RequestCiteDto } from './dto/request-cite.dto';
 
 @UseGuards(RolesGuard)
 @ApiTags('cite')
@@ -46,19 +47,6 @@ export class CiteController {
   }
 
   @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
-  @Get('date/:id')
-  @ApiResponse({
-    type: ResponseCiteDto,
-    isArray: true,
-  })
-  findByDoctorAndDate(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() date: string
-  ): Promise<ResponseCiteDto[]> {
-    return this.citeService.findByDoctorAndDate(id, date);
-  }
-
-  @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
   @Get(':id')
   @ApiResponse({
     type: ResponseCiteDto,
@@ -84,6 +72,19 @@ export class CiteController {
   })
   create(@Body() createDto: CreateCiteDto): Promise<ResponseCiteDto> {
     return this.citeService.insert(createDto);
+  }
+
+  @Role(Roles.Admin, Roles.Paciente, Roles.Asistente, Roles.Doctor)
+  @Post('date/:id')
+  @ApiResponse({
+    type: ResponseCiteDto,
+    isArray: true,
+  })
+  findByDoctorAndDate(
+    @Body() objectDate: RequestCiteDto,
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<ResponseCiteDto[]> {
+    return this.citeService.findByDoctorAndDate(id, objectDate);
   }
 
   @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)

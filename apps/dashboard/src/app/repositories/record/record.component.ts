@@ -20,7 +20,6 @@ import { RecordService } from './record.service';
   styleUrls: ['./record.component.scss'],
 })
 export class RecordComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   recordData: TableDataVM<RecordItemVM> = {
     headers: [
       {

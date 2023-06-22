@@ -13,13 +13,19 @@ import {
   UpdateAvailabilityDto,
 } from './dto';
 import { daysOfTheWeek } from '../../common/enums';
-import { checkTimeConflict, checkTimeRange } from '@medigo/time-handler';
+import {
+  checkTimeConflict,
+  checkTimeRange,
+  getDayOfTheWeekByDate,
+} from '@medigo/time-handler';
+import { CiteService } from '../cite/cite.service';
 
 @Injectable()
 export class AvailabilityService {
   constructor(
     @InjectRepository(Availability)
-    private repository: Repository<Availability>
+    private repository: Repository<Availability>,
+    private citeService: CiteService
   ) {}
 
   async findAll(): Promise<ResponseAvailabilityDto[]> {
@@ -157,6 +163,7 @@ export class AvailabilityService {
     try {
       const availability = await this.findValid(id);
       availability.deleted = true;
+      await this.citeService.deleteByAvailability(id);
       return new ResponseAvailabilityDto(
         await this.repository.save(availability)
       );
@@ -176,6 +183,36 @@ export class AvailabilityService {
           },
 
           deleted: false,
+        },
+        relations: {
+          doctor: {
+            speciality: true,
+            user: true,
+          },
+        },
+      });
+      return availability.map((item) => new ResponseAvailabilityDto(item));
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        'Error al encontrar disponibilidad'
+      );
+    }
+  }
+
+  async findByDayOfWeek(
+    date: string,
+    id: number
+  ): Promise<ResponseAvailabilityDto[]> {
+    try {
+      const availability = await this.repository.find({
+        where: {
+          day: getDayOfTheWeekByDate(date),
+          doctor: {
+            id,
+          },
+          deleted: false,
+          available: true,
         },
         relations: {
           doctor: {

@@ -70,12 +70,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           body: (users as any) || [],
         };
-        this.data.body = this.data.body.map(
-          (data) =>
-            data['status'] == true
-              ? { ...data, status: 'Activo' }
-              : { ...data, status: 'Inactivo' } //TODO: Fix
-        );
+
         this.tableService.setData(this.data);
       })
     );

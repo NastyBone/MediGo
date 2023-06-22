@@ -52,6 +52,7 @@ async function bootstrap() {
   //PREFIX
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  // VALIDATION
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory(e) {

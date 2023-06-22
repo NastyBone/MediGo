@@ -1,22 +1,31 @@
 import moment from 'moment';
 
+const dayParser = [
+  'Domingo',
+  'Lunes',
+  'Martes',
+  'Miercoles',
+  'Jueves',
+  'Viernes',
+  'Sabado',
+  'Domingo',
+];
+
 export function timeStringToDate(
   date: string,
   time: string,
   yesterday: boolean = false
 ): Date {
   let fixedDate = new Date(
-    moment
-      .utc(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
-      .add(5, 'second')
+    moment(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
+      .add(5, 'seconds')
       .format('MM/DD/YYYY hh:mm a')
   );
   if (yesterday) {
     fixedDate = new Date(
-      moment
-        .utc(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
+      moment(date + ' ' + time, 'DD/MM/YYYY hh:mm a')
         .subtract(1, 'day')
-        .add(5, 'second')
+        .add(5, 'seconds')
         .format('MM/DD/YYYY hh:mm a')
     );
   }
@@ -24,7 +33,7 @@ export function timeStringToDate(
 }
 
 export function checkTimeRange(start: string, end: string): boolean {
-  return moment.utc(end, 'hh:mm a') > moment.utc(start, 'hh:mm a');
+  return moment(end, 'hh:mm a') > moment(start, 'hh:mm a');
 }
 
 export function checkTimeConflict(
@@ -43,26 +52,26 @@ export function checkTimeConflict(
     if (doctorId == id) {
       if (day == aval.day) {
         if (
-          moment.utc(start, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
-          moment.utc(start, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+          moment(start, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
+          moment(start, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
           flag = false;
         }
         if (
-          moment.utc(end, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
-          moment.utc(end, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+          moment(end, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
+          moment(end, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
           flag = false;
         }
         if (
-          moment.utc(start, 'hh:mm a') >= moment.utc(aval.start, 'hh:mm a') &&
-          moment.utc(end, 'hh:mm a') <= moment.utc(aval.start, 'hh:mm a')
+          moment(start, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
+          moment(end, 'hh:mm a') <= moment(aval.start, 'hh:mm a')
         ) {
           flag = false;
         }
         if (
-          moment.utc(start, 'hh:mm a') >= moment.utc(aval.end, 'hh:mm a') &&
-          moment.utc(end, 'hh:mm a') <= moment.utc(aval.end, 'hh:mm a')
+          moment(start, 'hh:mm a') >= moment(aval.end, 'hh:mm a') &&
+          moment(end, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
           flag = false;
         }
@@ -72,10 +81,9 @@ export function checkTimeConflict(
   return flag;
 }
 
-export function formatDate(str: string | Date): string | Date {
-  return new Date(
-    moment.utc(str, 'DD/MM/YYYY hh:mm a').format('MM/DD/YYYY hh:mm a')
-  );
+export function formatDate(str: string | Date): string {
+  str = new Date(str).toLocaleDateString('es-ES');
+  return moment(str, 'DD/MM/YYYY hh:mm a').toDate().toLocaleDateString('es-ES');
 }
 
 export function dateFixFormat(date: string) {
@@ -88,4 +96,12 @@ export function getMonthRange(): [Date, Date] {
   const lastMonth = moment(now).subtract(1, 'month');
 
   return [now.toDate(), lastMonth.toDate()];
+}
+
+export function getDayOfTheWeekByDate(date: string): string {
+  return dayParser[moment(date).isoWeekday()];
+}
+
+export function addDay(date: Date): Date {
+  return moment(date).add(1, 'day').toDate();
 }

@@ -45,6 +45,39 @@
             >Campo Requerido</mat-error
           >
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Doctor</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="doctorControl"
+            [matAutocomplete]="autodoctor"
+            [readonly]="disableSelectDoctor"
+          />
+          <mat-autocomplete
+            name="doctor"
+            id="doctor"
+            #autodoctor="matAutocomplete"
+            [displayWith]="displayFn"
+          >
+            <mat-option
+              *ngFor="let option of filteredDoctors | async"
+              [value]="option"
+              >{{ option.user?.firstName }}
+              {{ option.user?.lastName }}</mat-option
+            >
+            <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
+              >No se encontraron doctores</mat-option
+            >
+          </mat-autocomplete>
+          <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+            >Campo Requerido</mat-error
+          >
+          <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
+            >Seleccione una opción</mat-error
+          >
+        </mat-form-field>
+
         <mat-divider [inset]="true"></mat-divider>
         <mat-form-field>
           <mat-label>Fecha</mat-label>
@@ -79,59 +112,28 @@
 
         <mat-form-field>
           <mat-label>Hora</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="time"
-            [ngxMatTimepicker]="pickerB"
-            [format]="12"
-            readonly
-            [max]="'12:00 PM'"
-            [min]="'08:00 AM'"
-          />
-          <ngx-mat-timepicker-toggle
-            (click)="pickerB.open()"
-            matSuffix
-          ></ngx-mat-timepicker-toggle>
-          <mat-hint>Presione el reloj</mat-hint>
-
-          <mat-error *ngIf="form.controls['time'].hasError('required')"
-            >Campo requerido</mat-error
+          <mat-select
+          name="time"
+          formControlName="time"
+          id="time"
+          matSelect
+          [(value)]="timeSelect"
+          [compareWith]="compareObjects"
+          required
+        >
+          <mat-option
+            *ngFor="let option of incomingAvailabilities"
+            [value]="option"
+            >{{ option.start}} - {{option.end}}</mat-option
           >
-          <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Doctor</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="doctorControl"
-            [matAutocomplete]="autodoctor"
-            [readonly]="disableSelectDoctor"
-          />
-          <mat-autocomplete
-            name="doctor"
-            id="doctor"
-            #autodoctor="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            <mat-option
-              *ngFor="let option of filteredDoctors | async"
-              [value]="option"
-              >{{ option.user?.firstName }}
-              {{ option.user?.lastName }}</mat-option
-            >
-            <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
-              >No se encontraron doctores</mat-option
-            >
-          </mat-autocomplete>
-          <mat-error *ngIf="form.get('doctor')?.hasError('required')"
-            >Campo Requerido</mat-error
-          >
-          <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
-            >Seleccione una opción</mat-error
-          >
+          <mat-option *ngIf="incomingAvailabilities.length === 0" disabled
+          >No se encontraron horarios para el dia seleccionado</mat-option
+        >
+        </mat-select>
+        <mat-error
+          *ngIf="form.controls['time'].hasError('required')"
+          >Campo Requerido</mat-error
+        >
         </mat-form-field>
 
         <mat-form-field>
@@ -177,7 +179,6 @@
             matSelect
             [(value)]="statusSelect"
             required
-            [(value)]="selected"
             [compareWith]="compareObjects"
           >
             <mat-option

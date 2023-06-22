@@ -13,15 +13,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { isEqual, uniq } from 'lodash';
-import {
-  Observable,
-  Subscription,
-  finalize,
-  forkJoin,
-  map,
-  startWith,
-} from 'rxjs';
+import { isEqual } from 'lodash';
+import { Observable, Subscription, finalize, map, startWith } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { RecordItemVM } from '../model';
 import { RecordService } from '../record.service';

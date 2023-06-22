@@ -8,7 +8,7 @@ export const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
-    // canActivate: [AuthGuard], //TODO: Descomentar
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
@@ -17,6 +17,6 @@ export const routes: Routes = [
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  // providers: [AuthGuard],
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {}

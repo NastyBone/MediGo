@@ -53,7 +53,6 @@ export class FormComponent implements OnInit, OnDestroy {
     { name: 'Disponible', value: 'true' },
   ];
   availableSelect!: string;
-  selected!: string;
 
   //
   incomingDoctors!: DoctorItemVM[];

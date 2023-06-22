@@ -29,8 +29,10 @@ export class CiteComponent implements OnInit, OnDestroy {
       },
       {
         columnDef: 'time',
-        header: 'Hora',
-        cell: (element: { [key: string]: string }) => `${element['time']}`,
+        header: 'Desde - Hasta',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cell: (element: { [key: string]: string | any }) =>
+          `${element['time']['start']} - ${element['time']['end']}`,
       },
       {
         columnDef: 'subject',

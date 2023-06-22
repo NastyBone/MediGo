@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 
 import { UsersService } from '@medigo/dashboard-sdk';
 import { BaseQuery, UseCase } from '../../../../common';
-import { User2UserVM } from '../../mappers';
 import { UserVM } from '../../model';
 import { User2UserItemVM } from '../../mappers/user-2-user-item-vm';
 

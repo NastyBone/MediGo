@@ -5,7 +5,11 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { ResponseCiteDto } from '../repositories/cite/dto';
 import { socketOptions } from './constants';
-import { timeStringToDate, checkTimeRange } from '@medigo/time-handler';
+import {
+  timeStringToDate,
+  checkTimeRange,
+  formatDate,
+} from '@medigo/time-handler';
 
 @WebSocketGateway(+process.env.GATEWAY_PORT | 8080, socketOptions)
 @Injectable()
@@ -13,54 +17,94 @@ export class CronService {
   constructor(private schedulerRegistry: SchedulerRegistry) {}
   @WebSocketServer() server: Server;
 
-  setCronJob(cite: ResponseCiteDto): void {
+  setCronJob(
+    id: number,
+    date: string,
+    time: string,
+    doctor: { id: number; name: string },
+    patient: { id: number; name: string },
+    speciality: string
+  ): void {
+    const alertDate = timeStringToDate(formatDate(date), time, false);
+    const myDate = new Date(new Date(Date.now() + 4000));
+
     const job = new CronJob(
-      timeStringToDate(cite.date, cite.time, true),
+      myDate, //FIXME: change
       () => {
+        console.log('Emitting: ' + myDate);
+
         this.server.emit('alert', {
-          data: cite,
+          data: {
+            date,
+            time,
+            doctor,
+            patient,
+            speciality,
+          },
         });
       }
     );
-    this.schedulerRegistry.addCronJob('' + cite.id, job);
+    this.schedulerRegistry.addCronJob(id + '', job);
+    job.start();
   }
 
-  deleteCronJob(id: string): void {
-    const job = this.schedulerRegistry.getCronJob('' + id);
-    console.log(job);
+  deleteCronJob(id: number): void {
+    const job = this.getCronJob(id);
     if (job) {
       this.schedulerRegistry.deleteCronJob('' + id);
     }
   }
 
-  updateCronJob(cite: ResponseCiteDto): void {
-    this.deleteCronJob('' + cite.id);
-    this.setCronJob(cite);
+  updateCronJob(
+    id: number,
+    date: string,
+    time: string,
+    doctor: { id: number; name: string },
+    patient: { id: number; name: string },
+    speciality: string
+  ): void {
+    const job = this.getCronJob(id);
+    if (job) {
+      this.deleteCronJob(id);
+    }
+    this.setCronJob(id, date, time, doctor, patient, speciality);
   }
 
   pauseJob(id: number): void {
-    const job = this.schedulerRegistry.getCronJob('' + id);
-    job.stop();
+    const job = this.getCronJob(id);
+    if (job) {
+      job.stop();
+    }
   }
 
   startJob(id: number): void {
-    const job = this.schedulerRegistry.getCronJob('' + id);
-    job.start();
+    const job = this.getCronJob(id);
+    if (job) {
+      job.start();
+    }
   }
 
   deleteManyCronJobs(cites: ResponseCiteDto[]): void {
     try {
       cites.forEach((cite) => {
-        this.deleteCronJob('' + cite.id);
+        this.deleteCronJob(cite.id);
       });
     } catch (e) {
       console.log();
     }
   }
 
-  test(): void {
-    checkTimeRange('10:00 AM', '10:01 AM');
+  getCronJob(id: number): CronJob {
+    let job = null;
+    try {
+      job = this.schedulerRegistry.getCronJob('' + id);
+    } catch (e) {
+      console.log();
+    }
+    return job;
+  }
 
+  test(): void {
     const myDate = new Date(new Date(Date.now() + 5000));
     const job = new CronJob(myDate, () => {
       if (this.server) {
