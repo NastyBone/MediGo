@@ -20,7 +20,6 @@ import {
   Observable,
   startWith,
   map,
-  of,
   forkJoin,
 } from 'rxjs';
 import { StateService } from '../../../common/state';
@@ -192,8 +191,11 @@ export class FormComponent implements OnInit, OnDestroy {
               this.oldCiteValue = cite;
               this.dateControl.setValue(dateFixFormat(cite.date));
               cite.date = this.dateControl.value || cite.date;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               this.specialityControl.setValue((<any>cite.doctor).speciality);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               this.selectedSpecialityId = (<any>cite.doctor).speciality.id;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               this.selectedDoctorId = (<any>cite.doctor).id;
               if (cite.time) this.timeSelect = cite.time;
               cite.patientConfirm == this.selectable[0].name
@@ -399,6 +401,7 @@ export class FormComponent implements OnInit, OnDestroy {
       );
     }
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   displayFn(item?: any): string {
     if (item) {
       if (item.name) return item.name;
