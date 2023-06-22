@@ -21,7 +21,7 @@ import { Roles } from '../users';
 export class PatientController {
   constructor(private patientService: PatientService) {}
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Paciente)
   @Get('user/:id')
   @ApiResponse({
     type: ResponsePatientDto,

@@ -58,7 +58,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   disableDateSubmit = true;
   loading = false;
   data!: any;
-  roleData!: any;
+  role!: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -68,7 +68,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
-    this.roleData = this.userState.getFullRole();
+    const role = this.userState.getRole();
     this.sub$.add(
       this.availabilityService.getLoading$().subscribe((loading) => {
         this.loading = loading;
@@ -83,7 +83,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
             ...this.availabilityData,
             body: availability || [],
             options:
-              this.roleData == 'asistente'
+              this.role == 'asistente'
                 ? [{ name: 'No disponible', value: null, icon: 'none' }]
                 : [],
           };
@@ -142,18 +142,15 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
   }
 
   private roleBasedData(): Observable<AvailabilityItemVM[] | null> {
-    const role = this.userState.getRole();
-
-    if (this.roleData) {
-      switch (role) {
+    const roleData = this.userState.getFullRole();
+    if (roleData) {
+      switch (this.role) {
         case 'asistente': {
-          return this.availabilityService.findByDoctor$(
-            this.roleData.doctor.id
-          );
+          return this.availabilityService.findByDoctor$(roleData.doctor.id);
           break;
         }
         case 'doctor': {
-          return this.availabilityService.findByDoctor$(this.roleData.id);
+          return this.availabilityService.findByDoctor$(roleData.id);
           break;
         }
         default: {

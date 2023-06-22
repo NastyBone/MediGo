@@ -20,11 +20,6 @@ export class CreateCiteDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  time!: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsBoolean()
   patientConfirm!: boolean;
   @ApiProperty({
@@ -33,6 +28,13 @@ export class CreateCiteDto extends PartialType(
   @IsNotEmpty()
   @Type(() => Number)
   doctorId!: number;
+
+  @ApiProperty({
+    type: Number,
+  })
+  @IsNotEmpty()
+  @Type(() => Number)
+  timeId!: number;
 
   @ApiProperty({
     type: Number,

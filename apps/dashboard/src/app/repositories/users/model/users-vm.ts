@@ -6,7 +6,7 @@ export interface UserVM {
   firstName: string;
   lastName: string;
   email: string;
-  status: boolean;
+  status: any;
   role: string;
   options?: {
     options?: Array<RowOptionVM<RowActionUser>>;

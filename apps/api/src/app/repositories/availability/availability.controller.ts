@@ -18,6 +18,7 @@ import {
 import { AvailabilityService } from './availability.service';
 import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
+import { RequestAvailabilityDto } from './dto/request-availability.dto';
 
 @ApiTags('availability')
 @Controller('availability')
@@ -47,6 +48,20 @@ export class AvailabilityController {
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResponseAvailabilityDto[]> {
     return this.availabilityService.findByDoctor(id);
+  }
+
+  @UseGuards(RolesGuard)
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Post('day/:id')
+  @ApiResponse({
+    type: ResponseAvailabilityDto,
+    isArray: true,
+  })
+  findByDay(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dayOfWeek: RequestAvailabilityDto
+  ): Promise<ResponseAvailabilityDto[]> {
+    return this.availabilityService.findByDayOfWeek(dayOfWeek.date, id);
   }
 
   @UseGuards(RolesGuard)

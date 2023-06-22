@@ -13,15 +13,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { isEqual, uniq } from 'lodash';
-import {
-  Observable,
-  Subscription,
-  finalize,
-  forkJoin,
-  map,
-  startWith,
-} from 'rxjs';
+import { isEqual } from 'lodash';
+import { Observable, Subscription, finalize, map, startWith } from 'rxjs';
 import { StateService } from '../../../common/state';
 import { RecordItemVM } from '../model';
 import { RecordService } from '../record.service';
@@ -55,22 +48,20 @@ export class FormComponent implements OnInit, OnDestroy {
 
   //
   incomingDoctors!: DoctorItemVM[];
-  selectedDoctor!: DoctorItemVM[];
   selectedDoctorId!: number;
   doctorControl = new FormControl(this.oldRecordValue.doctor, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredDoctors!: Observable<DoctorItemVM[]>;
+  disableSelectDoctor = false;
   //
   //
   incomingPatients: PatientItemVM[] = [];
-  selectedPatients!: PatientItemVM[];
   patientControl = new FormControl(this.oldRecordValue.patient, {
     validators: [Validators.required, forbiddenNamesValidator],
   });
   filteredPatients!: Observable<PatientItemVM[]>;
   //
-  disableSelectDoctor = false;
   //
   maxDate = new Date(2100, 11, 31);
   minDate = new Date(2000, 0, 1);

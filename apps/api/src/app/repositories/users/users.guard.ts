@@ -33,7 +33,11 @@ export class RolesGuard implements CanActivate {
         cookies['auth-cookie'].token
       );
       const user = await this.usersService.findOneByEmail(email);
-      if (!requiredRoles.some((role) => user.role.includes(role))) {
+      if (
+        !requiredRoles.some(
+          (role) => user.role.includes(role) || user.role !== Roles.Paciente
+        )
+      ) {
         throw new UnauthorizedException(
           'No está autorizado para realizar esta acción.'
         );

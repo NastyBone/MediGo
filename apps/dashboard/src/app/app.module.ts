@@ -47,7 +47,7 @@ function apiConfigFactory(): Configuration {
   providers: [
     AlertSocketService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-    //  AuthGuard, //TODO: ADD
+    AuthGuard,
     {
       provide: ErrorHandler,
       useExisting: forwardRef(() => ErrorHandlerService),

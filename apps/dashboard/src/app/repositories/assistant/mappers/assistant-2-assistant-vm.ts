@@ -6,7 +6,7 @@ export function Assistant2AssistantVM(Assistant: any): AssistantVM {
   try {
     if (!Assistant) throw Error();
   } catch (e) {
-    throw new Error('Su usuario no ha sido asignado');
+    throw new Error('Su usuario no ha sido asignado como asistente');
   }
   return {
     id: Assistant.id,

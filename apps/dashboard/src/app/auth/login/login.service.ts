@@ -35,4 +35,26 @@ export class LoginService {
         })
       );
   }
+  patientExec(email: string, password: string): Observable<any> {
+    return this.authService
+      .authControllerLoginPatient({
+        email,
+        password,
+      })
+      .pipe(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        map((response: any) => {
+          return {
+            id: response.id,
+            email: response.email,
+            name: response.name,
+            role: response.role,
+            loginStamp: response.loginStamp,
+          };
+        }),
+        tap((user: UserStateVM) => {
+          this.userStateService.setUser(user);
+        })
+      );
+  }
 }

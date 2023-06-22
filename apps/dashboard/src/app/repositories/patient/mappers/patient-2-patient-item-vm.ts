@@ -7,7 +7,7 @@ export function PatientItem2PatientItemVM(Patient: any): PatientItemVM {
   try {
     if (!Patient) throw Error();
   } catch (e) {
-    throw new Error('Su usuario no ha sido asignado');
+    throw new Error('Su usuario no ha sido asignado como paciente');
   }
   return {
     ...Patient2PatientVM(Patient),

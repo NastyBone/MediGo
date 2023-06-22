@@ -11,6 +11,7 @@ import { FindAvailabilityByDoctorService } from './use-cases/find-availability-b
 import { Observable, finalize } from 'rxjs';
 import { GetDoctorsService } from '../doctor/use-cases/get-doctors/get-doctors.service';
 import { DoctorItemVM } from '../doctor/model/doctor-item-vm';
+import { FindByDayAndDoctorService } from './use-cases/find-by-day-and-doctor/find-by-day-and-doctor.service';
 
 @Injectable()
 export class AvailabilityService extends ListComponentService<AvailabilityItemVM> {
@@ -22,6 +23,7 @@ export class AvailabilityService extends ListComponentService<AvailabilityItemVM
     public updateAvailabilityService: UpdateAvailabilityService,
     public availabilityMemoryService: AvailabilityMemoryService,
     protected findAvailabilityByDoctor: FindAvailabilityByDoctorService,
+    public findAvailabilityByDoctorAndDay: FindByDayAndDoctorService,
     private getDoctorsService: GetDoctorsService
   ) {
     super(

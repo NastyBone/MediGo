@@ -67,10 +67,7 @@ export class LoginService {
     user: UserLoginDto,
     res: Response
   ): Promise<LoginUserResponseDto> {
-    //TODO: Hacer igual que login, pero el role siempre retorna como patient
-    //TODO: Poner check o automaticamente redirigir a patientLogin desde login cuando el rol es patient
     const payload = { username: user.email, sub: user.id };
-
     const _token = await this.jwtService.signAsync(payload, {
       secret: jwtConstants.secret,
       expiresIn: jwtConstants.expiresIn,

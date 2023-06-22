@@ -31,7 +31,6 @@ export class ReportComponent implements OnInit, OnDestroy {
   private height = 600;
   private radius = Math.min(this.width, this.height) / 2 - this.margin;
   private colors: any;
-  //TODO: Implementar con citas
 
   ngOnInit(): void {
     this.loading = true;

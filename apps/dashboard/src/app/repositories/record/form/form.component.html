@@ -76,36 +76,36 @@
     >
   </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Paciente</mat-label>
-      <input
-        type="text"
-        matInput
-        [formControl]="patientControl"
-        [matAutocomplete]="autopatient"
-      />
-      <mat-autocomplete
-        name="patient"
-        id="patient"
-        #autopatient="matAutocomplete"
-        [displayWith]="displayFn"
+  <mat-form-field>
+    <mat-label>Paciente</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="patientControl"
+      [matAutocomplete]="autopatient"
+    />
+    <mat-autocomplete
+      name="patient"
+      id="patient"
+      #autopatient="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      <mat-option
+        *ngFor="let option of filteredPatients | async"
+        [value]="option"
+        >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
       >
-        <mat-option
-          *ngFor="let option of filteredPatients | async"
-          [value]="option"
-          >{{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
-        >
-        <mat-option *ngIf="(filteredPatients | async)?.length === 0" disabled
-          >No se encontraron pacientes</mat-option
-        >
-      </mat-autocomplete>
-      <mat-error *ngIf="form.get('patient')?.hasError('required')"
-        >Campo Requerido</mat-error
+      <mat-option *ngIf="(filteredPatients | async)?.length === 0" disabled
+        >No se encontraron pacientes</mat-option
       >
-      <mat-error *ngIf="form.get('patient')?.hasError('forbiddenNames')"
-        >Seleccione una opción</mat-error
-      >
-    </mat-form-field>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('patient')?.hasError('required')"
+      >Campo Requerido</mat-error
+    >
+    <mat-error *ngIf="form.get('patient')?.hasError('forbiddenNames')"
+      >Seleccione una opción</mat-error
+    >
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Descripción</mat-label>
@@ -120,31 +120,31 @@
       >Longitud Excedida</mat-error
     >
     <mat-error *ngIf="form.controls['description'].hasError('required')"
-    >Campo requerido</mat-error
-  >
+      >Campo requerido</mat-error
+    >
   </mat-form-field>
 </form>
 
-  <div class="modal-footer" mat-dialog-actions>
-    <button
-      mat-button
-      mat-dialog-close
-      type="button"
-      (click)="clickSave()"
-      color="primary"
-      [disabled]="submitDisabled || loading"
-    >
-      Guardar
-    </button>
-    <button
-      mat-button
-      mat-dialog-close
-      cdkFocusInitial
-      type="button"
-      (click)="clickClosed()"
-    >
-      Cancelar
-    </button>
-  </div>
+<div class="modal-footer" mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    type="button"
+    (click)="clickSave()"
+    color="primary"
+    [disabled]="submitDisabled || loading"
+  >
+    Guardar
+  </button>
+  <button
+    mat-button
+    mat-dialog-close
+    cdkFocusInitial
+    type="button"
+    (click)="clickClosed()"
+  >
+    Cancelar
+  </button>
+</div>
 
 <!-- <app-state *ngIf="loading"> </app-state> -->

@@ -55,6 +55,25 @@ export class LoginComponent implements OnInit, OnDestroy {
         })
     );
   }
+  getDataFromPatientLogin(): void {
+    this.loading = true;
+    this.sub$.add(
+      this.loginService
+        .patientExec(this.form.value.email, this.form.value.password)
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/dashboard'], {
+              relativeTo: this.activatedRoute,
+            });
+          },
+        })
+    );
+  }
   private createForm(): void {
     this.form = this.formBuilder.group({
       email: [

@@ -26,8 +26,8 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
   closed = new EventEmitter();
   form!: FormGroup;
   selectable = [
-    { name: 'Inactivo', value: 'true' },
-    { name: 'Activo', value: 'false' },
+    { name: 'Activo', value: 'true' },
+    { name: 'Inactivo', value: 'false' },
   ];
   roleList = [
     { name: 'Administrador', value: 'administrador' },
@@ -77,10 +77,12 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
       this.sub$.add(
         this.usersService.find$({ id: this.data.id }).subscribe((users) => {
           if (users) {
-            users.status
+            users.status == this.selectable[0].name
               ? (this.selected = this.selectable[0].value)
               : (this.selected = this.selectable[1].value);
-
+            this.selectedRole =
+              this.roleList.find((role) => role.name == users.role)?.value ||
+              this.roleList[3].value;
             this.oldFormValue = users;
             this.form.patchValue(
               {
@@ -134,6 +136,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     this.form.value.status == 'true'
       ? (this.form.value.status = true)
       : (this.form.value.status = false);
+
     if (this.data.id) {
       this.update();
     } else {
