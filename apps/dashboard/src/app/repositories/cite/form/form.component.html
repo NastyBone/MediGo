@@ -113,27 +113,26 @@
         <mat-form-field>
           <mat-label>Hora</mat-label>
           <mat-select
-          name="time"
-          formControlName="time"
-          id="time"
-          matSelect
-          [(value)]="timeSelect"
-          [compareWith]="compareObjects"
-          required
-        >
-          <mat-option
-            *ngFor="let option of incomingAvailabilities"
-            [value]="option"
-            >{{ option.start}} - {{option.end}}</mat-option
+            name="time"
+            formControlName="time"
+            id="time"
+            matSelect
+            [(value)]="timeSelect"
+            [compareWith]="compareObjects"
+            required
           >
-          <mat-option *ngIf="incomingAvailabilities.length === 0" disabled
-          >No se encontraron horarios para el dia seleccionado</mat-option
-        >
-        </mat-select>
-        <mat-error
-          *ngIf="form.controls['time'].hasError('required')"
-          >Campo Requerido</mat-error
-        >
+            <mat-option
+              *ngFor="let option of incomingAvailabilities"
+              [value]="option"
+              >{{ option.start }} - {{ option.end }}</mat-option
+            >
+            <mat-option *ngIf="incomingAvailabilities.length === 0" disabled
+              >No se encontraron horarios para el dia seleccionado</mat-option
+            >
+          </mat-select>
+          <mat-error *ngIf="form.controls['time'].hasError('required')"
+            >Campo Requerido</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field>

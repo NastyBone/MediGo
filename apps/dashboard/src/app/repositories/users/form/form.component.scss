@@ -8,6 +8,10 @@ mat-card {
   height: 100%;
   margin: 0.8rem;
 }
+mat-card-header button {
+  margin-top: -1.5rem;
+  margin-right: -1rem;
+}
 
 mat-card-content {
   column-gap: 0.8rem;
@@ -27,8 +31,8 @@ mat-card-header {
 .close-button {
   float: right;
   top: 0.35rem;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 mat-card-actions {
