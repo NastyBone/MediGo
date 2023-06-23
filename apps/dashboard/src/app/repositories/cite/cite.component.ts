@@ -113,6 +113,8 @@ export class CiteComponent implements OnInit, OnDestroy {
       hasBackdrop: true,
       data: {
         id,
+        fullRole: this.userState.getFullRole(),
+        role: this.userState.getRole(),
       },
     });
     modal.componentInstance.closed.subscribe(() => {

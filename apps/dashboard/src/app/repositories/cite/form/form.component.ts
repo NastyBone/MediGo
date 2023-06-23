@@ -108,13 +108,13 @@ export class FormComponent implements OnInit, OnDestroy {
   ];
   statusSelect!: string;
   //
-  timeSelect!: AvailabilityItemVM | null;
+  timeSelect!: AvailabilityItemVM;
   //
 
   dateControl = new FormControl(this.oldCiteValue.date, [Validators.required]);
   constructor(
     private citeService: CiteService,
-    @Inject(MAT_DIALOG_DATA) public data: DoctorItemVM,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private stateService: StateService,
     private formBuilder: FormBuilder
   ) {}
@@ -230,12 +230,12 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       subject: [null, [Validators.required, Validators.maxLength(256)]],
       date: this.dateControl,
-      time: [null, [Validators.required]],
+      time: [null, [Validators.required, forbiddenNamesValidator]],
       patientConfirm: [true, [Validators.required]],
       doctor: this.doctorControl,
       patient: this.patientControl,
     });
-
+    this.setRoleDefault();
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
         this.submitDisabled =
@@ -412,8 +412,8 @@ export class FormComponent implements OnInit, OnDestroy {
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compareObjects(o1: any, o2: any): boolean {
-    o1 == 'false' ? (o1 = false) : (o1 = true);
-    o2 == 'false' ? (o2 = false) : (o2 = true);
+    o1 ? (o1 = false) : (o1 = true);
+    o2 ? (o2 = false) : (o2 = true);
     return o1 === o2;
   }
 
@@ -464,5 +464,35 @@ export class FormComponent implements OnInit, OnDestroy {
           .toLowerCase()
           .indexOf(filterValue) === 0
     );
+  }
+  private setRoleDefault(): void {
+    const role = this.data.role;
+    if (role == 'doctor') {
+      this.form.patchValue(
+        {
+          doctor: this.data.fullRole,
+        },
+        { emitEvent: true }
+      );
+      this.specialityControl.setValue(this.data.fullRole.speciality);
+      this.disableSelectDoctor = true;
+    } else if (role == 'paciente') {
+      this.form.patchValue(
+        {
+          patient: this.data.fullRole,
+        },
+        { emitEvent: true }
+      );
+      this.disableSelectPatient = true;
+    } else if (role == 'asistente') {
+      this.form.patchValue(
+        {
+          doctor: this.data.fullRole.doctor,
+        },
+        { emitEvent: true }
+      );
+      this.specialityControl.setValue(this.data.fullRole.doctor.speciality);
+      this.disableSelectDoctor = true;
+    }
   }
 }

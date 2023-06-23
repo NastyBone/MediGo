@@ -196,7 +196,7 @@ export class FormComponent implements OnInit, OnDestroy {
           .create({
             ...this.form.value,
             doctorId: this.doctorControl.getRawValue()?.id,
-            patientId: this.doctorControl.getRawValue()?.id,
+            patientId: this.patientControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {
@@ -217,7 +217,7 @@ export class FormComponent implements OnInit, OnDestroy {
             ...this.form.value,
             id: this.data.id,
             doctorId: this.doctorControl.getRawValue()?.id,
-            patientId: this.doctorControl.getRawValue()?.id,
+            patientId: this.patientControl.getRawValue()?.id,
           })
           .pipe(
             finalize(() => {
