@@ -19,7 +19,6 @@ import { PatientService } from './patient.service';
   styleUrls: ['./patient.component.scss'],
 })
 export class PatientComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   patientData: TableDataVM<PatientItemVM> = {
     headers: [
       {

@@ -2,7 +2,7 @@ export interface CiteVM {
   id?: number;
   subject: string;
   date: string;
-  time: string;
+  timeId: number;
   patientConfirm: any;
   doctorId: number;
   patientId: number;

@@ -135,8 +135,6 @@ export class PatientService {
       });
       if (patient) {
         return new ResponsePatientDto(patient);
-      } else {
-        throw new Error();
       }
     } catch (error) {
       console.log(error);

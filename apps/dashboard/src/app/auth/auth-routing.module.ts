@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [AuthLoginGuard], //TODO: Activar
+    canActivate: [AuthLoginGuard],
   },
   {
     path: 'recovery-password',

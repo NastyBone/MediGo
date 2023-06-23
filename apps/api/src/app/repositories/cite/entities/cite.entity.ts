@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { IdEntity } from '../../base';
 import { Doctor } from '../../doctor/entities';
 import { Patient } from '../../patient/entities';
+import { Availability } from '../../availability/entities';
 
 @Entity()
 export class Cite extends IdEntity {
@@ -10,9 +11,6 @@ export class Cite extends IdEntity {
 
   @Column({ length: 256, nullable: false })
   date!: string;
-
-  @Column({ length: 256, nullable: false })
-  time!: string;
 
   @Column({ nullable: false })
   patientConfirm!: boolean;
@@ -24,4 +22,9 @@ export class Cite extends IdEntity {
   @ManyToOne(() => Patient, (patient) => patient.id, { nullable: false })
   @JoinColumn()
   patient!: Patient;
+
+  @ManyToOne(() => Availability, (availability) => availability.id, {
+    nullable: false,
+  })
+  time!: Availability;
 }

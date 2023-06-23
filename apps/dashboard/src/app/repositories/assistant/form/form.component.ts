@@ -59,7 +59,6 @@ export class FormComponent implements OnInit, OnDestroy {
   filteredUsers!: Observable<UserPatientVM[]>;
   //
   incomingDoctors!: DoctorItemVM[];
-  selectedDoctor!: DoctorItemVM[];
   doctorControl = new FormControl(this.oldAssistantValue.doctor, {
     validators: [Validators.required, forbiddenNamesValidator],
   });

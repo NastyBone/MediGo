@@ -19,7 +19,6 @@ import { FormComponent } from './form/form.component';
   styleUrls: ['./assistant.component.scss'],
 })
 export class AssistantComponent implements OnInit, OnDestroy {
-  //TODO: Fix
   assistantData: TableDataVM<AssistantItemVM> = {
     headers: [
       {

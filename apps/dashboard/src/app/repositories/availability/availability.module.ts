@@ -25,6 +25,7 @@ import { DoctorModule } from '../doctor/doctor.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { FindByDayAndDoctorService } from './use-cases/find-by-day-and-doctor/find-by-day-and-doctor.service';
 
 @NgModule({
   declarations: [AvailabilityComponent, FormComponent],
@@ -49,6 +50,7 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
     AvailabilityService,
     GetAvailabilitiesService,
     FindAvailabilityByDoctorService,
+    FindByDayAndDoctorService,
     FindAvailabilityService,
     CreateAvailabilityService,
     UpdateAvailabilityService,

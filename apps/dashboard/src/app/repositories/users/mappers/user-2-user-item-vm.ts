@@ -5,5 +5,6 @@ export function User2UserItemVM(user: any): UserItemVM {
   const userVM = User2UserVM(user);
   return {
     ...userVM,
+    status: user.status ? 'Activo' : 'Inactivo',
   };
 }

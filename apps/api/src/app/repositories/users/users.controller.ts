@@ -22,8 +22,8 @@ import { Roles } from './enums';
 import { Role, RolesGuard } from './users.guard';
 import { UsersService } from './users.service';
 
-// @UseGuards(RolesGuard) //FIXME: Descomentar
-// @Role(Roles.Admin)
+@UseGuards(RolesGuard)
+@Role(Roles.Admin)
 @ApiTags('users')
 @Controller('users')
 export class UsersController {

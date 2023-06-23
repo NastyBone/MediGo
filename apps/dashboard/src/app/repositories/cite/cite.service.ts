@@ -11,6 +11,15 @@ import { FindCitesByDoctorService } from './use-cases/find-cites-by-doctor/find-
 import { FindCitesByPatientService } from './use-cases/find-cites-by-patient/find-cites-by-patient.service';
 import { Observable, finalize } from 'rxjs';
 import { FindByDateAndDoctorService } from './use-cases/find-by-date-and-doctor/find-by-date-and-doctor.service';
+import { PatientItemVM } from '../patient/model';
+import { GetPatientsService } from '../patient/use-cases/get-patients/get-patients.service';
+import { GetSpecialitiesService } from '../speciality/use-cases/get-specialities/get-specialities.service';
+import { FindDoctorBySpecialityService } from '../doctor/use-cases/find-doctor-by-speciality/find-doctor-by-speciality.service';
+import { SpecialityItemVM } from '../speciality/model/speciality-item-vm';
+import { DoctorItemVM } from '../doctor/model';
+import { AvailabilityItemVM } from '../availability/model';
+import { FindAvailabilityByDoctorService } from '../availability/use-cases/find-availability-by-doctor/find-availability-by-doctor.service';
+import { FindByDayAndDoctorService } from '../availability/use-cases/find-by-day-and-doctor/find-by-day-and-doctor.service';
 
 @Injectable()
 export class CiteService extends ListComponentService<CiteItemVM> {
@@ -23,7 +32,12 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public citesMemoryService: CiteMemoryService,
     public findCiteByDoctor: FindCitesByDoctorService,
     public findCiteByPatient: FindCitesByPatientService,
-    public findCitesByDoctorAndDate: FindByDateAndDoctorService
+    public findByDoctorAndDate: FindByDateAndDoctorService,
+    public findAvailabilitiesByDoctor: FindAvailabilityByDoctorService,
+    public getPatientsService: GetPatientsService,
+    public getSpecialities: GetSpecialitiesService,
+    public getDoctorsBySpeciality: FindDoctorBySpecialityService,
+    public findByDoctorAndDay: FindByDayAndDoctorService
   ) {
     super(
       getCitesService,
@@ -59,14 +73,71 @@ export class CiteService extends ListComponentService<CiteItemVM> {
   findByDoctorAndDate$(
     date: string,
     id: number
-  ): Observable<Array<CiteItemVM>> {
+  ): Observable<Array<AvailabilityItemVM>> {
     this.setLoading(true);
-    return this.findCitesByDoctorAndDate
+    return this.findByDoctorAndDate
       .exec({ date, id })
       .pipe(finalize(() => this.setLoading(false)));
   }
 
-  setRef(ref: { reqId: number | null; indexes: number[] }) {
-    this.referData = ref;
+  findAvailabilitiesByDoctor$(
+    id: number
+  ): Observable<Array<AvailabilityItemVM>> {
+    this.setLoading(true);
+    return this.findAvailabilitiesByDoctor
+      .exec({ id })
+      .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  findByDoctorAndDay$(
+    date: string,
+    id: number
+  ): Observable<AvailabilityItemVM[]> {
+    this.setLoading(true);
+    return this.findByDoctorAndDay
+      .exec({ date, id })
+      .pipe(finalize(() => this.setLoading(false)));
+  }
+
+  getPatients$(load = true): Observable<Array<PatientItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getPatientsService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getSpecialities$(load = true): Observable<Array<SpecialityItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getSpecialities.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
+  getDoctorsBySpeciality$(
+    id: number,
+    load = true
+  ): Observable<Array<DoctorItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getDoctorsBySpeciality.exec({ id }).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
   }
 }
