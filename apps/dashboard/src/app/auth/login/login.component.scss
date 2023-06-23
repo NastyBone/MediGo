@@ -6,12 +6,6 @@
   justify-content: center;
   align-items: center;
 }
-<<<<<<< HEAD
-
-.image-container {
-  width: 15rem;
-  margin: 10% 0.5rem;
-=======
 .login-container {
   box-shadow: 0 0 2rem #222;
   border-radius: 2rem;
@@ -20,7 +14,6 @@
 .image-container {
   width: 17rem;
   margin: 5% 0.5rem;
->>>>>>> main
 }
 
 img {
@@ -29,34 +22,19 @@ img {
 }
 mat-form-field {
   width: 100%;
-<<<<<<< HEAD
-=======
   margin: 0.4rem 0;
->>>>>>> main
 }
 
 mat-card {
   padding: 3%;
-<<<<<<< HEAD
-=======
   height: 100%;
   width: 28rem;
->>>>>>> main
 }
 mat-card-content {
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
-  align-items: center;
-  margin-bottom: 5%;
 }
 form {
-  display: flex;
-  flex-direction: column;
-=======
-}
-form {
->>>>>>> main
   width: 100%;
 }
 mat-card-actions {
@@ -66,11 +44,7 @@ mat-card-actions {
 }
 
 button[mat-raised-button] {
-<<<<<<< HEAD
-  width: 100%;
-=======
   width: 50%;
->>>>>>> main
 }
 
 .recovery-link {
@@ -79,13 +53,8 @@ button[mat-raised-button] {
   color: rgb(0, 153, 255);
   text-decoration: underline;
   cursor: pointer;
-<<<<<<< HEAD
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
-=======
   margin-top: -0.3rem;
   margin-bottom: 0.7rem;
->>>>>>> main
   float: right;
   position: relative;
   z-index: 10;
