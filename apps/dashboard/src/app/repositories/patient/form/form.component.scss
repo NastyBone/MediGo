@@ -2,13 +2,27 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 2rem;
   padding: 0.5rem;
 }
+.Title {
+  font-size: 2rem;
+  font-weight: 100;
+}
+.modal-header button {
+  margin-top: -2rem;
+}
+
 .FormP {
+  width: 50rem;
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
 }
 .modal-footer {
   justify-content: center;
+  padding-bottom: 2.5rem;
 }

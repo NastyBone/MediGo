@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <span mat-dialog-title> Disponibilidad </span>
+  <span mat-dialog-title class="Title"> Disponibilidad </span>
   <button
     id="modal-close-button"
     mat-dialog-close
@@ -35,11 +35,11 @@
       >Campo requerido</mat-error
     >
     <mat-error *ngIf="form.controls['start'].hasError('timeRangeError')"
-    >Rango Invalido</mat-error
-  >
-  <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
-  >Rango Ocupado</mat-error
->
+      >Rango Invalido</mat-error
+    >
+    <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
+      >Rango Ocupado</mat-error
+    >
   </mat-form-field>
   <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
 
@@ -65,12 +65,12 @@
       >Campo requerido</mat-error
     >
     <mat-error *ngIf="form.controls['end'].hasError('timeRangeError')"
-    >Rango Invalido</mat-error
-  >
-  <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
-  >Rango Ocupado</mat-error
->
-<ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
+      >Rango Invalido</mat-error
+    >
+    <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
+      >Rango Ocupado</mat-error
+    >
+    <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
   </mat-form-field>
 
   <mat-form-field>
