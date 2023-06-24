@@ -10,5 +10,6 @@ import { JwtAuthModule } from '../../auth/jwt-auth/jwtAuth.module';
   imports: [TypeOrmModule.forFeature([Settings]), UsersModule, JwtAuthModule],
   providers: [SettingsService],
   controllers: [SettingsController],
+  exports: [SettingsService],
 })
 export class SettingsModule {}

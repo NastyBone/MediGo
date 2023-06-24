@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ReportRoutingModule } from './report-routing.module';
 import { ReportComponent } from './report.component';
 import { GetReportService } from './get-report.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ReportComponent],
-  imports: [CommonModule, ReportRoutingModule],
+  imports: [CommonModule, ReportRoutingModule, MatIconModule],
   providers: [GetReportService],
 })
 export class ReportModule {}

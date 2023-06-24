@@ -8,6 +8,7 @@ import {
 import { SettingsService } from './settings.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { UserStateService } from '../common';
 
 @Component({
   selector: 'medigo-settings',
@@ -22,7 +23,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private userStateServie: UserStateService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       ],
       description: [null],
       type: [null, Validators.required],
+      userId: [this.userStateServie.getUserId()],
     });
   }
 }

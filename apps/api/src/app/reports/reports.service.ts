@@ -5,16 +5,22 @@ import { ReportsDto, ReportsResponseDto } from './dto';
 import { DocumentOptions } from './types';
 import { CustomAssetsPathFolder } from '../config/constants';
 import { htmlTemplate } from './template';
+import { SettingsService } from '../repositories/settings/settings.service';
 
 @Injectable()
 export class ReportsService {
-  constructor() {
+  constructor(private settings: SettingsService) {
     return;
   }
 
   async generateReport(
     reportsDto: ReportsDto<any>
   ): Promise<ReportsResponseDto> {
+    const settingsData = await this.settings.getAllSettings();
+    reportsDto.data = {
+      ...reportsDto.data,
+      ...settingsData,
+    };
     const _utcDate = new Date();
     const generateDate = new Date(_utcDate.getTime());
 
