@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { UserStateVM } from './models';
 @Injectable({ providedIn: 'root' })
 export class UserStateService {
   constructor() {
-    // private patientService: PatientService // private assistantService: AssistantService, // private doctorsService: DoctorService,
     return;
   }
 
-  sub$ = new Subscription();
   private user$ = new BehaviorSubject<UserStateVM | null>(null);
+
+  clear(): void {
+    this.user$.next(null);
+    localStorage.removeItem('medigo-user');
+    localStorage.removeItem('medigo-role');
+  }
 
   getUser$(): Observable<UserStateVM | null> {
     return this.user$.asObservable();
@@ -28,12 +32,6 @@ export class UserStateService {
 
   setRole(role: unknown): void {
     localStorage.setItem('medigo-role', JSON.stringify(role));
-  }
-
-  clear(): void {
-    this.user$.next(null);
-    localStorage.removeItem('medigo-user');
-    localStorage.removeItem('medigo-role');
   }
 
   getUserStorage(): UserStateVM | null {
