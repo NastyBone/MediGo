@@ -14,8 +14,8 @@ export class AdminService {
   }
 
   logout(): void {
-    this.userStateService.clear();
+    this.userStateService.clear(); //
     this.authService.authControllerLogout();
-    this.router.navigate(['/login']);
+    this.router.navigate([`/login`]);
   }
 }

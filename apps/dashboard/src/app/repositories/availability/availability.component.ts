@@ -68,7 +68,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
     private userState: UserStateService
   ) {}
   ngOnInit(): void {
-    const role = this.userState.getRole();
+    this.role = this.userState.getRole();
     this.sub$.add(
       this.availabilityService.getLoading$().subscribe((loading) => {
         this.loading = loading;

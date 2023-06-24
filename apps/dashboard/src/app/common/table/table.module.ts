@@ -14,7 +14,6 @@ import { getSpanishPaginatorIntl } from './spanish-paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { UserStateService } from '../user-state';
 @NgModule({
   declarations: [TableComponent],
   imports: [
@@ -31,7 +30,6 @@ import { UserStateService } from '../user-state';
   providers: [
     TableService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    UserStateService,
   ],
   exports: [TableComponent],
 })

@@ -23,6 +23,8 @@
             matInput
             [formControl]="specialityControl"
             [matAutocomplete]="autospeciality"
+            [readonly]="disableSelectDoctor"
+
           />
           <mat-autocomplete
             name="speciality"
@@ -133,6 +135,9 @@
           <mat-error *ngIf="form.controls['time'].hasError('required')"
             >Campo Requerido</mat-error
           >
+          <mat-error *ngIf="form.get('time')?.hasError('forbiddenNames')"
+          >Seleccione una opción</mat-error
+        >
         </mat-form-field>
 
         <mat-form-field>
@@ -142,6 +147,7 @@
             matInput
             [formControl]="patientControl"
             [matAutocomplete]="autopatient"
+            [readonly]="disableSelectPatient"
           />
           <mat-autocomplete
             name="patient"

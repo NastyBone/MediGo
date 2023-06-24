@@ -24,6 +24,7 @@ export class AuthLoginGuard implements CanActivate {
     | boolean
     | UrlTree {
     const userState = this.userService.getUser();
+
     if (!userState) {
       return true;
     } else {
