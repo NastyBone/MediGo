@@ -1,2 +1,44 @@
-<div #chart *ngIf="this.data[0].value !== 0 || this.data[1].value !== 0"></div>
-<div class="no-data" *ngIf="!(this.data[0].value !== 0 || this.data[1].value !== 0)">No hay información disponible</div>
+<div class="container">
+  <h1 class="title">Reporte de Citas</h1>
+  <div class="chart-container">
+    <div
+      #chart
+      *ngIf="this.data[0].value !== 0 || this.data[1].value !== 0"
+    ></div>
+  </div>
+  <div
+    class="chart-info"
+    *ngIf="this.data[0].value !== 0 || this.data[1].value !== 0"
+  >
+    <div class="chart-item confirmadas">
+      <div
+        class="color-block"
+        [style]="{
+          backgroundColor: rangeColors[2],
+          border: '7px solid' + rangeColors[0],
+          opacity: '60%'
+        }"
+      ></div>
+      <span>Confirmadas: {{ this.data[0].value }}</span>
+    </div>
+    <div class="chart-item no-confirmadas">
+      <div
+        class="color-block"
+        [style]="{
+          backgroundColor: rangeColors[3],
+          border: '7px solid' + rangeColors[1],
+          opacity: '60%'
+        }"
+      ></div>
+      <span>No Confirmadas: {{ this.data[1].value }}</span>
+    </div>
+  </div>
+
+  <div
+    class="no-data container"
+    *ngIf="!(this.data[0].value !== 0 || this.data[1].value !== 0)"
+  >
+    <mat-icon>addchart</mat-icon>
+    <span>No hay información disponible</span>
+  </div>
+</div>

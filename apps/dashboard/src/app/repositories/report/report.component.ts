@@ -31,7 +31,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   private height = 600;
   private radius = Math.min(this.width, this.height) / 2 - this.margin;
   private colors: any;
-
+  public rangeColors = ['#45CD80', '#FF5545', '#00A76C', '#FF1500'];
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(true);
@@ -74,7 +74,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.colors = d3
       .scaleOrdinal()
       .domain(this.data.map((d) => d.value.toString()))
-      .range(['#45CD80', '#FF5545', '#00A76C', '#FF1500']);
+      .range(this.rangeColors);
   }
 
   private drawChart(): void {
@@ -89,7 +89,9 @@ export class ReportComponent implements OnInit, OnDestroy {
       .attr('fill', (d: any, i: any) => this.colors(i))
       .attr('stroke', (d: any, i: any) => this.colors(i + 2))
       .style('stroke-width', '25px')
-      .style('opacity', 0.6);
+      .style('opacity', (d: any) => {
+        return d.value !== 0 ? 0.6 : 0;
+      });
 
     const labelLocation = d3.arc().innerRadius(100).outerRadius(this.radius);
 
@@ -98,12 +100,20 @@ export class ReportComponent implements OnInit, OnDestroy {
       .data(pie(this.data))
       .enter()
       .append('text')
-      .text((d: any) => `${d.data.name}: ${d.data.value}`)
+      .text((d: any) =>
+        d.value !== 0
+          ? `${
+              (d.data.value * 100) / (this.data[1].value + this.data[0].value)
+            }%`
+          : ''
+      )
       .attr(
         'transform',
         (d: any) => 'translate(' + labelLocation.centroid(d) + ')'
       )
       .style('text-anchor', 'middle')
-      .style('font-size', 15);
+      .style('font-size', 30)
+      .style('font-family', 'system-ui, sans-serif')
+      .style('font-weight', '600');
   }
 }
