@@ -1,34 +1,36 @@
-.Container {
+.container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background-color: #eee;
-  height: 89%;
-  width: 100%;
+  height: 85vh;
+  justify-content: space-evenly;
+
 }
-.Logo {
+
+.logo {
   height: 27.5rem;
   width: 45rem;
   //margin-left: 5rem;
 }
-.Title {
-  font-size: 3.12rem;
+.title {
+  font-size: 4rem;
   font-weight: 400;
   color: #000;
   margin-top: 3rem;
+  font-family: monospace;
 }
-.Description {
+.description {
   letter-spacing: 0.3rem;
   font-size: 1.5rem;
   background: #007991; /* fallback for old browsers */
   background: -webkit-linear-gradient(
-    to right,
+    to left,
     #4fdfb4,
     #007991
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to right,
+    to left,
     #4fdfb4,
     #007991
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
