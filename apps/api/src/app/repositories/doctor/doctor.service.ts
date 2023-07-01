@@ -11,6 +11,8 @@ import { CreateDoctorDto, ResponseDoctorDto, UpdateDoctorDto } from './dto';
 import { RecordService } from '../record/record.service';
 import { CiteService } from '../cite/cite.service';
 import { AvailabilityService } from '../availability/availability.service';
+import { AssistantService } from '../assistant/assistant.service';
+import { Roles } from '../users';
 
 @Injectable()
 export class DoctorService {
@@ -19,8 +21,9 @@ export class DoctorService {
     private repository: Repository<Doctor>,
     private recordService: RecordService,
     private citeService: CiteService,
-    private availabilittyService: AvailabilityService
-  ) {}
+    private availabilityService: AvailabilityService,
+    private assistantService: AssistantService
+  ) { }
 
   async findAll(): Promise<ResponseDoctorDto[]> {
     const data = await this.repository.find({
@@ -38,7 +41,14 @@ export class DoctorService {
       },
     });
 
-    return data.map((item) => new ResponseDoctorDto(item));
+    return data.filter((item) => {
+      const newDoctor = new ResponseDoctorDto(item)
+      if (newDoctor.user.role == Roles.Doctor) {
+        return newDoctor
+      } else {
+        this.remove(item.id)
+      }
+    });
   }
 
   async findValid(id: number): Promise<Doctor> {
@@ -114,9 +124,10 @@ export class DoctorService {
       const doctor = await this.findValid(id);
       doctor.user = null;
       doctor.deleted = true;
-      await this.availabilittyService.deleteByDoctors(doctor.id);
+      await this.availabilityService.deleteByDoctors(doctor.id);
       await this.recordService.deleteByDoctors(doctor.id);
       await this.citeService.deleteByDoctors(doctor.id);
+      await this.assistantService.deleteByDoctors(doctor.id)
       await this.repository.save(doctor);
       return doctor;
     } catch (error) {

@@ -67,10 +67,16 @@ export class ResponseUserPatientDto {
   @IsString()
   email: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  role: string;
+
   constructor(data: User) {
     this.id = data.id;
     this.firstName = data.firstName;
     this.lastName = data.lastName;
     this.email = data.email;
+    this.role = data.role
   }
 }

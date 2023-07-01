@@ -5,7 +5,7 @@ import { Doctor } from '../../doctor/entities';
 
 @Entity()
 export class Assistant extends IdEntity {
-  @OneToOne(() => Doctor, (doctor) => doctor.id, { nullable: false })
+  @OneToOne(() => Doctor, (doctor) => doctor.id, { nullable: true })
   @JoinColumn()
   doctor!: Doctor;
 
