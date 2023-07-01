@@ -9,6 +9,7 @@ import { UsersModule } from '../users';
 @Module({
   imports: [TypeOrmModule.forFeature([Assistant]), UsersModule, JwtAuthModule],
   providers: [AssistantService],
+  exports: [AssistantService],
   controllers: [AssistantController],
 })
-export class AssistantModule {}
+export class AssistantModule { }

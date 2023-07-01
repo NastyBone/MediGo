@@ -12,13 +12,14 @@ import {
   ResponseAssistantDto,
   UpdateAssistantDto,
 } from './dto';
+import { Roles } from '../users';
 
 @Injectable()
 export class AssistantService {
   constructor(
     @InjectRepository(Assistant)
     private repository: Repository<Assistant>
-  ) {}
+  ) { }
 
   async findAll(): Promise<ResponseAssistantDto[]> {
     const data = await this.repository.find({
@@ -39,7 +40,15 @@ export class AssistantService {
       },
     });
 
-    return data.map((item) => new ResponseAssistantDto(item));
+    return data.filter((item) => {
+      const newAssistant = new ResponseAssistantDto(item)
+      if (newAssistant.user.role == Roles.Asistente) {
+        return newAssistant
+      } else {
+        this.remove(item.id)
+      }
+    });
+
   }
 
   async findValid(id: number): Promise<Assistant> {
@@ -123,6 +132,7 @@ export class AssistantService {
       const assistant = await this.findValid(id);
       assistant.user = null;
       assistant.deleted = true;
+      assistant.doctor = null
       await this.repository.save(assistant);
       return assistant;
     } catch (error) {
@@ -154,12 +164,26 @@ export class AssistantService {
       });
       if (assistant) {
         return new ResponseAssistantDto(assistant);
-      } else {
-        throw new Error();
       }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Asistente no asignado');
     }
+  }
+
+  async deleteByDoctors(id: number): Promise<void | boolean> {
+    const assistant = await this.repository.findOne({
+      where: {
+        deleted: false,
+        doctor: {
+          id,
+        },
+      },
+    });
+
+    if (assistant) await this.remove(assistant.id)
+    console.log('SOFT DELETION: ASSISTANT BY DOCTOR');
+
+    return true;
   }
 }

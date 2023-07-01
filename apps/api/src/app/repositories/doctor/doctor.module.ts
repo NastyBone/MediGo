@@ -8,6 +8,7 @@ import { UsersModule } from '../users';
 import { CiteModule } from '../cite/cite.module';
 import { RecordModule } from '../record/record.module';
 import { AvailabilityModule } from '../availability/availability.module';
+import { AssistantModule } from '../assistant/assistant.module';
 
 @Module({
   imports: [
@@ -15,10 +16,11 @@ import { AvailabilityModule } from '../availability/availability.module';
     UsersModule,
     JwtAuthModule,
     CiteModule,
+    AssistantModule,
     RecordModule,
     AvailabilityModule,
   ],
   providers: [DoctorService],
   controllers: [DoctorController],
 })
-export class DoctorModule {}
+export class DoctorModule { }
