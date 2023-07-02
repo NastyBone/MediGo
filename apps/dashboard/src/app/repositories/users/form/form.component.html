@@ -2,8 +2,7 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title class="title">Crear o Modificar Usuario</mat-card-title>
-      <button class="close-button" type="button" mat-fab color="basic" aria-label="Close"
-        (click)="clickClosed()">
+      <button class="close-button" type="button" mat-fab color="basic" aria-label="Close" (click)="clickClosed()">
         <mat-icon>close</mat-icon>
       </button>
 
@@ -32,7 +31,9 @@
         <mat-form-field>
           <mat-label>Rol</mat-label>
           <mat-select name="role" formControlName="role" id="role" matSelect placeholder="Rol" required
-            [(value)]="selectedRole">
+          [compareWith]="compareObjects"
+          
+            >
             <mat-option *ngFor="let option of roleList" [value]="option.value">{{ option.name }}</mat-option>
           </mat-select>
           <mat-error *ngIf="form.controls['role'].hasError('required')">Campo Requerido</mat-error>

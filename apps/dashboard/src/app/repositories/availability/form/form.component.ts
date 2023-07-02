@@ -161,7 +161,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   clickClosed(): void {
     this.closed.emit();
-    this.form.reset();
   }
   private createForm(): void {
     //

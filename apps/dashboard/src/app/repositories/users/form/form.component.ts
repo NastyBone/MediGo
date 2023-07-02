@@ -30,10 +30,10 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     { name: 'Inactivo', value: 'false' },
   ];
   roleList = [
+    { name: 'Paciente', value: 'paciente' },
     { name: 'Administrador', value: 'administrador' },
     { name: 'Doctor', value: 'doctor' },
     { name: 'Asistente', value: 'asistente' },
-    { name: 'Paciente', value: 'paciente' },
   ];
   selected!: string;
   selectedRole!: string;
@@ -80,9 +80,6 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
             users.status == this.selectable[0].name
               ? (this.selected = this.selectable[0].value)
               : (this.selected = this.selectable[1].value);
-            this.selectedRole =
-              this.roleList.find((role) => role.name == users.role)?.value ||
-              this.roleList[3].value;
             this.oldFormValue = users;
             this.form.patchValue(
               {
@@ -113,11 +110,12 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
         [Validators.email, Validators.required, Validators.maxLength(256)],
       ],
       status: [false, [Validators.required]],
-      role: [false, [Validators.required]],
+      role: [null, [Validators.required]],
       id: [0],
     });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
+        console.log(this.form.value)
         this.submitDisabled =
           isEqual(this.oldFormValue, this.form.getRawValue()) ||
           this.form.invalid;

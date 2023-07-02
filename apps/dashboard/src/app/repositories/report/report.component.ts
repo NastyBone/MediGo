@@ -15,9 +15,10 @@ export class ReportComponent implements OnInit, OnDestroy {
   constructor(
     private stateService: StateService,
     private reportService: GetReportService
-  ) {}
+  ) { }
   loading = false;
   sub$ = new Subscription();
+  actualMonth!: string
 
   data = [
     { name: 'Confirmadas', value: 20 },
@@ -35,6 +36,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = true;
     this.stateService.setLoading(true);
+    this.actualMonth = (new Date()).toLocaleString('es-ES', { month: 'long' })
     this.sub$.add(
       this.reportService
         .exec()
@@ -102,9 +104,8 @@ export class ReportComponent implements OnInit, OnDestroy {
       .append('text')
       .text((d: any) =>
         d.value !== 0
-          ? `${
-              (d.data.value * 100) / (this.data[1].value + this.data[0].value)
-            }%`
+          ? `${(d.data.value * 100) / (this.data[1].value + this.data[0].value)
+          }%`
           : ''
       )
       .attr(

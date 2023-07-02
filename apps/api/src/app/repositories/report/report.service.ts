@@ -3,7 +3,7 @@ import { CiteService } from '../cite/cite.service';
 
 @Injectable()
 export class ReportService {
-  constructor(private citeService: CiteService) {}
+  constructor(private citeService: CiteService) { }
   async findAll(): Promise<{ completed: number; notCompleted: number }> {
     const { completed, notCompleted } = await this.citeService.getData();
     return { completed, notCompleted };

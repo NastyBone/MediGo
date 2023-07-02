@@ -26,7 +26,7 @@ export class AvailabilityService {
     @InjectRepository(Availability)
     private repository: Repository<Availability>,
     private citeService: CiteService
-  ) {}
+  ) { }
 
   async findAll(): Promise<ResponseAvailabilityDto[]> {
     const data = await this.repository.find({
@@ -75,14 +75,16 @@ export class AvailabilityService {
   ): Promise<ResponseAvailabilityDto> {
     if (!checkTimeRange(createAvailabilityDto.start, createAvailabilityDto.end))
       throw new BadRequestException('Rango Invalido');
+    const availableData = await this.findByDoctor(createAvailabilityDto.doctor.id)
+    console.log(availableData)
 
     if (
-      checkTimeConflict(
+      !checkTimeConflict(
         createAvailabilityDto.start,
         createAvailabilityDto.end,
         createAvailabilityDto.day,
         createAvailabilityDto.doctor.id,
-        await this.findByDoctor(createAvailabilityDto.doctor.id)
+        availableData
       )
     ) {
       throw new BadRequestException('Rango En Conflicto');
@@ -123,7 +125,7 @@ export class AvailabilityService {
       throw new BadRequestException('Rango Invalido');
 
     if (
-      checkTimeConflict(
+      !checkTimeConflict(
         updateAvailabilityDto.start,
         updateAvailabilityDto.end,
         updateAvailabilityDto.day,

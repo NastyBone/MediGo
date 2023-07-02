@@ -103,8 +103,8 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   //
   selectable = [
-    { name: 'No confirmada', value: 'false' },
     { name: 'Confirmada', value: 'true' },
+    { name: 'No confirmada', value: 'false' },
   ];
   statusSelect!: string;
   //
