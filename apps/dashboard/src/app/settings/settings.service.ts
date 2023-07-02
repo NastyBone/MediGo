@@ -20,7 +20,7 @@ export class SettingsService {
     private dialog: MatDialog,
     private getSettingsService: GetSettingsService,
     private updateSettingsService: UpdateSettingssService
-  ) {}
+  ) { }
 
   getLoading$(): Observable<boolean> {
     return this.loading$.asObservable();
@@ -33,7 +33,9 @@ export class SettingsService {
   open(): void {
     const dialogRef = this.dialog.open(SettingsComponent, {
       hasBackdrop: true,
-      disableClose: true,
+
+      autoFocus: false,
+
     });
 
     (dialogRef.componentInstance as SettingsComponent).closed.subscribe(() => {

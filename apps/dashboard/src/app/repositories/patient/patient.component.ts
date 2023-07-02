@@ -58,7 +58,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     private patientService: PatientService,
     private tableService: TableService,
     private stateService: StateService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.sub$.add(
       this.patientService.getLoading$().subscribe((loading) => {
@@ -97,6 +97,8 @@ export class PatientComponent implements OnInit, OnDestroy {
   showModal(id?: number): void {
     const modal = this.matDialog.open(FormComponent, {
       hasBackdrop: true,
+      autoFocus: false,
+
       data: {
         id,
       },
@@ -115,6 +117,8 @@ export class PatientComponent implements OnInit, OnDestroy {
         },
       },
       hasBackdrop: true,
+      autoFocus: false,
+
     });
 
     dialogRef.componentInstance.closed.subscribe((res) => {

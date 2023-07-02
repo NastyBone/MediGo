@@ -103,8 +103,8 @@ export class FormComponent implements OnInit, OnDestroy {
   //
   //
   selectable = [
-    { name: 'No confirmada', value: 'false' },
     { name: 'Confirmada', value: 'true' },
+    { name: 'No confirmada', value: 'false' },
   ];
   statusSelect!: string;
   //
@@ -117,7 +117,7 @@ export class FormComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private stateService: StateService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -225,6 +225,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   clickClosed(): void {
     this.closed.emit();
+    this.form.reset();
   }
   private createForm(): void {
     this.form = this.formBuilder.group({
@@ -280,7 +281,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   clickSave(): void {
     this.form.value.patientConfirm == 'true' ||
-    this.form.value.patientConfirm == true
+      this.form.value.patientConfirm == true
       ? (this.form.value.patientConfirm = true)
       : (this.form.value.patientConfirm = false);
 

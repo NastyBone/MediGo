@@ -44,7 +44,6 @@ export function checkTimeConflict(
   data: any
 ): boolean {
   let flag = true;
-
   data.map((aval: any) => {
     let id = null;
     if (aval.doctorId) id = aval.doctorId;

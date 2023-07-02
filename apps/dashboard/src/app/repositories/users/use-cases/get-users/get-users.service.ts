@@ -17,7 +17,7 @@ export class GetUsersService
   constructor(
     private usersService: UsersService,
     private memoryService: UsersMemoryService
-  ) {}
+  ) { }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   exec(data: BaseQuery): Observable<Array<UserVM> | null> {
     return this.usersService.usersControllerFindAll().pipe(
@@ -27,6 +27,7 @@ export class GetUsersService
         return data.map(User2UserItemVM);
       }),
       tap((users) => {
+        console.log(users)
         this.memoryService.setDataSource(users);
       })
     );
