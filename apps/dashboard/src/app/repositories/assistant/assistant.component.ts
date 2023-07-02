@@ -54,7 +54,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
     private assistantService: AssistantService,
     private tableService: TableService,
     private stateService: StateService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.sub$.add(
       this.assistantService.getLoading$().subscribe((loading) => {
@@ -93,6 +93,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
   showModal(id?: number): void {
     const modal = this.matDialog.open(FormComponent, {
       hasBackdrop: true,
+      autoFocus: false,
       data: {
         id,
       },
@@ -111,6 +112,7 @@ export class AssistantComponent implements OnInit, OnDestroy {
         },
       },
       hasBackdrop: true,
+      autoFocus: false,
     });
 
     dialogRef.componentInstance.closed.subscribe((res) => {

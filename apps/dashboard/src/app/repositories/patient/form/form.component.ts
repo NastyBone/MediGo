@@ -55,7 +55,7 @@ export class FormComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: PatientItemVM,
     private stateService: StateService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -126,6 +126,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   clickClosed(): void {
     this.closed.emit();
+    this.form.reset();
   }
   private createForm(): void {
     this.form = this.formBuilder.group({

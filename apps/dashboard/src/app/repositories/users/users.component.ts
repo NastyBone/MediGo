@@ -104,7 +104,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   showForm(id?: string) {
     const dialogRef = this.dialog.open(FormComponent, {
       hasBackdrop: true,
-      disableClose: true,
+      autoFocus: false,
+
       data: { id },
     });
 
@@ -122,7 +123,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         },
       },
       hasBackdrop: true,
-      disableClose: true,
+      autoFocus: false,
+
     });
 
     (dialogRef.componentInstance as ConfirmModalComponent).closed.subscribe(

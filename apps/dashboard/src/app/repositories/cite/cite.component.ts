@@ -74,7 +74,7 @@ export class CiteComponent implements OnInit, OnDestroy {
     private tableService: TableService,
     private stateService: StateService,
     private userState: UserStateService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.role = this.userState.getRole();
     this.sub$.add(
@@ -111,6 +111,7 @@ export class CiteComponent implements OnInit, OnDestroy {
   showModal(id?: number): void {
     const modal = this.matDialog.open(FormComponent, {
       hasBackdrop: true,
+      autoFocus: false,
       data: {
         id,
         fullRole: this.userState.getFullRole(),
@@ -131,6 +132,7 @@ export class CiteComponent implements OnInit, OnDestroy {
         },
       },
       hasBackdrop: true,
+      autoFocus: false,
     });
 
     dialogRef.componentInstance.closed.subscribe((res) => {

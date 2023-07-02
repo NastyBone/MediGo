@@ -72,7 +72,7 @@ export class FormComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private stateService: StateService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //
@@ -156,6 +156,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   clickClosed(): void {
     this.closed.emit();
+    this.form.reset();
   }
   private createForm(): void {
     this.form = this.formBuilder.group({

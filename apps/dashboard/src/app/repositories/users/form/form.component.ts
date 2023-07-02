@@ -55,7 +55,7 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     private stateService: StateService,
     @Inject(MAT_DIALOG_DATA) public data: UserVM,
     private cdref: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
