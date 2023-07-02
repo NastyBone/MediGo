@@ -14,128 +14,131 @@
 </div>
 
 <form class="FormA" mat-dialog-content [formGroup]="form!">
-  <mat-form-field class="">
-    <mat-label>Inicio</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="start"
-      [ngxMatTimepicker]="pickerA"
-      [format]="12"
-      readonly
-      [max]="'11:00 AM'"
-      [min]="'07:00 AM'"
-    />
-    <ngx-mat-timepicker-toggle
-      (click)="pickerA.open()"
-      matSuffix
-    ></ngx-mat-timepicker-toggle>
-
-    <mat-error *ngIf="form.controls['start'].hasError('required')"
-      >Campo requerido</mat-error
-    >
-    <mat-error *ngIf="form.controls['start'].hasError('timeRangeError')"
-      >Rango Invalido</mat-error
-    >
-    <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
-      >Rango Ocupado</mat-error
-    >
-  </mat-form-field>
-  <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
-
-  <mat-form-field class="">
-    <mat-label>Fin</mat-label>
-    <input
-      type="text"
-      matInput
-      formControlName="end"
-      [ngxMatTimepicker]="pickerB"
-      [format]="12"
-      readonly
-      [max]="'12:00 PM'"
-      [min]="'08:00 AM'"
-    />
-    <ngx-mat-timepicker-toggle
-      (click)="pickerB.open()"
-      matSuffix
-    ></ngx-mat-timepicker-toggle>
-    <mat-hint>Presione el reloj</mat-hint>
-
-    <mat-error *ngIf="form.controls['end'].hasError('required')"
-      >Campo requerido</mat-error
-    >
-    <mat-error *ngIf="form.controls['end'].hasError('timeRangeError')"
-      >Rango Invalido</mat-error
-    >
-    <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
-      >Rango Ocupado</mat-error
-    >
-    <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Dia</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="dayControl"
-      [matAutocomplete]="autoday"
-    />
-    <mat-autocomplete
-      name="day"
-      id="day"
-      #autoday="matAutocomplete"
-      [displayWith]="displayFn"
-    >
-      <mat-option
-        *ngFor="let option of filteredDays | async"
-        [value]="option"
-        >{{ option.name }}</mat-option
+  <div class="Time">
+    <mat-form-field>
+      <mat-label>Doctor</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="doctorControl"
+        [matAutocomplete]="autoclient"
+        [readonly]="disableSelectDoctor"
+      />
+      <mat-autocomplete
+        name="doctor"
+        id="doctor"
+        #autoclient="matAutocomplete"
+        [displayWith]="displayFn"
       >
-      <mat-option *ngIf="(filteredDays | async)?.length === 0" disabled
-        >No se encontraron dias</mat-option
+        <mat-option
+          *ngFor="let option of filteredDoctors | async"
+          [value]="option"
+        >
+          {{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
+        >
+        <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
+          >No se encontraron doctores</mat-option
+        >
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+        >Campo Requerido</mat-error
       >
-    </mat-autocomplete>
-    <mat-error *ngIf="form.get('day')?.hasError('required')"
-      >Campo Requerido</mat-error
-    >
-    <mat-error *ngIf="form.get('day')?.hasError('forbiddenNames')"
-      >Seleccione una opción</mat-error
-    >
-  </mat-form-field>
+      <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
+        >Seleccione una opción</mat-error
+      >
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Doctor</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="doctorControl"
-      [matAutocomplete]="autoclient"
-      [readonly]="disableSelectDoctor"
-    />
-    <mat-autocomplete
-      name="doctor"
-      id="doctor"
-      #autoclient="matAutocomplete"
-      [displayWith]="displayFn"
-    >
-      <mat-option
-        *ngFor="let option of filteredDoctors | async"
-        [value]="option"
+    <mat-form-field>
+      <mat-label>Dia</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="dayControl"
+        [matAutocomplete]="autoday"
+      />
+      <mat-autocomplete
+        name="day"
+        id="day"
+        #autoday="matAutocomplete"
+        [displayWith]="displayFn"
       >
-        {{ option.user?.firstName }} {{ option.user?.lastName }}</mat-option
+        <mat-option
+          *ngFor="let option of filteredDays | async"
+          [value]="option"
+          >{{ option.name }}</mat-option
+        >
+        <mat-option *ngIf="(filteredDays | async)?.length === 0" disabled
+          >No se encontraron dias</mat-option
+        >
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('day')?.hasError('required')"
+        >Campo Requerido</mat-error
       >
-      <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
-        >No se encontraron doctores</mat-option
+      <mat-error *ngIf="form.get('day')?.hasError('forbiddenNames')"
+        >Seleccione una opción</mat-error
       >
-    </mat-autocomplete>
-    <mat-error *ngIf="form.get('doctor')?.hasError('required')"
-      >Campo Requerido</mat-error
-    >
-    <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
-      >Seleccione una opción</mat-error
-    >
-  </mat-form-field>
+    </mat-form-field>
+  </div>
+  <div class="Time">
+    <mat-form-field>
+      <mat-label>Inicio</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="start"
+        [ngxMatTimepicker]="pickerA"
+        [format]="12"
+        readonly
+        [max]="'11:00 AM'"
+        [min]="'07:00 AM'"
+      />
+      <ngx-mat-timepicker-toggle
+        (click)="pickerA.open()"
+        matSuffix
+      ></ngx-mat-timepicker-toggle>
+
+      <mat-error *ngIf="form.controls['start'].hasError('required')"
+        >Campo requerido</mat-error
+      >
+      <mat-error *ngIf="form.controls['start'].hasError('timeRangeError')"
+        >Rango Invalido</mat-error
+      >
+      <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
+        >Rango Ocupado</mat-error
+      >
+      <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fin</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="end"
+        [ngxMatTimepicker]="pickerB"
+        [format]="12"
+        readonly
+        [max]="'12:00 PM'"
+        [min]="'08:00 AM'"
+      />
+      <ngx-mat-timepicker-toggle
+        (click)="pickerB.open()"
+        matSuffix
+      ></ngx-mat-timepicker-toggle>
+      <mat-hint>Presione el reloj</mat-hint>
+
+      <mat-error *ngIf="form.controls['end'].hasError('required')"
+        >Campo requerido</mat-error
+      >
+      <mat-error *ngIf="form.controls['end'].hasError('timeRangeError')"
+        >Rango Invalido</mat-error
+      >
+      <mat-error *ngIf="form.controls['end'].hasError('timeConflictError')"
+        >Rango Ocupado</mat-error
+      >
+      <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
+    </mat-form-field>
+  </div>
 
   <mat-form-field>
     <mat-label>Estado</mat-label>
@@ -166,6 +169,7 @@
     (click)="clickSave()"
     color="primary"
     [disabled]="submitDisabled || loading"
+    class="actionBtn"
   >
     Guardar
   </button>
@@ -175,6 +179,7 @@
     cdkFocusInitial
     type="button"
     (click)="clickClosed()"
+    class="actionBtn"
   >
     Cancelar
   </button>
