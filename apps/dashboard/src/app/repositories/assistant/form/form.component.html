@@ -1,6 +1,6 @@
 <div class="Container">
   <div class="modal-header">
-    <span mat-dialog-title class="Title"> Nuevo Asistente</span>
+    <span mat-dialog-title class="Title">Crear y Modificar Asistente</span>
     <button
       id="modal-close-button"
       mat-dialog-close
@@ -86,6 +86,7 @@
       (click)="clickSave()"
       color="primary"
       [disabled]="submitDisabled || loading"
+      class="acitonBtn"
     >
       Guardar
     </button>
@@ -95,6 +96,7 @@
       cdkFocusInitial
       type="button"
       (click)="clickClosed()"
+      class="acitonBtn"
     >
       Cancelar
     </button>

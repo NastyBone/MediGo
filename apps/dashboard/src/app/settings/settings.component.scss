@@ -1,6 +1,7 @@
 #modal-title {
   font-size: 2rem;
-  margin-top: 1rem;
+  font-weight: 100;
+  padding-top: 1rem;
 }
 
 #modal-header {
@@ -11,11 +12,11 @@
   top: 0.35rem;
   width: 2.5rem;
   height: 2.5rem;
-  margin-top: -1rem;
 }
 
 #modal-actions {
   justify-content: space-around;
+  margin: 0 2rem;
 }
 
 #modal-card {
@@ -26,4 +27,7 @@
 #modal-form-field-container {
   width: 100%;
   margin: auto;
+}
+.actionBtn {
+  flex: 1 1 auto;
 }

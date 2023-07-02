@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <span mat-dialog-title class="Title">Nuevo Doctor</span>
+  <span mat-dialog-title class="Title">Crear y Modificar Doctor</span>
   <button
     id="modal-close-button"
     mat-dialog-close
@@ -91,6 +91,7 @@
     (click)="clickSave()"
     color="primary"
     [disabled]="submitDisabled || loading"
+    class="actionBtn"
   >
     Guardar
   </button>
@@ -100,6 +101,7 @@
     cdkFocusInitial
     type="button"
     (click)="clickClosed()"
+    class="actionBtn"
   >
     Cancelar
   </button>

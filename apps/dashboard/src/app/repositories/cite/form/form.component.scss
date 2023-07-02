@@ -1,6 +1,7 @@
 .container {
   min-width: 50vw;
-  max-height: 90vh;
+  max-height: 95vh;
+  overflow: hidden;
 }
 
 mat-card {
@@ -20,6 +21,16 @@ mat-card-content,
 .sub-form {
   padding-top: 0 !important;
 }
+.divForm {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+.divForm > mat-form-field {
+  width: 100%;
+  box-sizing: border-box;
+}
 
 mat-card-header {
   justify-content: space-between;
@@ -31,10 +42,9 @@ mat-card-header {
 
 .close-button {
   float: right;
-  top: 0rem;
+  top: -0.5rem;
   width: 2.5rem;
   height: 2.5rem;
-  margin-top: -1rem;
 }
 
 .bill-distribution {
@@ -50,6 +60,7 @@ mat-card-header {
 
 mat-card-actions {
   justify-content: space-evenly;
+  margin: 0 2rem;
 }
 .action-button {
   flex: 1 1 auto;

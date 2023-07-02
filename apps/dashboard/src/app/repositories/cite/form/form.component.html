@@ -16,130 +16,134 @@
 
     <form [formGroup]="form" class="form-control">
       <mat-card-content>
-        <mat-form-field>
-          <mat-label>Especialidad</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="specialityControl"
-            [matAutocomplete]="autospeciality"
-            [readonly]="disableSelectDoctor"
-
-          />
-          <mat-autocomplete
-            name="speciality"
-            id="speciality"
-            #autospeciality="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            <mat-option
-              *ngFor="let option of filteredSpecialities | async"
-              [value]="option"
-              >{{ option.name }}</mat-option
+        <div class="divForm">
+          <mat-form-field>
+            <mat-label>Especialidad</mat-label>
+            <input
+              type="text"
+              matInput
+              [formControl]="specialityControl"
+              [matAutocomplete]="autospeciality"
+              [readonly]="disableSelectDoctor"
+            />
+            <mat-autocomplete
+              name="speciality"
+              id="speciality"
+              #autospeciality="matAutocomplete"
+              [displayWith]="displayFn"
             >
-            <mat-option
-              *ngIf="(filteredSpecialities | async)?.length === 0"
-              disabled
-              >No se encontraron especialidades</mat-option
+              <mat-option
+                *ngFor="let option of filteredSpecialities | async"
+                [value]="option"
+                >{{ option.name }}</mat-option
+              >
+              <mat-option
+                *ngIf="(filteredSpecialities | async)?.length === 0"
+                disabled
+                >No se encontraron especialidades</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+              >Campo Requerido</mat-error
             >
-          </mat-autocomplete>
-          <mat-error *ngIf="form.get('doctor')?.hasError('required')"
-            >Campo Requerido</mat-error
-          >
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Doctor</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="doctorControl"
-            [matAutocomplete]="autodoctor"
-            [readonly]="disableSelectDoctor"
-          />
-          <mat-autocomplete
-            name="doctor"
-            id="doctor"
-            #autodoctor="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            <mat-option
-              *ngFor="let option of filteredDoctors | async"
-              [value]="option"
-              >{{ option.user?.firstName }}
-              {{ option.user?.lastName }}</mat-option
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Doctor</mat-label>
+            <input
+              type="text"
+              matInput
+              [formControl]="doctorControl"
+              [matAutocomplete]="autodoctor"
+              [readonly]="disableSelectDoctor"
+            />
+            <mat-autocomplete
+              name="doctor"
+              id="doctor"
+              #autodoctor="matAutocomplete"
+              [displayWith]="displayFn"
             >
-            <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled
-              >No se encontraron doctores</mat-option
+              <mat-option
+                *ngFor="let option of filteredDoctors | async"
+                [value]="option"
+                >{{ option.user?.firstName }}
+                {{ option.user?.lastName }}</mat-option
+              >
+              <mat-option
+                *ngIf="(filteredDoctors | async)?.length === 0"
+                disabled
+                >No se encontraron doctores</mat-option
+              >
+            </mat-autocomplete>
+            <mat-error *ngIf="form.get('doctor')?.hasError('required')"
+              >Campo Requerido</mat-error
             >
-          </mat-autocomplete>
-          <mat-error *ngIf="form.get('doctor')?.hasError('required')"
-            >Campo Requerido</mat-error
-          >
-          <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
-            >Seleccione una opción</mat-error
-          >
-        </mat-form-field>
+            <mat-error *ngIf="form.get('doctor')?.hasError('forbiddenNames')"
+              >Seleccione una opción</mat-error
+            >
+          </mat-form-field>
+        </div>
 
         <mat-divider [inset]="true"></mat-divider>
-        <mat-form-field>
-          <mat-label>Fecha</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            id="date"
-            name="date"
-            [min]="minDate"
-            [max]="maxDate"
-            formControlName="date"
-            [formControl]="dateControl"
-            readonly
-          />
-          <mat-hint>Presione el calendario</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-            disabled="false"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker disabled="false"></mat-datepicker>
-          <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMin')">
-            Seleccione una fecha mayor
-          </mat-error>
-          <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMax')">
-            Seleccione una fecha menor
-          </mat-error>
-          <mat-error *ngIf="form.get('date')?.hasError('required')">
-            Campo Requerido
-          </mat-error>
-        </mat-form-field>
+        <div class="divForm">
+          <mat-form-field>
+            <mat-label>Fecha</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              id="date"
+              name="date"
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="date"
+              [formControl]="dateControl"
+              readonly
+            />
+            <mat-hint>Presione el calendario</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+              disabled="false"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+            <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMin')">
+              Seleccione una fecha mayor
+            </mat-error>
+            <mat-error *ngIf="form.get('date')?.hasError('matDatepickerMax')">
+              Seleccione una fecha menor
+            </mat-error>
+            <mat-error *ngIf="form.get('date')?.hasError('required')">
+              Campo Requerido
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Hora</mat-label>
-          <mat-select
-            name="time"
-            formControlName="time"
-            id="time"
-            matSelect
-            [(value)]="timeSelect"
-            [compareWith]="compareObjects"
-            required
-          >
-            <mat-option
-              *ngFor="let option of incomingAvailabilities"
-              [value]="option"
-              >{{ option.start }} - {{ option.end }}</mat-option
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <mat-select
+              name="time"
+              formControlName="time"
+              id="time"
+              matSelect
+              [(value)]="timeSelect"
+              [compareWith]="compareObjects"
+              required
             >
-            <mat-option *ngIf="incomingAvailabilities.length === 0" disabled
-              >No se encontraron horarios para el dia seleccionado</mat-option
+              <mat-option
+                *ngFor="let option of incomingAvailabilities"
+                [value]="option"
+                >{{ option.start }} - {{ option.end }}</mat-option
+              >
+              <mat-option *ngIf="incomingAvailabilities.length === 0" disabled
+                >No se encontraron horarios para el dia seleccionado</mat-option
+              >
+            </mat-select>
+            <mat-error *ngIf="form.controls['time'].hasError('required')"
+              >Campo Requerido</mat-error
             >
-          </mat-select>
-          <mat-error *ngIf="form.controls['time'].hasError('required')"
-            >Campo Requerido</mat-error
-          >
-          <mat-error *ngIf="form.get('time')?.hasError('forbiddenNames')"
-          >Seleccione una opción</mat-error
-        >
-        </mat-form-field>
-
+            <mat-error *ngIf="form.get('time')?.hasError('forbiddenNames')"
+              >Seleccione una opción</mat-error
+            >
+          </mat-form-field>
+        </div>
         <mat-form-field>
           <mat-label>Paciente</mat-label>
           <input

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   padding: 0.5rem;
 }
 .Title {
@@ -10,18 +10,21 @@
   font-weight: 100;
 }
 .modal-header button {
-  margin-top: -2rem;
+  margin-top: 0.35rem;
+  right: 0.7rem;
 }
 .FormDoctor {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  width: 45rem;
-  padding: 0 2rem;
-  margin: 1.5rem 1rem;
+  padding: 0 1.5rem;
+  margin: 1.5rem 0;
 }
 .modal-footer {
-  justify-content: center;
-  padding-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  margin: 0 2rem;
+}
+.actionBtn {
+  flex: 1 1 auto;
 }
