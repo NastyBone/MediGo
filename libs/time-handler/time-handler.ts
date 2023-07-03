@@ -41,7 +41,8 @@ export function checkTimeConflict(
   end: string,
   day: string,
   doctorId: number,
-  data: any
+  data: any,
+  avalId: number | null = null
 ): boolean {
   let flag = true;
   data.map((aval: any) => {
@@ -54,25 +55,37 @@ export function checkTimeConflict(
           moment(start, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
           moment(start, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
-          flag = false;
+          if (avalId !== aval.id) {
+            flag = false;
+          }
         }
         if (
           moment(end, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
           moment(end, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
-          flag = false;
+
+          if (avalId !== aval.id) {
+            flag = false;
+          }
+
         }
         if (
           moment(start, 'hh:mm a') >= moment(aval.start, 'hh:mm a') &&
           moment(end, 'hh:mm a') <= moment(aval.start, 'hh:mm a')
         ) {
-          flag = false;
+
+          if (avalId !== aval.id) {
+            flag = false;
+          }
         }
         if (
           moment(start, 'hh:mm a') >= moment(aval.end, 'hh:mm a') &&
           moment(end, 'hh:mm a') <= moment(aval.end, 'hh:mm a')
         ) {
-          flag = false;
+
+          if (avalId !== aval.id) {
+            flag = false;
+          }
         }
       }
     }

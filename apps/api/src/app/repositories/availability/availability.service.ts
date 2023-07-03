@@ -130,7 +130,8 @@ export class AvailabilityService {
         updateAvailabilityDto.end,
         updateAvailabilityDto.day,
         updateAvailabilityDto.doctor.id,
-        await this.findByDoctor(updateAvailabilityDto.doctor.id)
+        await this.findByDoctor(updateAvailabilityDto.doctor.id),
+        id
       )
     ) {
       throw new BadRequestException('Rango En Conflicto');

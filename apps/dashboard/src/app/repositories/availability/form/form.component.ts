@@ -170,7 +170,7 @@ export class FormComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           TimeRangeCheck,
-          TimeConflictValidator(this.data.availabilities),
+          TimeConflictValidator(this.data.availabilities, this.data.id || null),
         ],
       ],
       end: [
@@ -178,7 +178,7 @@ export class FormComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           TimeRangeCheck,
-          TimeConflictValidator(this.data.availabilities),
+          TimeConflictValidator(this.data.availabilities, this.data.id || null),
         ],
       ],
       day: this.dayControl,

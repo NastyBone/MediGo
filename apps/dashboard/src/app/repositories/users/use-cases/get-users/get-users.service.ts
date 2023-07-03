@@ -27,7 +27,6 @@ export class GetUsersService
         return data.map(User2UserItemVM);
       }),
       tap((users) => {
-        console.log(users)
         this.memoryService.setDataSource(users);
       })
     );
