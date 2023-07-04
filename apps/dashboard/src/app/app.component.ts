@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private alertSocketService: AlertSocketService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.sub$.add(
@@ -30,11 +30,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.alertSocketService.getMessage().subscribe((message: any) => {
         this.toastService.info(
-          `${new Date(message.data.date).toLocaleDateString('es-ES')} - ${
-            message.data.time
-          } - Cita de [${message.data.speciality}].\nDoctor: [${
-            message.data.doctor.name
-          }].\nPaciente: [${message.data.patient.name}]`
+          `${new Date(message.date).toLocaleDateString('es-ES')} - ${message.time
+          } - Cita de [${message.speciality}].\nDoctor: [${message.doctor.name
+          }].\nPaciente: [${message.patient.name}]`
         );
       })
     );

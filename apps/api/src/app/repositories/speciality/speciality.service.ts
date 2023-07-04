@@ -11,13 +11,15 @@ import {
   ResponseSpecialityDto,
   UpdateSpecialityDto,
 } from './dto';
+import { DoctorService } from '../doctor/doctor.service';
 
 @Injectable()
 export class SpecialityService {
   constructor(
     @InjectRepository(Speciality)
-    private repository: Repository<Speciality>
-  ) {}
+    private repository: Repository<Speciality>,
+    private doctorSevice: DoctorService
+  ) { }
 
   async findAll(): Promise<ResponseSpecialityDto[]> {
     const data = await this.repository.find({
@@ -85,6 +87,7 @@ export class SpecialityService {
   async remove(id: number): Promise<ResponseSpecialityDto> {
     try {
       const speciality = await this.findValid(id);
+      await this.doctorSevice.deleteBySpeciality(id)
       speciality.deleted = true;
       return new ResponseSpecialityDto(await this.repository.save(speciality));
     } catch (error) {

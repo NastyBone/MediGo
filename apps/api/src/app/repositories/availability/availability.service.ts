@@ -184,7 +184,6 @@ export class AvailabilityService {
           doctor: {
             id,
           },
-
           deleted: false,
         },
         relations: {
