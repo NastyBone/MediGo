@@ -23,7 +23,7 @@ export class GetUsersService
     return this.usersService.usersControllerFindAll().pipe(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       map((data: any[]) => {
-        data = data?.filter((user: UserVM) => user.role !== 'administrador');
+        // data = data?.filter((user: UserVM) => user.role !== 'administrador');
         return data.map(User2UserItemVM);
       }),
       tap((users) => {

@@ -21,6 +21,7 @@ import { AssistantModule } from '../assistant/assistant.module';
     AvailabilityModule,
   ],
   providers: [DoctorService],
+  exports: [DoctorService],
   controllers: [DoctorController],
 })
 export class DoctorModule { }

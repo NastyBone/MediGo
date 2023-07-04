@@ -174,4 +174,23 @@ export class DoctorService {
 
     return doctorsBySpeciality;
   }
+
+  async deleteBySpeciality(id: number): Promise<void | boolean> {
+    const doctors = await this.repository.find({
+      where: {
+        deleted: false,
+        speciality: {
+          id,
+        },
+      },
+    });
+
+    if (doctors.length) {
+      doctors.map((item) => (item.deleted = true));
+      await this.repository.save(doctors);
+    }
+    console.log('SOFT DELETION: DOCTORS BY SPECIALITY');
+
+    return true;
+  }
 }

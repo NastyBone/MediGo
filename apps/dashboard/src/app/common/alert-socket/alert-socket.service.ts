@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AlertSocketService {
-  constructor(private userStateService: UserStateService) {}
+  constructor(private userStateService: UserStateService) { }
   private socket = io('http://localhost:8080', {
     withCredentials: true,
     extraHeaders: {

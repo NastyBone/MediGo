@@ -7,14 +7,13 @@ import { ResponseCiteDto } from '../repositories/cite/dto';
 import { socketOptions } from './constants';
 import {
   timeStringToDate,
-  checkTimeRange,
   formatDate,
 } from '@medigo/time-handler';
 
 @WebSocketGateway(+process.env.GATEWAY_PORT | 8080, socketOptions)
 @Injectable()
 export class CronService {
-  constructor(private schedulerRegistry: SchedulerRegistry) {}
+  constructor(private schedulerRegistry: SchedulerRegistry) { }
   @WebSocketServer() server: Server;
 
   setCronJob(
@@ -26,21 +25,19 @@ export class CronService {
     speciality: string
   ): void {
     const alertDate = timeStringToDate(formatDate(date), time, false);
-    const myDate = new Date(new Date(Date.now() + 4000));
+    // const myDate = new Date(new Date(Date.now() + 4000));
 
     const job = new CronJob(
-      myDate, //FIXME: change
+      alertDate,
       () => {
-        console.log('Emitting: ' + myDate);
+        console.log('Emitting: ' + alertDate);
 
         this.server.emit('alert', {
-          data: {
-            date,
-            time,
-            doctor,
-            patient,
-            speciality,
-          },
+          date,
+          time,
+          doctor,
+          patient,
+          speciality,
         });
       }
     );
