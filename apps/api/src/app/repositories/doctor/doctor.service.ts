@@ -42,9 +42,8 @@ export class DoctorService {
     });
 
     return data.filter((item) => {
-      const newDoctor = new ResponseDoctorDto(item)
-      if (newDoctor.user.role == Roles.Doctor) {
-        return newDoctor
+      if (item.user.role == Roles.Doctor && !item.user.deleted) {
+        return new ResponseDoctorDto(item)
       } else {
         this.remove(item.id)
       }
