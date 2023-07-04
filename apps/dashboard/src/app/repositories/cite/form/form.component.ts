@@ -370,7 +370,9 @@ export class FormComponent implements OnInit, OnDestroy {
   loadAvailabilities(): void {
     const dateValue = this.dateControl.getRawValue();
     const doctorId = this.selectedDoctorId;
+    console.log(doctorId, dateValue)
     if (dateValue && doctorId) {
+
       this.loading = true;
       this.stateService.setLoading(this.loading);
       this.sub$.add(
@@ -391,6 +393,8 @@ export class FormComponent implements OnInit, OnDestroy {
             })
           )
           .subscribe(({ occupated, availables }) => {
+
+
             if (occupated && availables) {
               const availabilities = this.timeAvailableDifference(
                 availables,
@@ -477,6 +481,7 @@ export class FormComponent implements OnInit, OnDestroy {
       );
       this.specialityControl.setValue(this.data.fullRole.speciality);
       this.disableSelectDoctor = true;
+      this.selectedDoctorId = this.data.fullRole.id
     } else if (role == 'paciente') {
       this.form.patchValue(
         {
@@ -494,6 +499,8 @@ export class FormComponent implements OnInit, OnDestroy {
       );
       this.specialityControl.setValue(this.data.fullRole.doctor.speciality);
       this.disableSelectDoctor = true;
+      this.selectedDoctorId = this.data.fullRole.doctor.id
+
     }
   }
 }
