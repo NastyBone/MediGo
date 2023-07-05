@@ -129,10 +129,17 @@ export class FormComponent implements OnInit, OnDestroy, AfterContentChecked {
     return o1 === o2;
   }
 
+  compareUserObjects(o1: any, o2: any): boolean {
+    if (o1 && o2) {
+      return o1.toLowerCase() === o2.toLowerCase();
+    } return false
+  }
+
   clickSave(): void {
     this.form.value.status == 'true'
       ? (this.form.value.status = true)
       : (this.form.value.status = false);
+    this.form.value.role = this.form.value.role.toLowerCase()
 
     if (this.data.id) {
       this.update();

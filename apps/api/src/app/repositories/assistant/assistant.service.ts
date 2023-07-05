@@ -41,9 +41,8 @@ export class AssistantService {
     });
 
     return data.filter((item) => {
-      const newAssistant = new ResponseAssistantDto(item)
-      if (newAssistant.user.role == Roles.Asistente) {
-        return newAssistant
+      if (item.user.role == Roles.Asistente && !item.user.deleted) {
+        return new ResponseAssistantDto(item)
       } else {
         this.remove(item.id)
       }

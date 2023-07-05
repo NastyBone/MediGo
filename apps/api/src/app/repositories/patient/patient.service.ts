@@ -18,7 +18,7 @@ export class PatientService {
     private repository: Repository<Patient>,
     private citeService: CiteService,
     private recordService: RecordService
-  ) {}
+  ) { }
 
   async findAll(): Promise<ResponsePatientDto[]> {
     const data = await this.repository.find({
@@ -35,7 +35,11 @@ export class PatientService {
       },
     });
 
-    return data.map((item) => new ResponsePatientDto(item));
+    return data.filter((item) => {
+      if (!item.user.deleted) {
+        return new ResponsePatientDto(item)
+      };
+    })
   }
 
   async findValid(id: number): Promise<Patient> {
