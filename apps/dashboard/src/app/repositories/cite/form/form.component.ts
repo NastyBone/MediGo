@@ -177,7 +177,6 @@ export class FormComponent implements OnInit, OnDestroy {
               cite.patientConfirm == this.selectable[0].name
                 ? (this.statusSelect = this.selectable[0].value)
                 : (this.statusSelect = this.selectable[1].value);
-              //TODO: Probar cargar condicional si logea como asistente o doctor
 
               this.form.patchValue(
                 {
@@ -431,9 +430,16 @@ export class FormComponent implements OnInit, OnDestroy {
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   compareObjects(o1: any, o2: any): boolean {
-    o1 ? (o1 = false) : (o1 = true);
-    o2 ? (o2 = false) : (o2 = true);
-    return o1 === o2;
+    if (o1 && o2) {
+      return o1 === o2;
+    } return false
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  compareTimeObjects(o1: any, o2: any): boolean {
+    if (o1 && o2) {
+      return o1.id === o2.id;
+    } return false
   }
 
   private _filterDoctors(name: string): DoctorItemVM[] {
