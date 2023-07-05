@@ -23,7 +23,7 @@ import { RolesGuard, Role } from '../users/users.guard';
 @ApiTags('speciality')
 @Controller('speciality')
 export class SpecialityController {
-  constructor(private specialityService: SpecialityService) {}
+  constructor(private specialityService: SpecialityService) { }
 
   @Role(Roles.Admin)
   @Get(':id')

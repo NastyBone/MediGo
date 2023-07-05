@@ -123,17 +123,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.stateService.setLoading(this.loading);
     this.sub$.add(
-      forkJoin({
-        specialities: this.citeService.getSpecialities$(),
-        patients: this.citeService.getPatients$(),
-      })
+      this.citeService.getSpecialities$()
         .pipe(
           finalize(() => {
             this.loading = false;
             this.stateService.setLoading(this.loading);
           })
         )
-        .subscribe(({ specialities, patients }) => {
+        .subscribe((specialities) => {
           if (specialities) {
             this.incomingSpecialities = specialities;
             this.filteredSpecialities =
@@ -151,27 +148,6 @@ export class FormComponent implements OnInit, OnDestroy {
                     : this.incomingSpecialities.slice();
                 })
               );
-          }
-
-          if (patients) {
-            this.incomingPatients = patients;
-
-            this.filteredPatients = this.patientControl.valueChanges.pipe(
-              startWith<string | PatientItemVM | undefined | null>(''),
-              map((value) => {
-                if (value !== null) {
-                  return typeof value === 'string'
-                    ? value
-                    : value?.user?.firstName + ' ' + value?.user?.lastName;
-                }
-                return '';
-              }),
-              map((name) => {
-                return name
-                  ? this._filterPatients(name)
-                  : this.incomingPatients.slice();
-              })
-            );
           }
         })
     );
@@ -201,8 +177,8 @@ export class FormComponent implements OnInit, OnDestroy {
               cite.patientConfirm == this.selectable[0].name
                 ? (this.statusSelect = this.selectable[0].value)
                 : (this.statusSelect = this.selectable[1].value);
-              this.loadDoctors();
-              this.loadAvailabilities();
+              //TODO: Probar cargar condicional si logea como asistente o doctor
+
               this.form.patchValue(
                 {
                   ...cite,
@@ -237,6 +213,13 @@ export class FormComponent implements OnInit, OnDestroy {
       patient: this.patientControl,
     });
     this.setRoleDefault();
+    if (!this.disableSelectPatient) {
+      this.loadPatients();
+    }
+    if (!this.disableSelectDoctor) {
+      this.loadDoctors();
+      this.loadAvailabilities();
+    }
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
         this.submitDisabled =
@@ -331,6 +314,38 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
   //
+  loadPatients(): void {
+    this.loading = true;
+    this.stateService.setLoading(true)
+    this.sub$.add(this.citeService.getPatients$().pipe(
+      finalize(() => {
+        this.loading = false;
+        this.stateService.setLoading(this.loading);
+      })
+    ).subscribe((patients) => {
+      if (patients) {
+        this.incomingPatients = patients;
+
+        this.filteredPatients = this.patientControl.valueChanges.pipe(
+          startWith<string | PatientItemVM | undefined | null>(''),
+          map((value) => {
+            if (value !== null) {
+              return typeof value === 'string'
+                ? value
+                : value?.user?.firstName + ' ' + value?.user?.lastName;
+            }
+            return '';
+          }),
+          map((name) => {
+            return name
+              ? this._filterPatients(name)
+              : this.incomingPatients.slice();
+          })
+        );
+      }
+    }))
+  }
+  //
   loadDoctors(): void {
     this.loading = true;
     this.stateService.setLoading(this.loading);
@@ -370,7 +385,6 @@ export class FormComponent implements OnInit, OnDestroy {
   loadAvailabilities(): void {
     const dateValue = this.dateControl.getRawValue();
     const doctorId = this.selectedDoctorId;
-    console.log(doctorId, dateValue)
     if (dateValue && doctorId) {
 
       this.loading = true;
