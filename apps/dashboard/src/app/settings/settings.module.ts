@@ -27,4 +27,4 @@ import { MatInputModule } from '@angular/material/input';
   ],
   providers: [SettingsService, GetSettingsService, UpdateSettingssService],
 })
-export class SettingsModule {}
+export class SettingsModule { }
