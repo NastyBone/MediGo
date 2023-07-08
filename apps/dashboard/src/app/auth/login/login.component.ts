@@ -22,7 +22,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     return;
   }
   form!: FormGroup;
+  patientForm!: FormGroup;
+
   submitDisable = true;
+  submitPatientDisable = true;
+
   loading = false;
   hide = true;
 
@@ -59,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.sub$.add(
       this.loginService
-        .patientExec(this.form.value.email, this.form.value.password)
+        .patientExec(this.patientForm.value.email, this.patientForm.value.password)
         .pipe(
           finalize(() => {
             this.loading = false;
@@ -89,9 +93,28 @@ export class LoginComponent implements OnInit, OnDestroy {
         ],
       ],
     });
+    this.patientForm = this.formBuilder.group({
+      email: [
+        null,
+        [Validators.email, Validators.required, Validators.maxLength(256)],
+      ],
+      password: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(16),
+        ],
+      ],
+    });
     this.sub$.add(
       this.form.valueChanges.subscribe(() => {
         this.submitDisable = !this.form.valid;
+      })
+    );
+    this.sub$.add(
+      this.patientForm.valueChanges.subscribe(() => {
+        this.submitPatientDisable = !this.patientForm.valid;
       })
     );
   }

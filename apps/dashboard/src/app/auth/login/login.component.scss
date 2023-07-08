@@ -75,3 +75,7 @@ mat-card-title-group {
   display: flex;
   flex-direction: column;
 }
+
+.mat-mdc-raised-button:not(:disabled){
+  color: white;
+}
