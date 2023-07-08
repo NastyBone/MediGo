@@ -6,7 +6,9 @@ describe('AlertSocketService', () => {
   let service: AlertSocketService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+
+    });
     service = TestBed.inject(AlertSocketService);
   });
 
