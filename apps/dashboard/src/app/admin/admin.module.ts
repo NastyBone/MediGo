@@ -13,13 +13,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DoctorModule } from '../repositories/doctor/doctor.module';
 import { AssistantModule } from '../repositories/assistant/assistant.module';
 import { PatientModule } from '../repositories/patient/patient.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AdminComponent],
   imports: [
     CommonModule,
-    NoopAnimationsModule,
     AdminRoutingModule,
     SettingsModule,
     MatToolbarModule,
@@ -32,5 +30,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     PatientModule,
   ],
   providers: [AdminService],
+
 })
 export class AdminModule { }
