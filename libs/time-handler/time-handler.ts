@@ -1,5 +1,5 @@
-import moment from 'moment';
-
+import * as moment from 'moment';
+//TODO: Testear fechas ahora csm
 const dayParser = [
   'Domingo',
   'Lunes',

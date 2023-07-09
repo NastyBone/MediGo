@@ -1,13 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UpdateSettingsService } from './update-settings.service';
+import { UpdateSettingssService } from './update-settings.service';
+import { SettingsService } from '@medigo/dashboard-sdk';
+import { SettingsModule } from '../../settings.module';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { ToastModule } from '@medigo/toast';
 
 describe('UpdateSettingsService', () => {
-  let service: UpdateSettingsService;
+  let service: UpdateSettingssService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(UpdateSettingsService);
+    TestBed.configureTestingModule({
+      providers: [SettingsService, HttpClient, HttpHandler],
+      imports: [SettingsModule, ToastModule]
+    });
+    service = TestBed.inject(UpdateSettingssService);
   });
 
   it('should be created', () => {

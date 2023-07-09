@@ -22,6 +22,7 @@ import { UsersService } from '../users.service';
 import { UsersService as GeneratedUsersService } from '@medigo/dashboard-sdk';
 import { FormComponent } from './form.component';
 import { MatSelectModule } from '@angular/material/select';
+import { UsersModule } from '../users.module';
 
 describe('FormComponent', () => {
   let component: FormComponent;
@@ -53,6 +54,7 @@ describe('FormComponent', () => {
         MatCardModule,
         ReactiveFormsModule,
         MatSelectModule,
+        UsersModule
       ],
     }).compileComponents();
 

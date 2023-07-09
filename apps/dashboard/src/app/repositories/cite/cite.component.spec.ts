@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CiteComponent } from './cite.component';
+import { AvailabilityService, CiteService, DoctorService, PatientService, SpecialityService } from '@medigo/dashboard-sdk';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { CiteModule } from './cite.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 describe('CiteComponent', () => {
   let component: CiteComponent;
@@ -8,9 +13,11 @@ describe('CiteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CiteComponent ]
+      declarations: [CiteComponent],
+      providers: [CiteService, DoctorService, PatientService, AvailabilityService, SpecialityService, HttpClient, HttpHandler],
+      imports: [CiteModule, BrowserAnimationsModule, RouterModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CiteComponent);
     component = fixture.componentInstance;

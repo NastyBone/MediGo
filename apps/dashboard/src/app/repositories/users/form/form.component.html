@@ -10,25 +10,25 @@
     </mat-card-header>
     <form [formGroup]="form" class="form-control">
       <mat-card-content>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input type="text" matInput name="firstName" id="firstName" formControlName="firstName" matInput />
           <mat-error *ngIf="form.controls['firstName'].hasError('required')">Campo Requerido</mat-error>
           <mat-error *ngIf="form.controls['firstName'].hasError('maxlength')">Longitud Excedida</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Apellido</mat-label>
           <input type="text" matInput name="lastName" id="lastName" formControlName="lastName" matInput />
           <mat-error *ngIf="form.controls['lastName'].hasError('required')">Campo Requerido</mat-error>
           <mat-error *ngIf="form.controls['lastName'].hasError('maxlength')">Longitud Excedida</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Correo</mat-label>
           <input type="text" matInput name="email" id="email" matInput formControlName="email" />
           <mat-error *ngIf="form.controls['email'].hasError('required')">Campo Requerido</mat-error>
           <mat-error *ngIf="form.controls['email'].hasError('email')">Correo invalido</mat-error></mat-form-field>
         <mat-error *ngIf="form.controls['email'].hasError('maxlength')">Longitud Excedida</mat-error>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Rol</mat-label>
           <mat-select name="role" formControlName="role" id="role" matSelect placeholder="Rol" required
             [compareWith]="compareUserObjects" >

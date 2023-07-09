@@ -4,6 +4,9 @@ export default {
   preset: "../../jest.preset.js",
   setupFilesAfterEnv: ["<rootDir>/src/test-setup.ts"],
   coverageDirectory: "../../coverage/apps/dashboard",
+  moduleNameMapper: {
+    '^d3$': 'node_modules/d3/dist/d3.min.js',
+  },
   transform: {
     "^.+\\.(ts|mjs|js|html)$": [
       "jest-preset-angular",
@@ -13,10 +16,11 @@ export default {
       },
     ],
   },
-  transformIgnorePatterns: ["node_modules/(?!.*\\.mjs$)"],
+  transformIgnorePatterns: ["node_modules/(?!.*\\.mjs$)",],
   snapshotSerializers: [
     "jest-preset-angular/build/serializers/no-ng-attributes",
     "jest-preset-angular/build/serializers/ng-snapshot",
     "jest-preset-angular/build/serializers/html-comment",
+
   ],
 };
