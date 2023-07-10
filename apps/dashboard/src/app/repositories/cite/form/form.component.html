@@ -97,8 +97,8 @@
               formControlName="date"
               [formControl]="dateControl"
               readonly
+              (click)="picker.open()"
             />
-            <mat-hint>Presione el calendario</mat-hint>
             <mat-datepicker-toggle
               matIconSuffix
               [for]="picker"

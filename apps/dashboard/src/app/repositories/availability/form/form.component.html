@@ -1,3 +1,4 @@
+<div class="container">
 <div class="modal-header">
   <span mat-dialog-title class="Title"> Disponibilidad </span>
   <button
@@ -106,6 +107,7 @@
       <mat-error *ngIf="form.controls['start'].hasError('timeConflictError')"
         >Rango Ocupado</mat-error
       >
+    
       <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
     </mat-form-field>
 
@@ -125,7 +127,6 @@
         (click)="pickerB.open()"
         matSuffix
       ></ngx-mat-timepicker-toggle>
-      <mat-hint>Presione el reloj</mat-hint>
 
       <mat-error *ngIf="form.controls['end'].hasError('required')"
         >Campo requerido</mat-error
@@ -184,3 +185,4 @@
   </button>
 </div>
 <!-- <app-state *ngIf="loading"> </app-state> -->
+</div>
