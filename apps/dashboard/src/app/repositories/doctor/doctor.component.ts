@@ -26,21 +26,21 @@ export class DoctorComponent implements OnInit, OnDestroy {
         header: 'Apellido',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['user']['lastName']}`,
+          `${element['user.lastName']}`,
       },
       {
         columnDef: 'firstName',
         header: 'Nombre',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['user']['firstName']}`,
+          `${element['user.firstName']}`,
       },
       {
         columnDef: 'speciality',
         header: 'Especialidad',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['speciality']['name']}`,
+          `${element['speciality.name']}`,
       },
       {
         columnDef: 'phone',

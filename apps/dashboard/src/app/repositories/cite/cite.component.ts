@@ -32,7 +32,7 @@ export class CiteComponent implements OnInit, OnDestroy {
         header: 'Desde - Hasta',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['time']['start']} - ${element['time']['end']}`,
+          `${element['time.start']} - ${element['time.end']}`,
       },
       {
         columnDef: 'subject',
@@ -43,13 +43,13 @@ export class CiteComponent implements OnInit, OnDestroy {
         columnDef: 'doctor',
         header: 'Doctor',
         cell: (element: { [key: string]: string | any }) =>
-          `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
+          `${element['doctor.user.lastName']} ${element['doctor.user.firstName']}`,
       },
       {
         columnDef: 'patient',
         header: 'Paciente',
         cell: (element: { [key: string]: string | any }) =>
-          `${element['patient']['user']['firstName']} ${element['patient']['user']['lastName']}`,
+          `${element['patient.user.firstName']} ${element['patient.user.lastName']}`,
       },
       {
         columnDef: 'patinetConfirm',

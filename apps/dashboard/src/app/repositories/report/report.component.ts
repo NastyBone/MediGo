@@ -104,7 +104,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       .append('text')
       .text((d: any) =>
         d.value !== 0
-          ? `${(d.data.value * 100) / (this.data[1].value + this.data[0].value)
+          ? `${((d.data.value * 100) / (this.data[1].value + this.data[0].value)).toFixed(2)
           }%`
           : ''
       )

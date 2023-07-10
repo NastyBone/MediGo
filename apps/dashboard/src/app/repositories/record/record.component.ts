@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription, lastValueFrom } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   TableDataVM,
   TableService,
@@ -38,14 +38,14 @@ export class RecordComponent implements OnInit, OnDestroy {
         header: 'Doctor',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
+          `${element['doctor.user.lastName']} ${element['doctor.user.firstName']}`,
       },
       {
         columnDef: 'patient',
         header: 'Paciente',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cell: (element: { [key: string]: string | any }) =>
-          `${element['patient']['user']['lastName']} ${element['patient']['user']['firstName']}`,
+          `${element['patient.user.lastName']} ${element['patient.user.firstName']}`,
       },
     ],
     body: [],
