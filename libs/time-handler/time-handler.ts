@@ -103,8 +103,8 @@ export function dateFixFormat(date: string) {
   return new Date(+year, +month - 1, +day, 0, 0, 0).toISOString();
 }
 
-export function getMonthRange(): [Date, Date] {
-  const now = moment(new Date()).date(31);
+export function getMonthRange(id: number): [Date, Date] {
+  const now = moment(new Date()).month(id).date(31);
   const lastMonth = moment(now).subtract(1, 'month');
 
   return [now.toDate(), lastMonth.toDate()];

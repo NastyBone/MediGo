@@ -1782,30 +1782,9 @@
                 ]
             }
         },
-        "/report": {
-            "get": {
-                "operationId": "ReportController_findAll",
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "reports"
-                ]
-            }
-        },
         "/report/{id}": {
             "get": {
-                "operationId": "ReportController_findByDoctor",
+                "operationId": "ReportController_findAll",
                 "parameters": [
                     {
                         "name": "id",
@@ -2068,13 +2047,17 @@
                     },
                     "email": {
                         "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "id",
                     "firstName",
                     "lastName",
-                    "email"
+                    "email",
+                    "role"
                 ]
             },
             "ResponseUserDto": {

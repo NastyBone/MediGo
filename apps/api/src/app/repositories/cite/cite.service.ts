@@ -21,7 +21,7 @@ export class CiteService {
     @InjectRepository(Cite)
     private repository: Repository<Cite>,
     private cronService: CronService
-  ) {}
+  ) { }
 
   async findAll(): Promise<ResponseCiteDto[]> {
     const data = await this.repository.find({
@@ -326,8 +326,9 @@ export class CiteService {
     }
   }
 
-  async getData(): Promise<{ completed: number; notCompleted: number }> {
-    const [presentMonth, prevMonth] = getMonthRange();
+  async getData(id: number): Promise<{ completed: number; notCompleted: number }> {
+    const [presentMonth, prevMonth] = getMonthRange(id);
+    console.log(presentMonth, prevMonth)
     const countCompleted = await this.repository.count({
       where: {
         deleted: false,
