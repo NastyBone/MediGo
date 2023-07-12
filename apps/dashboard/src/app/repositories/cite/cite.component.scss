@@ -4,6 +4,30 @@
   box-sizing: border-box;
   margin-bottom: 4rem;
 }
+::ng-deep .mat-mdc-tab-body-content,
+form {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+form {
+  width: 100%;
+}
+
+.generate-button {
+  flex: 1 1;
+}
+mat-card-actions {
+  padding: 0;
+  gap: 5%;
+}
+
+mat-form-field {
+  width: 25%;
+  margin: 0.5%;
+  align-items: center;
+}
 
 mat-card-title {
   margin-bottom: 1rem;
@@ -22,4 +46,14 @@ mat-card-title {
   margin: 1rem;
   width: 3rem;
   height: 3rem;
+}
+
+.form-container {
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-right: 7rem;
+}
+.form-card {
+  padding: 1rem;
 }

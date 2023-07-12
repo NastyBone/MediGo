@@ -207,7 +207,7 @@ export class FormComponent implements OnInit, OnDestroy {
       subject: [null, [Validators.required, Validators.maxLength(256)]],
       date: this.dateControl,
       time: [null, [Validators.required, forbiddenNamesValidator]],
-      patientConfirm: [true, [Validators.required]],
+      patientConfirm: [null, [Validators.required]],
       doctor: this.doctorControl,
       patient: this.patientControl,
     });

@@ -14,25 +14,15 @@ import { Roles } from '../users';
 @ApiTags('reports')
 @Controller('report')
 export class ReportController {
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService) { }
 
   @Role(Roles.Admin)
-  @Get()
-  @ApiResponse({
-    type: Object,
-  })
-  findAll(): Promise<{ completed: number; notCompleted: number }> {
-    return this.reportService.findAll();
-  }
-
-  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor)
   @Get(':id')
   @ApiResponse({
     type: Object,
   })
-  findByDoctor(
-    @Param('id', ParseIntPipe) id: number
-  ): Promise<{ completed: number; notCompleted: number }> {
-    return this.reportService.findByDoctor(id);
+  findAll(@Param('id', ParseIntPipe) id: number): Promise<{ completed: number; notCompleted: number }> {
+    return this.reportService.findAll(id);
   }
+
 }

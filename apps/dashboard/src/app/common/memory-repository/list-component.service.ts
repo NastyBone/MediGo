@@ -21,7 +21,7 @@ export class ListComponentService<
     @Optional() private updateService?: UseCase<T, T> | null,
     @Optional() private findService?: UseCase<T, BaseQuery> | null,
     @Optional() private reportService?: UseCase<T> | null
-  ) {}
+  ) { }
 
   getData$(): Observable<T[] | null> {
     if (!this.memoryService) {
@@ -45,7 +45,7 @@ export class ListComponentService<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  report(data: T): Observable<any> {
+  report(data: any): Observable<any> {
     if (!this.reportService) {
       throw new Error('reportService is not defined');
     }

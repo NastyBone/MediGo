@@ -6,11 +6,11 @@ import { Report2ReportVM } from './mappers';
 
 @Injectable()
 export class GetReportService {
-  constructor(private reportService: ReportsService) {}
+  constructor(private reportService: ReportsService) { }
 
-  exec(): Observable<ReportVM> {
+  exec(id: number): Observable<ReportVM> {
     return this.reportService
-      .reportControllerFindAll()
+      .reportControllerFindAll(id)
       .pipe(map(Report2ReportVM));
   }
 }

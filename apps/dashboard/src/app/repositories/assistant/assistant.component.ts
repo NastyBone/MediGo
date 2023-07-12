@@ -25,19 +25,19 @@ export class AssistantComponent implements OnInit, OnDestroy {
         columnDef: 'firstName',
         header: 'Nombre',
         cell: (element: { [key: string]: string | any }) =>
-          `${element['user']['firstName']}`,
+          `${element['user.firstName']}`,
       },
       {
         columnDef: 'lastName',
         header: 'Apellido',
         cell: (element: { [key: string]: string | any }) =>
-          `${element['user']['lastName']}`,
+          `${element['user.lastName']}`,
       },
       {
         columnDef: 'doctor',
         header: 'Doctor',
         cell: (element: { [key: string]: string | any }) =>
-          `${element['doctor']['user']['lastName']} ${element['doctor']['user']['firstName']}`,
+          `${element['doctor.user.lastName']} ${element['doctor.user.firstName']}`,
       },
     ],
     body: [],

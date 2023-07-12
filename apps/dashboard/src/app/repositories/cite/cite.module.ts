@@ -31,6 +31,8 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { PatientModule } from '../patient/patient.module';
 import { DoctorModule } from '../doctor/doctor.module';
 import { AvailabilityModule } from '../availability/availability.module';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ReportCitesService } from './use-cases/report-cites/report-cites.service';
 @NgModule({
   declarations: [CiteComponent, FormComponent],
   imports: [
@@ -47,6 +49,7 @@ import { AvailabilityModule } from '../availability/availability.module';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatTabsModule,
     MatAutocompleteModule,
     NgxMatTimepickerModule,
     MatDividerModule,
@@ -65,6 +68,7 @@ import { AvailabilityModule } from '../availability/availability.module';
     GetCitesService,
     UpdateCiteService,
     CiteMemoryService,
+    ReportCitesService
   ],
 })
-export class CiteModule {}
+export class CiteModule { }

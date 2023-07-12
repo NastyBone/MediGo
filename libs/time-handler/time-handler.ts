@@ -103,8 +103,8 @@ export function dateFixFormat(date: string) {
   return new Date(+year, +month - 1, +day, 0, 0, 0).toISOString();
 }
 
-export function getMonthRange(): [Date, Date] {
-  const now = moment(new Date()).date(31);
+export function getMonthRange(id: number): [Date, Date] {
+  const now = moment(new Date()).month(id).date(31);
   const lastMonth = moment(now).subtract(1, 'month');
 
   return [now.toDate(), lastMonth.toDate()];
@@ -116,4 +116,16 @@ export function getDayOfTheWeekByDate(date: string): string {
 
 export function addDay(date: Date): Date {
   return moment(date).add(1, 'day').toDate();
+}
+export function validateDatesRange(start: string, end: string): {
+  start: string;
+  end: string;
+} {
+  if (
+    start == (undefined || null || '') ||
+    end == (undefined || null || '') ||
+    new Date(start) > new Date(end)
+  )
+    throw new Error('Rango de fecha invalido');
+  return { start, end };
 }

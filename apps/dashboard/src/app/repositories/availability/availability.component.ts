@@ -26,7 +26,7 @@ export class AvailabilityComponent implements OnInit, OnDestroy {
         columnDef: 'doctor',
         header: 'Doctor',
         cell: (element: { [key: string]: string } | any) =>
-          `${element['doctor']['user']['firstName']} ${element['doctor']['user']['lastName']}`,
+          `${element['doctor.user.firstName']} ${element['doctor.user.lastName']}`,
       },
       {
         columnDef: 'day',

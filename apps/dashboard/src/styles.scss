@@ -10,5 +10,7 @@ body {
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .mdc-dialog__container {
-  min-width: 678px !important;
+  & > :not(:has(.timepicker)) {
+    min-width: 678px !important;
+  }
 }

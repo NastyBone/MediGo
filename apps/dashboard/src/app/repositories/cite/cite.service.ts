@@ -20,6 +20,8 @@ import { DoctorItemVM } from '../doctor/model';
 import { AvailabilityItemVM } from '../availability/model';
 import { FindAvailabilityByDoctorService } from '../availability/use-cases/find-availability-by-doctor/find-availability-by-doctor.service';
 import { FindByDayAndDoctorService } from '../availability/use-cases/find-by-day-and-doctor/find-by-day-and-doctor.service';
+import { GetDoctorsService } from '../doctor/use-cases/get-doctors/get-doctors.service';
+import { ReportCitesService } from './use-cases/report-cites/report-cites.service';
 
 @Injectable()
 export class CiteService extends ListComponentService<CiteItemVM> {
@@ -30,6 +32,7 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public getCitesService: GetCitesService,
     public updateCiteService: UpdateCiteService,
     public citesMemoryService: CiteMemoryService,
+    public reportCitesService: ReportCitesService,
     public findCiteByDoctor: FindCitesByDoctorService,
     public findCiteByPatient: FindCitesByPatientService,
     public findByDoctorAndDate: FindByDateAndDoctorService,
@@ -37,7 +40,9 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     public getPatientsService: GetPatientsService,
     public getSpecialities: GetSpecialitiesService,
     public getDoctorsBySpeciality: FindDoctorBySpecialityService,
-    public findByDoctorAndDay: FindByDayAndDoctorService
+    public getDoctorsService: GetDoctorsService,
+    public findByDoctorAndDay: FindByDayAndDoctorService,
+
   ) {
     super(
       getCitesService,
@@ -45,13 +50,10 @@ export class CiteService extends ListComponentService<CiteItemVM> {
       deleteCiteService,
       createCiteService,
       updateCiteService,
-      findCiteService
+      findCiteService,
+      reportCitesService
     );
   }
-  referData!: {
-    reqId: number | null;
-    indexes: number[];
-  };
   findByDoctorId$(id: number): Observable<Array<CiteItemVM> | null> {
     this.setLoading(true);
     this.findCiteByDoctor
@@ -112,6 +114,19 @@ export class CiteService extends ListComponentService<CiteItemVM> {
     );
   }
 
+  getDoctors$(load = true): Observable<Array<DoctorItemVM> | null> {
+    if (load) {
+      this.setLoading(load);
+    }
+    return this.getDoctorsService.exec({}).pipe(
+      finalize(() => {
+        if (load) {
+          this.setLoading(false);
+        }
+      })
+    );
+  }
+
   getSpecialities$(load = true): Observable<Array<SpecialityItemVM> | null> {
     if (load) {
       this.setLoading(load);
@@ -140,4 +155,6 @@ export class CiteService extends ListComponentService<CiteItemVM> {
       })
     );
   }
+
+
 }

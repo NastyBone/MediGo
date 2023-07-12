@@ -733,6 +733,30 @@
                 ]
             }
         },
+        "/cite/report": {
+            "put": {
+                "operationId": "CiteController_report",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CiteReportDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "cite"
+                ]
+            }
+        },
         "/cite/date/{id}": {
             "post": {
                 "operationId": "CiteController_findByDoctorAndDate",
@@ -1782,30 +1806,9 @@
                 ]
             }
         },
-        "/report": {
-            "get": {
-                "operationId": "ReportController_findAll",
-                "parameters": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "reports"
-                ]
-            }
-        },
         "/report/{id}": {
             "get": {
-                "operationId": "ReportController_findByDoctor",
+                "operationId": "ReportController_findAll",
                 "parameters": [
                     {
                         "name": "id",
@@ -2068,13 +2071,17 @@
                     },
                     "email": {
                         "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "id",
                     "firstName",
                     "lastName",
-                    "email"
+                    "email",
+                    "role"
                 ]
             },
             "ResponseUserDto": {
@@ -2386,6 +2393,33 @@
                     "time",
                     "doctor",
                     "patient"
+                ]
+            },
+            "CiteReportDto": {
+                "type": "object",
+                "properties": {
+                    "start": {
+                        "type": "string"
+                    },
+                    "end": {
+                        "type": "string"
+                    },
+                    "patientId": {
+                        "type": "number"
+                    },
+                    "doctorId": {
+                        "type": "number"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "start",
+                    "end",
+                    "patientId",
+                    "doctorId",
+                    "status"
                 ]
             },
             "CreateCiteDto": {
