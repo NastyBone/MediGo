@@ -467,7 +467,6 @@ export class CiteService {
         },
       },
     })
-    console.log(cites)
     const response = this.reportService.generateReport({ data: cites }, 'Citas')
     return response
   }
