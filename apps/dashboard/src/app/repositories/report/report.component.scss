@@ -1,14 +1,17 @@
 .container {
   width: 100%;
-  height: 80%;
+
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding-top: 2rem;
+  box-sizing: border-box;
 }
 .chart-container {
-  margin: -2rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .title {
@@ -16,15 +19,16 @@
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 2.5rem;
   letter-spacing: 0.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: -0.5rem;
 }
-text {
-  font-size: 1rem;
-}
+
 .chart-info {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  margin-top: -4rem;
 }
 .color-block {
   height: 30px;
@@ -47,7 +51,6 @@ mat-icon {
   height: 20rem;
   font-size: 20rem;
   color: #7f7f7f;
-  
 }
 .hidden {
   display: none;

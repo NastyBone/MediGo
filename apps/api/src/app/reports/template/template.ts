@@ -48,7 +48,7 @@ text-align: center;
         border-collapse: collapse;
         border-spacing: 0;
         font-size: 0.8rem;
-        border: 2px solid black
+        border: 2px solid #dfd9d9
       }
       td {
         padding: 0.5rem 0.75rem;
@@ -57,8 +57,9 @@ text-align: center;
         width: 100%; margin-bottom: 25px
       }
 
+
       .tg td {
-        border-color: black;
+        border-color: #dfd9d9;
         border-style: solid;
         border-width: 1px;
         overflow: hidden;
@@ -93,6 +94,9 @@ text-align: center;
         border-color: inherit;
         text-align: center;
         vertical-align: bottom;
+      }
+      .text{
+        text-align: center;
       }
 
 
@@ -142,16 +146,16 @@ text-align: center;
   </tr>
   
   <tr>
-    <td class="tg-0lax" colspan="4"><strong>Nombre</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.patient.user.firstName}} {{this.source.patient.user.lastName}} </td>
+    <td class="tg-0lax" colspan="2"><strong>Nombre</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.patient.user.firstName}} {{this.source.patient.user.lastName}} </td>
   </tr>
     <tr>
-    <td class="tg-0lax" colspan="4"><strong>Telefono</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.patient.phone}} </td>
+    <td class="tg-0lax" colspan="2"><strong>Telefono</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.patient.phone}} </td>
   </tr>
   <tr>
-    <td class="tg-0lax" colspan="4"><strong>Dirección</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.patient.address}} </td>
+    <td class="tg-0lax" colspan="2"><strong>Dirección</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.patient.address}} </td>
   </tr>
 
 <tr>
@@ -165,16 +169,16 @@ text-align: center;
     <td class="tg-0lax" colspan="8" style="text-align:center" ><strong>Datos Del Doctor</strong></td>
     </tr>
     <tr>
-    <td class="tg-0lax" colspan="4"><strong>Nombre</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.doctor.user.firstName}} {{this.source.doctor.user.lastName}} </td>
+    <td class="tg-0lax" colspan="2"><strong>Nombre</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.doctor.user.firstName}} {{this.source.doctor.user.lastName}} </td>
   </tr>
     <tr>
-    <td class="tg-0lax" colspan="4"><strong>Especialidad</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.doctor.speciality.name}}</td>
+    <td class="tg-0lax" colspan="2"><strong>Especialidad</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.doctor.speciality.name}}</td>
   </tr>
     <tr>
-    <td class="tg-0lax" colspan="4"><strong>Telefono</strong></td>
-    <td class="tg-0lax" colspan="4">{{this.source.doctor.phone}} </td>
+    <td class="tg-0lax" colspan="2"><strong>Telefono</strong></td>
+    <td class="tg-0lax" colspan="6">{{this.source.doctor.phone}} </td>
   </tr>
   <tr>
     <td class="tg-0lax" colspan="8" style="text-align:center"><strong>Resultado Del Informe</strong></td><tr/>
@@ -188,7 +192,17 @@ text-align: center;
 </tr>
 </tbody>
 </table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
+<p class="text">___________________________________</p>
+<h2 class="text">FIRMA Y SELLO</h1>
   </body>
 </html>
 `;
