@@ -13,15 +13,15 @@
   </button>
 </div>
 
-<form class="FormSpeciality" mat-dialog-content [formGroup]="form!">
-  <mat-form-field class="">
+<form class="FormSpeciality" mat-dialog-content [formGroup]="form!" appearance="outline">
+  <mat-form-field class="" appearance="outline">
     <mat-label>Nombre de la especialidad</mat-label>
     <input type="text" matInput formControlName="name" />
     <mat-error *ngIf="form.controls['name'].hasError('required')"
       >Campo requerido</mat-error
     >
-  </mat-form-field>
-  <mat-form-field class="">
+  </mat-form-field >
+  <mat-form-field class="" appearance="outline">
     <mat-label>Descripción</mat-label>
     <input type="text" matInput formControlName="description" />
     <mat-error *ngIf="form.controls['description'].hasError('required')"

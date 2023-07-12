@@ -17,7 +17,7 @@
 
   <form class="formControl" [formGroup]="form!" (ngSubmit)="closeModal(true)">
     <mat-card-content>
-      <mat-form-field id="modal-form-field-container">
+      <mat-form-field id="modal-form-field-container" appearance="outline">
         <mat-label>Nombre de la institución</mat-label>
         <input
           matInput
@@ -34,7 +34,7 @@
           >30 caracteres maximos</mat-error
         >
       </mat-form-field>
-      <mat-form-field id="modal-form-field-container">
+      <mat-form-field id="modal-form-field-container" appearance="outline">
         <mat-label>R.I.F</mat-label>
         <input
           matInput
@@ -54,7 +54,7 @@
           >10 caracteres requeridos</mat-error
         >
       </mat-form-field>
-      <mat-form-field id="modal-form-field-container">
+      <mat-form-field id="modal-form-field-container" appearance="outline">
         <mat-label>Tipo de institución</mat-label>
         <input
           matInput
@@ -68,7 +68,7 @@
           >Campo requerido</mat-error
         >
       </mat-form-field>
-      <mat-form-field id="modal-form-field-container">
+      <mat-form-field id="modal-form-field-container" appearance="outline">
         <mat-label>Descripción</mat-label>
         <textarea
           matInput
