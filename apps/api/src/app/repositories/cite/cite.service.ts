@@ -7,20 +7,23 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { Cite } from './entities';
-import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
+import { CiteReportDto, CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
 import { CronService } from '../../cron/cron.service';
 import {
-  getDayOfTheWeekByDate,
   getMonthRange,
   timeStringToDate,
+  validateDatesRange
 } from '@medigo/time-handler';
+import { ReportsService } from '../../reports/reports.service';
+import { ReportsResponseDto } from '../../reports/dto';
 
 @Injectable()
 export class CiteService {
   constructor(
     @InjectRepository(Cite)
     private repository: Repository<Cite>,
-    private cronService: CronService
+    private cronService: CronService,
+    private reportService: ReportsService
   ) { }
 
   async findAll(): Promise<ResponseCiteDto[]> {
@@ -426,5 +429,46 @@ export class CiteService {
     }
     console.log('SOFT DELETION: CITES BY TIME');
     return true;
+  }
+
+  async generateReport(createReport: CiteReportDto): Promise<ReportsResponseDto> {
+    const date = validateDatesRange(createReport.start, createReport.end)
+    const filters = {
+      deleted: false,
+      createdAt: Between(new Date(date.start), new Date(date.end))
+    }
+
+    if (createReport.status !== null) {
+      filters['status'] = createReport.status
+    }
+    if (createReport.patientId !== null) {
+      filters['patient'] = { id: createReport.patientId }
+    }
+    if (createReport.doctorId !== null) {
+      filters['doctor'] = { id: createReport.doctorId }
+    }
+
+    const cites = await this.repository.find({
+      where: filters,
+      relations: {
+        patient: {
+          user: true,
+        },
+
+        doctor: {
+          speciality: true,
+          user: true,
+        },
+        time: {
+          doctor: {
+            speciality: true,
+            user: true,
+          },
+        },
+      },
+    })
+
+    const response = this.reportService.generateReport({ data: cites })
+    return response
   }
 }

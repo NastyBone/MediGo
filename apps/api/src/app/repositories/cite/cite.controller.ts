@@ -7,20 +7,22 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
-import { CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
+import { CiteReportDto, CreateCiteDto, ResponseCiteDto, UpdateCiteDto } from './dto';
 import { CiteService } from './cite.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../users';
 import { RolesGuard, Role } from '../users/users.guard';
 import { RequestCiteDto } from './dto/request-cite.dto';
+import { ReportsResponseDto } from '../../reports/dto';
 
 @UseGuards(RolesGuard)
 @ApiTags('cite')
 @Controller('cite')
 export class CiteController {
-  constructor(private citeService: CiteService) {}
+  constructor(private citeService: CiteService) { }
 
   @Role(Roles.Admin, Roles.Paciente)
   @Get('patient/:id')
@@ -63,6 +65,12 @@ export class CiteController {
   })
   findAll(): Promise<ResponseCiteDto[]> {
     return this.citeService.findAll();
+  }
+
+  @Role(Roles.Admin, Roles.Asistente, Roles.Doctor, Roles.Paciente)
+  @Put('report')
+  report(@Body() citeReport: CiteReportDto): Promise<ReportsResponseDto> {
+    return this.citeService.generateReport(citeReport)
   }
 
   @Role(Roles.Admin, Roles.Doctor, Roles.Paciente)

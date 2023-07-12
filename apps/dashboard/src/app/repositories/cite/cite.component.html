@@ -1,27 +1,77 @@
 <div class="container">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          <span class="module-title">Citas</span>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <medigo-table
-          emptyMessage="No hay citas para mostrar"
-          emptySearchMessage="Ningún cita coincide con la busqueda"
-          (clickOption)="clickAction($event)"
-        ></medigo-table>
-      </mat-card-content>
-    </mat-card>
-    <button
-      mat-fab
-      matTooltip="Agregar nueva cita"
-      color="accent"
-      aria-label="Agregar nueva cita"
-      class="btn-fixed"
-      (click)="showModal()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <span class="module-title">Citas</span>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <medigo-table emptyMessage="No hay citas para mostrar" emptySearchMessage="Ningún cita coincide con la busqueda"
+        (clickOption)="clickAction($event)"></medigo-table>
+    </mat-card-content>
+  </mat-card>
+  <button mat-fab matTooltip="Agregar nueva cita" color="accent" aria-label="Agregar nueva cita" class="btn-fixed"
+    (click)="showModal()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class="form-container">
+  <mat-card class="form-card">
+    <form [formGroup]="reportForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+          <input matStartDate formControlName="start" name="start" id="start" placeholder="Fecha final" readonly />
+          <input matEndDate placeholder="Fecha inicial" formControlName="end" name="end" id="end" readonly />
+        </mat-date-range-input>
+        <mat-datepicker-toggle disabled="false" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+        <mat-error *ngIf="
+              reportForm.controls['start'].hasError('required') ||
+              reportForm.controls['end'].hasError('required')
+            ">Fecha requerida</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Doctor</mat-label>
+        <input type="text" matInput [formControl]="doctorControl" [matAutocomplete]="autodoctor"
+          [readonly]="disableSelectDoctor" />
+        <mat-autocomplete name="doctor" id="doctor" #autodoctor="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of filteredDoctors | async" [value]="option">{{ option.user?.firstName }}
+            {{ option.user?.lastName }}</mat-option>
+          <mat-option *ngIf="(filteredDoctors | async)?.length === 0" disabled>No se encontraron doctores</mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="doctorControl?.hasError('required')">Campo Requerido</mat-error>
+        <mat-error *ngIf="doctorControl?.hasError('forbiddenNames')">Seleccione una opción</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Paciente</mat-label>
+        <input type="text" matInput [formControl]="patientControl" [matAutocomplete]="autopatient"
+          [readonly]="disableSelectPatient" />
+        <mat-autocomplete name="patient" id="patient" #autopatient="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of filteredPatients | async" [value]="option">{{ option.user?.firstName }}
+            {{ option.user?.lastName }}</mat-option>
+          <mat-option *ngIf="(filteredPatients | async)?.length === 0" disabled>No se encontraron
+            pacientes</mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="patientControl?.hasError('required')">Campo Requerido</mat-error>
+        <mat-error *ngIf="patientControl?.hasError('forbiddenNames')">Seleccione una opción</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select name="status" id="role" matSelect placeholder="status" [formControl]="statusControl">
+          <mat-option *ngFor="let option of selectable" [value]="option.value">{{ option.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <mat-card-actions>
+      <button class="generate-button" type="reset" mat-raised-button color="accent"
+        [disabled]="reportForm.invalid || loading" (click)="generate()">
+        Generar Reporte
+      </button>
+      <button class="generate-button" type="reset" mat-raised-button color="basic" (click)="reportForm.reset()">
+        Limpiar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

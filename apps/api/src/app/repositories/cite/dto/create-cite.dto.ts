@@ -4,6 +4,7 @@ import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
 import { Cite } from '../entities';
 import { Type } from 'class-transformer';
+import { Optional } from '@nestjs/common';
 
 export class CreateCiteDto extends PartialType(
   OmitType(Cite, ['updatedAt', 'createdAt', 'status', 'deleted'])
@@ -42,4 +43,28 @@ export class CreateCiteDto extends PartialType(
   @IsNotEmpty()
   @Type(() => Number)
   patientId!: number;
+}
+
+export class CiteReportDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsDateString()
+  start!: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsDateString()
+  end!: string;
+
+  @ApiProperty()
+  @Optional()
+  patientId!: number;
+
+  @ApiProperty()
+  @Optional()
+  doctorId!: number;
+
+  @ApiProperty()
+  @Optional()
+  status!: boolean;
 }

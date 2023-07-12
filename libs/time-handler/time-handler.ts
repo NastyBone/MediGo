@@ -117,3 +117,15 @@ export function getDayOfTheWeekByDate(date: string): string {
 export function addDay(date: Date): Date {
   return moment(date).add(1, 'day').toDate();
 }
+export function validateDatesRange(start: string, end: string): {
+  start: string;
+  end: string;
+} {
+  if (
+    start == (undefined || null || '') ||
+    end == (undefined || null || '') ||
+    new Date(start) > new Date(end)
+  )
+    throw new Error('Rango de fecha invalido');
+  return { start, end };
+}
