@@ -321,8 +321,8 @@ export class CiteComponent implements OnInit, OnDestroy {
 
   generate(): void {
     const data = this.reportForm.value
-    this.citeService.report({ patientId: data.patient.id, doctorId: data.doctor.id, start: data.start, end: data.end, status: data.status }).subscribe((data) => {
-      window.open(data.reportUrl)
+    this.citeService.report({ patientId: data.patient?.id || null, doctorId: data.doctor?.id || null, start: data.start, end: data.end, status: data.status }).subscribe((res) => {
+      window.open(res as string, '_blank')
     })
   }
 }
