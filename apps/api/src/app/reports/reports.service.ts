@@ -4,7 +4,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ReportsDto, ReportsResponseDto } from './dto';
 import { DocumentOptions } from './types';
 import { CustomAssetsPathFolder } from '../config/constants';
-import { htmlTemplate } from './template';
+import { recordTemplate, citeTemplate } from './template';
 import { SettingsService } from '../repositories/settings/settings.service';
 
 @Injectable()
@@ -14,25 +14,35 @@ export class ReportsService {
   }
 
   async generateReport(
-    reportsDto: ReportsDto<any>
+    reportsDto: ReportsDto<any>,
+    type: string
   ): Promise<ReportsResponseDto> {
     const settingsData = await this.settings.getAllSettings();
-    reportsDto.data = {
-      ...reportsDto.data,
-      ...settingsData,
-    };
+    if (type == 'Citas') {
+      const cites = reportsDto.data;
+      reportsDto.data = {
+        cites,
+        ...settingsData
+      }
+    } else {
+      reportsDto.data = {
+        ...reportsDto.data,
+        ...settingsData,
+      };
+    }
+
     const _utcDate = new Date();
     const generateDate = new Date(_utcDate.getTime());
 
     //GENERAR NOMBRE
-    const _pdfName = `Reporte_de_Informe_${generateDate
+    const _pdfName = `Reporte_de_${type}_${generateDate
       .toISOString()
       .slice(0, -5)
       .replace('T', '_')
       .replace(/:/g, '-')}`;
     //OPCIONES
     const document: DocumentOptions = {
-      html: htmlTemplate,
+      html: type == 'Citas' ? citeTemplate : recordTemplate,
       data: {
         source: reportsDto.data,
         date: generateDate.toLocaleDateString('es'),

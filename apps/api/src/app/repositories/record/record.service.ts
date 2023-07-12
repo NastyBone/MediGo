@@ -16,7 +16,7 @@ export class RecordService {
     @InjectRepository(Record)
     private repository: Repository<Record>,
     private reportService: ReportsService
-  ) {}
+  ) { }
 
   async findAll(): Promise<ResponseRecordDto[]> {
     const data = await this.repository.find({
@@ -201,7 +201,8 @@ export class RecordService {
     const toGenerate = await this.findOne(id);
     const response = await this.reportService.generateReport({
       data: toGenerate,
-    });
+
+    }, 'Informe');
     return response;
   }
 
