@@ -12,6 +12,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { UsersService } from './app/repositories/users/users.service';
 import process = require('process');
+import { AppService } from './app/app.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //SOCKET
@@ -22,19 +23,26 @@ async function bootstrap() {
     origin: true,
   });
 
-  //USER
+  //ADMIN
   try {
+    const appService = app.get(AppService)
     const userService = app.get(UsersService);
-    userService.insertAdmin(
+    const result = await userService.insertAdmin(
       process.env.ADMIN_EMAIL,
       process.env.ADMIN_PASSWORD,
       process.env.ADMIN_FIRST_NAME,
       process.env.ADMIN_LAST_NAME,
       process.env.ADMIN_ROLE
     );
+    if (result == true) {
+      await appService.init()
+    } else if (result === false) {
+      await appService.remove()
+    }
   } catch (error) {
     console.log(error);
   }
+
 
   //COOKIES
   app.use(cookieParser());
@@ -65,7 +73,7 @@ async function bootstrap() {
   );
 
   //PORT
-  const port = process.env.PORT || 3333;
+  const port = process.env.DB_PORT || 3333;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

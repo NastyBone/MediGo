@@ -15,6 +15,7 @@ import { ConfigModule as ConfigurationModule } from './config/config.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forFeature(entities),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
@@ -42,4 +43,4 @@ import { ConfigModule as ConfigurationModule } from './config/config.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

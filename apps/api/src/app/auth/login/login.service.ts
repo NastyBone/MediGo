@@ -18,7 +18,7 @@ export class LoginService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly jwtAuthService: JwtAuthService
-  ) {}
+  ) { }
 
   async login(
     user: UserLoginDto,
@@ -100,7 +100,6 @@ export class LoginService {
 
   async validateUser(email_: string, password_: string): Promise<UserLoginDto> {
     const user = await this.usersService.findOneByEmail(email_);
-
     if (!user || !(await comparePassword(password_, user.password))) {
       throw new UnauthorizedException('Usuario o contraseña inválida.');
     }
