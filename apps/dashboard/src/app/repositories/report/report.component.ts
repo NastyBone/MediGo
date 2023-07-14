@@ -94,7 +94,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   private createSvg(): void {
 
-    if (this.data[0].value !== 0 || this.data[1].value !== 0) {
+    if ((this.data[0].value !== 0 || this.data[1].value !== 0) && this.chartContainer) {
       this.svg = d3
         .select(this.chartContainer.nativeElement)
         .append('svg')
