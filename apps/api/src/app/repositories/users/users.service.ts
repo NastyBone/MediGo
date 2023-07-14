@@ -24,7 +24,7 @@ export class UsersService implements CrudRepository<User> {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly mailService: MailService
-  ) {}
+  ) { }
 
   async findValid(id: number): Promise<User> {
     const user = await this.usersRepository.findOne({
@@ -232,7 +232,7 @@ export class UsersService implements CrudRepository<User> {
     firstName: string,
     lastName: string,
     role: string
-  ): Promise<void> {
+  ): Promise<boolean | null> {
     const UsersAdmins = await this.usersRepository.find({
       where: {
         role: 'administrador',
@@ -243,6 +243,9 @@ export class UsersService implements CrudRepository<User> {
       const AdminEmail = await this.findOneByEmail(email);
       if (AdminEmail) {
         this.usersRepository.remove(AdminEmail);
+        return false
+      } else {
+        return null
       }
     } else {
       const user = this.usersRepository.create({
@@ -252,10 +255,9 @@ export class UsersService implements CrudRepository<User> {
         lastName,
         role,
       });
-
       await this.usersRepository.save(user);
+      return true
     }
-
     //return new ResponseUserDto(_userRes);
   }
 }

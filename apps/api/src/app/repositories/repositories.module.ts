@@ -27,4 +27,4 @@ import { ReportModule } from './report/report.module';
   providers: [],
   controllers: [],
 })
-export class RepositoriesModule {}
+export class RepositoriesModule { }

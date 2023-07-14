@@ -43,7 +43,7 @@
     >
   </mat-form-field>
 
-  <mat-form-field class="">
+  <mat-form-field class="" appearance="outline">
     <mat-label>Teléfono</mat-label>
     <input type="text" matInput formControlName="phone" />
     <mat-error *ngIf="form.controls['phone'].hasError('required')"
@@ -54,7 +54,7 @@
     >
   </mat-form-field>
 
-  <mat-form-field class="">
+  <mat-form-field class="" appearance="outline">
     <mat-label>Dirección</mat-label>
     <input type="text" matInput formControlName="address" />
     <mat-error *ngIf="form.controls['address'].hasError('required')"
