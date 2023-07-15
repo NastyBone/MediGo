@@ -26,8 +26,8 @@ export class ReportsService {
       }
     } else {
       reportsDto.data = {
-        ...reportsDto.data,
         ...settingsData,
+        ...reportsDto.data,
       };
     }
 

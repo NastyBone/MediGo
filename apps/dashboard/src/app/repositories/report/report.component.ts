@@ -117,7 +117,6 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   private drawChart(): void {
-    console.log(this.chartContainer)
     this.pie = d3.pie<any>().value((d: any) => Number(d.value));
 
     if (this.pieces) {
