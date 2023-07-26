@@ -11,7 +11,8 @@ import { MailModule } from './mail/mail.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronModule } from './cron/cron.module';
 import { ConfigModule as ConfigurationModule } from './config/config.module';
-
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -32,6 +33,9 @@ import { ConfigModule as ConfigurationModule } from './config/config.module';
         };
       },
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'apps/dashboard'),
     }),
     ScheduleModule.forRoot(),
     RepositoriesModule,

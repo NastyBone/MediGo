@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="title">Reporte de Especialidades</h1>
+  <div class="sub-container">
+    <div class="form-container">
+      <form [formGroup]="reportForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+            <input matStartDate formControlName="start" name="start" id="start" placeholder="Fecha final" readonly />
+            <input matEndDate placeholder="Fecha inicial" formControlName="end" name="end" id="end" readonly />
+          </mat-date-range-input>
+          <mat-datepicker-toggle disabled="false" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+          <mat-error *ngIf="
+                reportForm.controls['start'].hasError('required') ||
+                reportForm.controls['end'].hasError('required')
+              ">Fecha requerida</mat-error>
+              <mat-hint>Presione el calendario</mat-hint>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="chart-container" [ngClass]="{'hidden': this.data.length === 0}">
+      <div #chart></div>
+    </div>
+  </div>
+  <div class="no-data container" *ngIf="this.data.length === 0">
+    <mat-icon>addchart</mat-icon>
+    <span>No hay información disponible</span>
+  </div>
+
+</div>

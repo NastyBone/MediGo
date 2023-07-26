@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ReportsService } from '@medigo/dashboard-sdk';
-import { ReportVM } from './model';
+import { ReportVM } from '../model';
 import { Observable, map } from 'rxjs';
-import { Report2ReportVM } from './mappers';
+import { Report2ReportVM } from '../mappers';
 
 @Injectable()
 export class GetReportService {

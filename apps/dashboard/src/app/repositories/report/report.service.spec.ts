@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetReportService } from './get-report.service';
+import { GetReportService } from './use-cases/get-report.service';
 import { ReportsService } from '@medigo/dashboard-sdk';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ReportModule } from './report.module';

@@ -13,6 +13,7 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 import { UsersService } from './app/repositories/users/users.service';
 import process = require('process');
 import { AppService } from './app/app.service';
+import open = require('open');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //SOCKET
@@ -24,24 +25,24 @@ async function bootstrap() {
   });
 
   //ADMIN
-  try {
-    const appService = app.get(AppService)
-    const userService = app.get(UsersService);
-    const result = await userService.insertAdmin(
-      process.env.ADMIN_EMAIL,
-      process.env.ADMIN_PASSWORD,
-      process.env.ADMIN_FIRST_NAME,
-      process.env.ADMIN_LAST_NAME,
-      process.env.ADMIN_ROLE
-    );
-    if (result == true) {
-      await appService.init()
-    } else if (result === false) {
-      await appService.remove()
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   const appService = app.get(AppService)
+  //   const userService = app.get(UsersService);
+  //   const result = await userService.insertAdmin(
+  //     process.env.ADMIN_EMAIL,
+  //     process.env.ADMIN_PASSWORD,
+  //     process.env.ADMIN_FIRST_NAME,
+  //     process.env.ADMIN_LAST_NAME,
+  //     process.env.ADMIN_ROLE
+  //   );
+  //   if (result == true) {
+  //     await appService.init() //TODO: Descomentar
+  //   } else if (result === false) {
+  //     await appService.remove()
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
 
   //COOKIES
@@ -75,6 +76,7 @@ async function bootstrap() {
   //PORT
   const port = process.env.DB_PORT || 3333;
   await app.listen(port);
+  // await open(`http://localhost:${port}`) //TODO
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
