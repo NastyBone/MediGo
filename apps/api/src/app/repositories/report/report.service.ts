@@ -8,4 +8,9 @@ export class ReportService {
     const { completed, notCompleted } = await this.citeService.getData(id);
     return { completed, notCompleted };
   }
+
+  async findBySpecialities(date: { start: string, end: string }): Promise<{ id: number, name: string, count: string }[]> {
+    return this.citeService.getDataByRange(date);
+
+  }
 }

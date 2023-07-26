@@ -89,9 +89,9 @@ export class AppService {
     ];
 
     this.records = [
-      { description: 'Infección respiratoria', date: '2023-07-01', doctor: this.doctors[0], patient: this.patients[0] },
-      { description: 'Fractura de brazo', date: '2023-07-05', doctor: this.doctors[1], patient: this.patients[1] },
-      { description: 'Gripe', date: '2023-07-08', doctor: this.doctors[2], patient: this.patients[2] },
+      { description: 'Infección respiratoria', date: '01/07/2023', doctor: this.doctors[0], patient: this.patients[0] },
+      { description: 'Fractura de brazo', date: '05/07/2023', doctor: this.doctors[1], patient: this.patients[1] },
+      { description: 'Gripe', date: '08/07/2023', doctor: this.doctors[2], patient: this.patients[2] },
     ];
   }
 

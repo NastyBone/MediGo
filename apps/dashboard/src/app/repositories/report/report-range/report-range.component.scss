@@ -12,6 +12,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin: 4rem 0 0 0;
 }
 
 .title {
@@ -23,24 +24,6 @@
   margin-bottom: -0.5rem;
 }
 
-.chart-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 100%;
-}
-.color-block {
-  height: 30px;
-  width: 30px;
-  background-color: black;
-  margin-right: 0.5rem;
-}
-.chart-item {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  align-items: center;
-}
 span {
   font-size: 1.1rem;
 }
@@ -59,12 +42,8 @@ mat-icon {
 }
 .form-container{
   margin-top: 2rem;
-  margin-bottom: -1rem;
 }
-
-.chart-data{
-  width: 100%;
+.sub-container{
   display: flex;
-  margin-top: -3px;
-  flex-direction: row-reverse;
+  align-items: center;
 }

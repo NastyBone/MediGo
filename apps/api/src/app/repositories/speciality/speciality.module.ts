@@ -11,5 +11,6 @@ import { DoctorModule } from '../doctor/doctor.module';
   imports: [TypeOrmModule.forFeature([Speciality]), UsersModule, JwtAuthModule, DoctorModule],
   providers: [SpecialityService],
   controllers: [SpecialityController],
+  exports: [SpecialityService]
 })
 export class SpecialityModule { }

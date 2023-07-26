@@ -340,6 +340,7 @@ export class CiteService {
       },
     });
 
+
     const countNotCompleted = await this.repository.count({
       where: {
         deleted: false,
@@ -348,6 +349,20 @@ export class CiteService {
       },
     });
     return { completed: countCompleted, notCompleted: countNotCompleted };
+  }
+
+  async getDataByRange(date: { start: string, end: string }): Promise<{ id: number, name: string, count: string }[]> {
+
+    date = validateDatesRange(date.start, date.end)
+    const result = this.repository.createQueryBuilder("cite")
+      .innerJoinAndSelect("cite.doctor", "doctor")
+      .innerJoinAndSelect("doctor.speciality", "speciality")
+      .select("speciality.id, speciality.name, COUNT(cite.id)", "count")
+      .where("cite.createdAt BETWEEN :start AND :end", { start: date.start, end: date.end })
+      .groupBy("speciality.id")
+      .getRawMany();
+
+    return result
   }
 
   async getDataByDoctor(

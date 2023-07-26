@@ -4,7 +4,7 @@ import { ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { StateService } from '../../common/state';
 import { Subscription, finalize } from 'rxjs';
-import { GetReportService } from './get-report.service';
+import { GetReportService } from './use-cases/get-report.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 const months = [{
   name: 'Enero',
@@ -117,7 +117,6 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   private drawChart(): void {
-    console.log(this.chartContainer)
     this.pie = d3.pie<any>().value((d: any) => Number(d.value));
 
     if (this.pieces) {

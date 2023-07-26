@@ -13,6 +13,7 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 import { UsersService } from './app/repositories/users/users.service';
 import process = require('process');
 import { AppService } from './app/app.service';
+import open = require('open');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //SOCKET
@@ -23,7 +24,7 @@ async function bootstrap() {
     origin: true,
   });
 
-  //ADMIN
+  // ADMIN
   try {
     const appService = app.get(AppService)
     const userService = app.get(UsersService);
@@ -75,6 +76,7 @@ async function bootstrap() {
   //PORT
   const port = process.env.DB_PORT || 3333;
   await app.listen(port);
+  await open(`http://localhost:${port}`)
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
