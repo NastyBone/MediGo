@@ -9,10 +9,10 @@
 }
 .chart-container {
   height: 100%;
-  width: 100%;
   display: flex;
   justify-content: center;
-  margin: 4rem 0 0 3rem;
+  margin: 4rem 0;
+  width: 66.66%;
 }
 
 .title {
@@ -37,13 +37,18 @@ mat-icon {
 .hidden {
   display: none;
 }
-.title{
+.title {
   display: inline;
 }
-.form-container{
+.form-container {
   margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 33.33%;
 }
-.sub-container{
+.sub-container {
   display: flex;
   align-items: center;
+  width: 100%;
 }
