@@ -27,20 +27,20 @@ async function bootstrap() {
 
   // ADMIN
   try {
-    const appService = app.get(AppService)
-    const userService = app.get(UsersService);
-    const result = await userService.insertAdmin(
-      process.env.ADMIN_EMAIL,
-      process.env.ADMIN_PASSWORD,
-      process.env.ADMIN_FIRST_NAME,
-      process.env.ADMIN_LAST_NAME,
-      process.env.ADMIN_ROLE
-    );
-    if (result == true) {
-      await appService.init()
-    } else if (result === false) {
-      await appService.remove()
-    }
+    // const appService = app.get(AppService)
+    // const userService = app.get(UsersService);
+    // const result = await userService.insertAdmin(
+    //   process.env.ADMIN_EMAIL,
+    //   process.env.ADMIN_PASSWORD,
+    //   process.env.ADMIN_FIRST_NAME,
+    //   process.env.ADMIN_LAST_NAME,
+    //   process.env.ADMIN_ROLE
+    // );
+    // if (result == true) {
+    //   await appService.init()
+    // } else if (result === false) {
+    //   await appService.remove()
+    // }
   } catch (error) {
     console.log(error);
   }

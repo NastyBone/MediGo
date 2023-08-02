@@ -18,7 +18,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   form!: FormGroup;
   sub$ = new Subscription();
@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.sub$.add(
       this.resetPasswordService
         .exec(
-          { newPassword: this.form.value.password },
+          { newPassword: this.form.value.newPassword },
           this.activatedRoute.snapshot.params['token']
         )
         .pipe(

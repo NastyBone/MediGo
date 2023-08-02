@@ -126,29 +126,34 @@ export class CiteComponent implements OnInit, OnDestroy {
       })
     );
     this.sub$.add(
-      forkJoin({
-        doctors: this.citeService.getDoctors$(),
-        patients: this.citeService.getPatients$()
-      }).subscribe(({ doctors, patients }) => {
-        if (doctors) {
-          this.incomingDoctors = doctors;
-          this.filteredDoctors = this.doctorControl.valueChanges.pipe(
-            startWith<string | DoctorItemVM | null | undefined>(''),
-            map((value) => {
-              if (value !== null) {
-                return typeof value === 'string'
-                  ? value
-                  : value?.user?.firstName + ' ' + value?.user?.lastName;
-              }
-              return '';
-            }),
-            map((name) => {
-              return name
-                ? this._filterDoctors(name)
-                : this.incomingDoctors.slice();
-            })
-          );
-        }
+      this.citeService.getDoctors$()
+        .subscribe((doctors) => {
+          if (doctors) {
+            this.incomingDoctors = doctors;
+            this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+              startWith<string | DoctorItemVM | null | undefined>(''),
+              map((value) => {
+                if (value !== null) {
+                  return typeof value === 'string'
+                    ? value
+                    : value?.user?.firstName + ' ' + value?.user?.lastName;
+                }
+                return '';
+              }),
+              map((name) => {
+                return name
+                  ? this._filterDoctors(name)
+                  : this.incomingDoctors.slice();
+              })
+            );
+          }
+
+
+        })
+    )
+
+    if (this.role !== "paciente") {
+      this.sub$.add(this.citeService.getPatients$().subscribe((patients) => {
         if (patients) {
           this.incomingPatients = patients;
 
@@ -169,9 +174,8 @@ export class CiteComponent implements OnInit, OnDestroy {
             })
           );
         }
-
-      })
-    )
+      }))
+    }
   }
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
