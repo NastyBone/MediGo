@@ -69,6 +69,7 @@ export class ReportRangeComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+
     const { start, end } = this.reportForm.value
     if (start !== null && end !== null) {
       this.rangeDate = {
@@ -87,11 +88,13 @@ export class ReportRangeComponent implements OnInit, OnDestroy {
 
   drawChart() {
     if (this.svg) {
-
-
       this.svg.selectAll("*").remove();
-      const counts = d3.rollups(this.data, v => v.length, d => d.name);
-      const maxCount = d3.max(counts, d => d[1]);
+      const counts = d3.rollups(this.data, v => {
+        return v[0].count
+      }, d => d.name);
+      const maxCount = d3.max(counts, d => {
+        return d[1]
+      });
       const x = d3.scaleBand()
         .domain(counts.map(d => d[0].toString()))
         .range([0, this.width])

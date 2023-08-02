@@ -19,7 +19,7 @@ import { Roles } from '../users';
 @ApiTags('doctor')
 @Controller('doctor')
 export class DoctorController {
-  constructor(private doctorService: DoctorService) {}
+  constructor(private doctorService: DoctorService) { }
 
   @Role(Roles.Admin, Roles.Doctor)
   @Get('user/:id')
@@ -53,7 +53,7 @@ export class DoctorController {
     return this.doctorService.findOne(id);
   }
 
-  @Role(Roles.Admin)
+  @Role(Roles.Admin, Roles.Paciente)
   @Get()
   @ApiResponse({
     type: ResponseDoctorDto,

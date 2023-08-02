@@ -4,7 +4,7 @@ import { recovery, welcome } from './templates/templates';
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService) {}
+  constructor(private mailerService: MailerService) { }
 
   /**
    * Funcion para mandar un correo con el token `url_` de recuperacion al `email_` especificado.
@@ -14,16 +14,17 @@ export class MailService {
    */
   async sendRecovery(url_: string, email_: string): Promise<boolean> {
     try {
+      console.log('sending', email_)
       await this.mailerService.sendMail({
         to: email_,
         subject: 'MEDIGO - Solicitud de cambio de contraseña',
         html: recovery(url_),
         attachments: [
           {
-            filename: 'brand-no-background.png',
+            filename: 'logo.png',
             path:
               process.cwd() +
-              '/packages/api/src/assets/brand-no-background.png',
+              '/apps/api/src/assets/logo.png',
             cid: 'filesrc',
           },
         ],

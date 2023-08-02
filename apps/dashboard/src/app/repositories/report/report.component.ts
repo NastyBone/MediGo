@@ -196,7 +196,6 @@ export class ReportComponent implements OnInit, OnDestroy {
       this.idMonth = this.monthForm.value['month']
       this.actualMonth = new Date(((new Date()).setMonth(this.idMonth))).toLocaleString('es-ES', { month: 'long' });
       this.loadData()
-
     }))
   }
   compareObjects(o1: any, o2: any): boolean {

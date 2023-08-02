@@ -60,6 +60,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
   loading = false;
+  formTitleAction = "Crear"
 
   //
   incomingDoctors!: DoctorItemVM[];
@@ -153,6 +154,7 @@ export class FormComponent implements OnInit, OnDestroy {
     );
     this.createForm();
     if (this.data.id) {
+      this.formTitleAction = 'Modificar'
       this.sub$.add(
         this.citeService
           .find$({ id: this.data.id })

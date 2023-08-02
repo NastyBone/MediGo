@@ -111,8 +111,7 @@ export class UsersService implements CrudRepository<User> {
   ): Promise<ResponseUserDto> {
     const emailCheck = await this.findOneByEmail(updateUserDto.email);
     const entity = await this.findValid(id);
-
-    if (emailCheck.id !== entity.id)
+    if (emailCheck && emailCheck.id !== entity.id)
       throw new BadRequestException('Email en uso');
 
     if (updateUserDto?.firstName) {
